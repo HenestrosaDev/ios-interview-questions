@@ -3291,7 +3291,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Authors
 
 - Questions compiled by: Paul Hudson <[hackingwithswift.com](https://www.hackingwithswift.com/)>
-- Questions answered by: HenestrosaConH <[henestrosaconh@gmail.com](henestrosaconh@gmail.com)> (José Carlos López Henestrosa)
+- Questions answered by: HenestrosaConH <[henestrosaconh@gmail.com](henestrosaconh@gmail.com)>
 
 See also the list of [contributors](https://github.com/HenestrosaConH/ios-interview-questions/contributors) who participated in this project.
 
