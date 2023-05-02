@@ -436,7 +436,7 @@ The difficulty of the questions is classified by these colours:
   In this way, the table view can remain focused on managing the display of the cells, while delegating other responsibilities to separate objects that are better suited to handle them.
   </details>
 
-- 🟧 [How would you explain delegates to a new Swift developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-delegates-to-a-new-swift-developer)
+- 🟧 [Can you explain MVC, and how it's used on Apple's platforms?](https://www.hackingwithswift.com/interview-questions/can-you-explain-mvc-and-how-its-used-on-apples-platforms)
   <details>
     <summary>Answer</summary>
 
