@@ -53,6 +53,8 @@ The difficulty of the questions is classified by these colours:
 - 🟧 Intermediate question
 - 🟥 Advanced question
 
+---
+
 ## Accessibility
 
 - 🟩 [How much experience do you have testing with VoiceOver?](https://www.hackingwithswift.com/interview-questions/how-much-experience-do-you-have-testing-with-voiceover)
