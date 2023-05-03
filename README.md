@@ -232,7 +232,7 @@ The difficulty of the questions is classified by these colours:
   Using the correct key decoding strategy is important because it ensures that our data is decoded correctly into our Swift objects, which can help prevent bugs and ensure that our app works as expected.
   </details>
 
-- 🟩 [When using arrays, what’s the difference between map() and compactMap()?](https://www.hackingwithswift.com/interview-questions/when-using-arrays-whats-the-difference-between-map-and-compactmap)
+- 🟩 [When using arrays, what’s the difference between `map()` and `compactMap()`?](https://www.hackingwithswift.com/interview-questions/when-using-arrays-whats-the-difference-between-map-and-compactmap)
   <details>
     <summary>Answer</summary>
 
@@ -305,13 +305,13 @@ The difficulty of the questions is classified by these colours:
   As a collection, a `String` has several useful properties and methods inherited from the `Collection` protocol, including `count`, `isEmpty`, and `first`, as well as subscripting using integer indices or ranges. Additionally, `String` also provides many specific methods for working with strings, such as `hasPrefix`, `hasSuffix`, and `replacingOccurrences`, which makes it easier to manipulate and transform string values in various ways.
   </details> 
 
-- 🟧 [What is a UUID, and when might you use it?](https://www.hackingwithswift.com/interview-questions/what-does-it-mean-when-we-say-strings-are-collections-in-swift)
+- 🟧 [What is a `UUID`, and when might you use it?](https://www.hackingwithswift.com/interview-questions/what-is-a-uuid-and-when-might-you-use-it)
   <details>
     <summary>Answer</summary>
 
-  UUID stands for Universally Unique Identifier. It is a 128-bit value that is used to identify information in a unique way. UUIDs are used to identify unique objects, resources, or entities in a system or application.
+  `UUID` stands for Universally Unique Identifier. It is a 128-bit value that is used to identify information in a unique way. UUIDs are used to identify unique objects, resources, or entities in a system or application.
 
-  In Swift, the UUID class is used to generate UUIDs. We can use UUIDs in a variety of situations where we need a unique identifier, such as:
+  In Swift, the `UUID` class is used to generate UUIDs. We can use UUIDs in a variety of situations where we need a unique identifier, such as:
 
   - To identify objects or resources in a distributed system where multiple nodes need to access the same resource.
   - To create unique identifiers for user accounts or other entities in a database.
@@ -672,7 +672,7 @@ The difficulty of the questions is classified by these colours:
   In this example, we first get the `FileManager` object, then we get the URL for the document directory using `url(for:in:appropriateFor:create:)`. We then use the `contentsOfDirectory(atPath:)` method to get an array of file and folder names within the document directory, and loop through them to print each item's name.
   </details>
 
-- 🟩 [What class would you use to list files in a directory?](https://www.hackingwithswift.com/interview-questions/what-is-userdefaults-good-for-what-is-userdefaults-not-good-for)
+- 🟩 [What is `UserDefaults` good for? What is `UserDefaults` not good for?](https://www.hackingwithswift.com/interview-questions/what-is-userdefaults-good-for-what-is-userdefaults-not-good-for)
   <details>
     <summary>Answer</summary>
 
@@ -695,7 +695,7 @@ The difficulty of the questions is classified by these colours:
   In general, `UserDefaults` is best suited for small, simple, and non-sensitive data that needs to be persisted across app launches and accessed easily from different parts of the app. If we need to store more complex data, we may need to consider using other storage solutions such as Core Data or a third-party database.
   </details>
 
-- 🟩 [What is the purpose of NotificationCenter?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-notificationcenter)
+- 🟩 [What is the purpose of `NotificationCenter`?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-notificationcenter)
   <details>
     <summary>Answer</summary>
 
@@ -869,7 +869,7 @@ The difficulty of the questions is classified by these colours:
   This would sort the array of people in ascending order based on their `name` property.
   </details>
 
-- 🟥 [Can you name at least three different `CALayer` subclasses?](https://www.hackingwithswift.com/interview-questions/when-might-you-use-nssortdescriptor)
+- 🟥 [Can you name at least three different `CALayer` subclasses?](https://www.hackingwithswift.com/interview-questions/can-you-name-at-least-three-different-calayer-subclasses)
   <details>
     <summary>Answer</summary>
 
@@ -1011,7 +1011,7 @@ The difficulty of the questions is classified by these colours:
   By using size classes in Swift, developers can create layouts that adjust dynamically based on the device's size and orientation, reducing the need to create separate layouts for different device sizes. This can make development more efficient and help ensure a consistent user experience across different devices.
   </details>
 
-- 🟥 [What happens when Color or UIColor has values outside 0 to 1?](https://www.hackingwithswift.com/interview-questions/what-happens-when-color-or-uicolor-has-values-outside-0-to-1)
+- 🟥 [What happens when `Color` or `UIColor` has values outside 0 to 1?](https://www.hackingwithswift.com/interview-questions/what-happens-when-color-or-uicolor-has-values-outside-0-to-1)
   <details>
     <summary>Answer</summary>
 
@@ -1732,7 +1732,7 @@ The difficulty of the questions is classified by these colours:
   The `#if swift` directive is a powerful tool for ensuring that our code is compatible with multiple versions of the Swift language, and for enabling or disabling certain features based on the version being used.
   </details>
 
-- 🟩 [What does the assert() function do?](https://www.hackingwithswift.com/interview-questions/what-does-the-assert-function-do)
+- 🟩 [What does the `assert()` function do?](https://www.hackingwithswift.com/interview-questions/what-does-the-assert-function-do)
   <details>
     <summary>Answer</summary>
 
