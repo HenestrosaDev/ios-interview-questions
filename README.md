@@ -236,9 +236,9 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  Both `map()` and `compactMap()` are higher-order functions available for arrays in Swift.
+  Both `map()` and `compactMap()` are higher-order functions available for types that conform to the `Sequence` protocol in Swift (e.g., arrays and sets).
 
-  The `map()` function takes a closure as its argument, applies the closure to each element of the array, and returns an array with the transformed elements. The type of the returned array is the same as the input array. For example, if we have an array of integers and we use `map()` to transform each element by doubling it, the returned array will also be an array of integers.
+  The `map()` function takes a closure as its argument, applies the closure to each element of the array, and returns an array with the transformed elements.
   
   On the other hand, `compactMap()` also takes a closure as its argument and applies the closure to each element of the array. However, unlike `map()`, `compactMap()` returns an array with the transformed elements, but only if they are not `nil`. If the transformed element is `nil`, it is discarded from the returned array. Therefore, `compactMap()` is useful when we want to transform elements of an array that may have `nil` values and remove them from the result.
 
@@ -254,7 +254,7 @@ The difficulty of the questions is classified by these colours:
   let compactMapped = numbers.compactMap { Int($0) } // [1, 2, 3, 5]
   ```
   
-  In the example above, the `map()` function is used to convert each string element of the `numbers` array to an integer. However, since `"four"` cannot be converted to an integer, it is returned as `nil`. The resulting array from `map()` contains `nil` for the `"four"` element. On the other hand, `compactMap()` is used to convert each string element to an integer and remove the `nil` values. The resulting array from `compactMap()` only contains integers.
+  In the example above, the `map()` function is used to convert each string element of the `numbers` array to an integer. However, since `"four"` cannot be converted to an integer, it is returned as `nil`. The resulting array from `map()` contains `nil` for the `"four"`, so its type is `[Int?]`. On the other hand, `compactMap()` is used to convert each string element to an integer and remove the `nil` values. The resulting array from `compactMap()` only contains integers, so its type is `[Int]`.
   </details>
 
 - 🟩 [Why is immutability important?](https://www.hackingwithswift.com/interview-questions/why-is-immutability-important)
