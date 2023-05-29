@@ -137,6 +137,7 @@ The difficulty of the questions is classified by these colours:
   - **Mutability**: In general, classes are more flexible and mutable than structs. We can add and remove properties and methods from a class at runtime, while a struct's properties and methods are fixed at compile time.
   - **Initialization**: Structs have member-wise initializers automatically generated for them by default, while classes do not. This means that when we create a new instance of a struct, we can pass in all of its properties as arguments to the initializer. With classes, we need to define our own initializer(s) to achieve the same effect.
   - **Memory management**: Classes are managed by reference counting, meaning that instances are deallocated when their reference count drops to zero. Structs, on the other hand, are copied by value, and their lifetimes are determined by the scope in which they're defined.
+  <br>
 
   In general, we should choose classes when we need the features they provide, such as inheritance or reference types, and choose structs when we want to take advantage of their predictability, immutability, and value semantics.
   </details> 
@@ -202,6 +203,7 @@ The difficulty of the questions is classified by these colours:
   - **Order**: Arrays have a specific order, and the elements in an array are accessed using their index, whereas sets are unordered, and the elements in a set are accessed using their value.
   - **Duplicates**: Arrays can contain duplicate values, whereas sets only contain unique values.
   - **Performance**: Sets are optimized for fast membership testing, which means that they are typically faster than arrays when checking whether an element exists in the collection. However, sets are typically slower than arrays when accessing elements by index.
+  <br>
 
   In general, we would use an array when we need to maintain the order of our elements or when we need to allow duplicates, and we would use a set when we need to ensure that our elements are unique or when we need to quickly test for membership.
   </details>
@@ -228,6 +230,7 @@ The difficulty of the questions is classified by these colours:
   - `useDefaultKeys`: This strategy uses the property names as the keys in the JSON.
   - `convertFromSnakeCase`: This strategy converts keys in the JSON from snake_case to camelCase.
   - `custom`: This strategy allows us to define our own key mapping using a closure.
+  <br>
 
   Using the correct key decoding strategy is important because it ensures that our data is decoded correctly into our Swift objects, which can help prevent bugs and ensure that our app works as expected.
   </details>
@@ -267,7 +270,8 @@ The difficulty of the questions is classified by these colours:
   - **Thread safety**: Immutable objects are inherently thread-safe, as they cannot be changed by multiple threads simultaneously. This can make concurrent programming much easier and less error-prone.
   - **Clarity and simplicity**: When objects are immutable, it is clear that their state cannot change, which can make code easier to reason about and understand. Immutability can also simplify certain algorithms and data structures, such as functional programming techniques.
   - **Performance**: In some cases, immutable data structures can be more performant than mutable ones. This is because they do not need to perform additional checks and operations to ensure their state is consistent.
-
+  <br>
+      
   In summary, immutability can improve code safety, clarity, performance, and simplify concurrency, and is therefore an important concept in programming.
   </details> 
 
@@ -684,6 +688,7 @@ The difficulty of the questions is classified by these colours:
   - We need to persist data across app launches.
   - We need to share data between different parts of our app.
   - We need to store data that is specific to the user, such as user preferences or settings.
+  <br>
 
   `UserDefaults` is not a good choice for:
 
@@ -691,6 +696,7 @@ The difficulty of the questions is classified by these colours:
   - Sensitive data that requires encryption or secure storage.
   - Complex data modeling or relationships.
   - High-performance requirements.
+  <br>
 
   In general, `UserDefaults` is best suited for small, simple, and non-sensitive data that needs to be persisted across app launches and accessed easily from different parts of the app. If we need to store more complex data, we may need to consider using other storage solutions such as Core Data or a third-party database.
   </details>
@@ -848,6 +854,7 @@ The difficulty of the questions is classified by these colours:
   - Support for recording both audio and video
   - Support for live broadcasting to popular streaming platforms
   - Built-in support for sharing recorded videos via social media, messaging apps, and more
+  <br>
   
   Overall, ReplayKit is a useful tool for developers who want to give their users an easy way to share their app experiences with others, or for those who want to incorporate gameplay or app demo videos into their marketing efforts.
   </details>
@@ -952,6 +959,7 @@ The difficulty of the questions is classified by these colours:
   - **Preview canvas**: With SwiftUI, we can see a live preview of our UI as we create it. This helps us to quickly iterate on our design and catch any issues before compiling and running the app.
   - **Cross-platform development**: SwiftUI can be used to build user interfaces for multiple platforms, including iOS, macOS, watchOS, and tvOS, with a single codebase. This can save time and reduce development costs for applications that need to be deployed on multiple platforms.
   - **Accessibility**: SwiftUI includes accessibility features such as VoiceOver and dynamic type, which makes it easier to build apps that are accessible to everyone.
+  <br>
 
   Disadvantages of SwiftUI compared to UIKit:
 
@@ -996,6 +1004,7 @@ The difficulty of the questions is classified by these colours:
   - App transport security settings
   - Supported audio and video formats
   - App extensions and plug-ins
+  <br>
 
   Overall, the Info.plist file is a powerful tool for configuring our app and communicating its requirements and capabilities to the system.
   </details>
@@ -3043,6 +3052,7 @@ The difficulty of the questions is classified by these colours:
   2. **Navigation**: Storyboards can be used to create the entire flow of an application's user interface, including navigation between different views, while XIBs are typically used to build specific views that are reused in multiple parts of an app.
   3. **Collaboration**: Since XIBs contain individual views, they can be more easily shared between developers, while storyboards are more complex and can be harder to manage in a team environment.
   4. **Flexibility**: XIBs provide more flexibility in terms of customizing individual views, while storyboards make it easier to manage the overall flow of an application's user interface.
+  <br>
 
   In summary, XIBs are used to build individual views or UI elements that can be reused in different parts of an app, while storyboards are used to design the overall flow of an app's user interface.
   </details>
@@ -3058,6 +3068,7 @@ The difficulty of the questions is classified by these colours:
   1. **Show Segue**: This type of segue is used to push a new view controller onto the navigation stack. The new view controller slides in from the right, and the current view controller slides out to the left.
   2. **Modally Present Segue**: This type of segue is used to present a view controller modally. The new view controller slides up from the bottom of the screen, covering the current view controller.
   3. **Custom Segue**: This type of segue is used to create a custom transition between view controllers. It allows the developer to define a custom animation or transition effect.
+  <br>
 
   Each segue has an identifier that is used to identify it in code. When a segue is triggered, the `prepare(for:sender:)` method is called on the current view controller, which allows the developer to pass data to the destination view controller before it is presented.
   </details>
@@ -3123,7 +3134,8 @@ The difficulty of the questions is classified by these colours:
 
   - `UIImage` is a class that represents an image in memory. It is often used as a source of data for a view that displays images, such as a `UIImageView`.
   - `UIImageView` is a subclass of `UIView` that is designed to display a `UIImage` on screen. It provides additional functionality for scaling, animating, and manipulating images, and is often used in conjunction with other view classes to build a user interface.
-
+  <br>
+      
   In summary, `UIImage` represents the image data, while `UIImageView` is a view that displays the image data.
   </details>
 
