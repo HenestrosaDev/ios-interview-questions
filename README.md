@@ -3292,16 +3292,12 @@ The difficulty of the questions is classified by these colours:
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 ## Authors
 
 - Questions compiled by: Paul Hudson <[hackingwithswift.com](https://www.hackingwithswift.com/)>
 - Questions answered by: HenestrosaConH <[henestrosaconh@gmail.com](henestrosaconh@gmail.com)>
 
 See also the list of [contributors](https://github.com/HenestrosaConH/ios-interview-questions/contributors) who participated in this project.
-
-<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Support
 
