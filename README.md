@@ -178,7 +178,7 @@ The difficulty of the questions is classified by these colours:
   
   In this example, the `calculateMinMax` function returns a tuple with two values: the minimum and maximum values in an array of integers. The tuple is marked as optional, in case the input array is empty.
 
-  Overall, tuples are a useful tool for organizing related data, and they can simplify code in certain situations where a custom data structure would be overkill.
+  Tuples are a useful tool for organizing related data, and they can simplify code in certain situations where a custom data structure would be overkill.
   </details>
 
 - 🟩 [What does the `Codable` protocol do?](https://www.hackingwithswift.com/interview-questions/what-does-the-codable-protocol-do)
@@ -422,7 +422,7 @@ The difficulty of the questions is classified by these colours:
   
   In this example, we have two types that conform to the `Drawable` protocol: `Circle` and `Square`. We then define a `DrawableWrapper` class that takes any object that conforms to the `Drawable` protocol and stores a closure that can draw the object in a given `CGContext`. This allows us to "erase" the concrete type of the object and treat it as a `Drawable` protocol type. We can then create `DrawableWrapper` objects for `Circle` and `Square`, and call their `draw(in:)` methods without needing to know their concrete types.
 
-  Overall, type erasure is a powerful technique in Swift that can be used to simplify the interfaces of generic types and hide their implementation details. It is particularly useful when we need to work with generic types in a context where the associated types are not known until runtime.
+  Type erasure is a powerful technique in Swift that can be used to simplify the interfaces of generic types and hide their implementation details. It is particularly useful when we need to work with generic types in a context where the associated types are not known until runtime.
   </details> 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -483,7 +483,7 @@ The difficulty of the questions is classified by these colours:
 
   For example, let's say we have a `UserManager` class that is responsible for fetching and managing user data. Instead of having the `UserManager` class create its own dependencies, such as a network client, we pass in the dependencies as parameters when we create an instance of the `UserManager`. This way, we can easily swap out different network clients without having to modify the `UserManager` code.
 
-  Overall, dependency injection helps to make our code more flexible, modular, and easier to test.
+  Dependency injection helps to make our code more flexible, modular, and easier to test.
   </details>
 
 - 🟧 [How would you explain protocol-oriented programming to a new Swift developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-protocol-oriented-programming-to-a-new-swift-developer)
@@ -613,7 +613,7 @@ The difficulty of the questions is classified by these colours:
   - **Rendering pipeline**: The rendering pipeline in SpriteKit is optimized for 2D graphics, while SceneKit's pipeline is optimized for 3D graphics. This means that SpriteKit can handle large numbers of 2D sprites with ease, while SceneKit can handle complex 3D models and scenes.
   <br>
 
-  Overall, the choice between SpriteKit and SceneKit depends on the specific needs of the project. For simple 2D games, SpriteKit is often the better choice due to its ease of use and performance. For more complex 3D games or apps, SceneKit provides a more robust set of tools for creating complex scenes and interactions.
+  The choice between SpriteKit and SceneKit depends on the specific needs of the project. For simple 2D games, SpriteKit is often the better choice due to its ease of use and performance. For more complex 3D games or apps, SceneKit provides a more robust set of tools for creating complex scenes and interactions.
   </details>
 
 - 🟩 [How much experience do you have using Core Data? Can you give examples?](https://www.hackingwithswift.com/interview-questions/how-much-experience-do-you-have-using-core-data-can-you-give-examples)
@@ -655,7 +655,7 @@ The difficulty of the questions is classified by these colours:
   - **Using a third-party library**: There are many third-party libraries available that can help us display web content in our app. For example, `Alamofire` can be used to fetch web content and display it using a native view controller or custom UI.
   <br>
 
-  Overall, the choice of which method to use depends on our specific needs and the level of control and customization we require over the appearance and behavior of the web content.
+  The choice of which method to use depends on our specific needs and the level of control and customization we require over the appearance and behavior of the web content.
   </details>
 
 - 🟩 [What class would you use to list files in a directory?](https://www.hackingwithswift.com/interview-questions/what-class-would-you-use-to-list-files-in-a-directory)
@@ -838,7 +838,7 @@ The difficulty of the questions is classified by these colours:
 
   The framework can be used to create both 2D and 3D games, and includes built-in support for popular game engines like SpriteKit and SceneKit. Additionally, GameplayKit provides support for physics simulations, which can be useful for creating realistic game mechanics.
 
-  Overall, the purpose of GameplayKit is to simplify game development by providing a range of tools and functionalities that can be used to create a wide variety of games with minimal effort.
+  All in all, the purpose of GameplayKit is to simplify game development by providing a range of tools and functionalities that can be used to create a wide variety of games with minimal effort.
   </details>
 
 - 🟧 [What is the purpose of ReplayKit?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-replaykit)
@@ -856,7 +856,7 @@ The difficulty of the questions is classified by these colours:
   - Built-in support for sharing recorded videos via social media, messaging apps, and more
   <br>
   
-  Overall, ReplayKit is a useful tool for developers who want to give their users an easy way to share their app experiences with others, or for those who want to incorporate gameplay or app demo videos into their marketing efforts.
+  In short, ReplayKit is a useful tool for developers who want to give their users an easy way to share their app experiences with others, or for those who want to incorporate gameplay or app demo videos into their marketing efforts.
   </details>
 
 - 🟧 [When might you use `NSSortDescriptor`?](https://www.hackingwithswift.com/interview-questions/when-might-you-use-nssortdescriptor)
@@ -1006,7 +1006,7 @@ The difficulty of the questions is classified by these colours:
   - App extensions and plug-ins
   <br>
 
-  Overall, the Info.plist file is a powerful tool for configuring our app and communicating its requirements and capabilities to the system.
+  In a nutshell, the Info.plist file is a powerful tool for configuring our app and communicating its requirements and capabilities to the system.
   </details>
 
 - 🟧 [What is the purpose of size classes?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-size-classes)
@@ -2739,15 +2739,13 @@ The difficulty of the questions is classified by these colours:
   One of the main benefits of using the `Environment` is that it allows we to create a consistent user interface throughout our app. For example, we might use the `.font` environment key to set a default font for all our app's text views. If the user changes the font size in the system settings, all the text in our app will automatically update to reflect the new font size.
   
   We can also use the `Environment` to create theming systems, where we define a set of colors or styles that can be applied to all the views in our app. By changing the values in the `Environment`, we can switch between different themes and instantly update the appearance of our app.
-
-  Overall, the `Environment` is a powerful tool that can simplify our app's architecture and make it easier to manage shared data and configuration settings. It's an essential concept to understand when building apps with SwiftUI.
   </details>
 
 - 🟩 [What does the `@Published` property wrapper do?](https://www.hackingwithswift.com/interview-questions/what-does-the-atpublished-property-wrapper-do)
   <details>
     <summary>Answer</summary>
   
-  The `@Published` property wrapper is a feature in Swift that is part of the Combine framework. It allows us to declare a property in a class or structure as "published", meaning that any changes to that property will automatically trigger a notification to any subscribers.
+  The `@Published` property wrapper is a feature in Swift that is part of the Combine framework used to sumplify comunication between different parts of an app. It allows us to declare a property in a class or structure as "published", meaning that any changes to that property will automatically trigger a notification to any subscribers (reactive property).
 
   Here's how it works: when we declare a property with the `@Published` wrapper, the Swift compiler automatically generates a `Publisher` object that emits a new value every time the property is updated. We can then use this publisher to create a subscription, which allows us to react to any changes to the property.
 
@@ -2776,7 +2774,7 @@ The difficulty of the questions is classified by these colours:
   
   In this example, the `sink` closure will be called every time the `count` property is updated, printing out the new value of `count`.
   
-  Overall, the `@Published` property wrapper is a convenient way to create reactive properties in our code and simplify communication between different parts of our app. It's particularly useful when combined with other features of the Combine framework, such as `ObservableObject`, to create reactive data models.
+  In addition to all this, the `@Published` property wrapper is particularly useful when combined with other features of the Combine framework, such as `ObservableObject`, to create reactive data models.
   </details>
 
 - 🟩 [What does the `@State` property wrapper do?](https://www.hackingwithswift.com/interview-questions/what-does-the-atstate-property-wrapper-do)
@@ -3012,9 +3010,6 @@ The difficulty of the questions is classified by these colours:
   - Creating a custom navigation bar with a background image that spans the entire width of the screen, including the safe area insets.
   - Creating a circular progress bar that fills up as the user completes a task, with the radius of the circle adapting to the available space.
   - Creating a responsive grid layout that adjusts the number of columns based on the screen size and orientation.
-  <br>
-  
-  Overall, `GeometryReader` is a powerful tool for creating dynamic and responsive SwiftUI layouts.
   </details>
 
 - 🟥 [Why does SwiftUI use structs for views?](https://www.hackingwithswift.com/interview-questions/why-does-swiftui-use-structs-for-views)
@@ -3027,9 +3022,6 @@ The difficulty of the questions is classified by these colours:
   2. **Predictable behavior**: Structs are immutable by default, which means that their properties cannot be changed after they are created. This makes it easier to reason about the behavior of a view, since its properties will not change unexpectedly.
   3. **Composition**: SwiftUI views can be composed of other views, and structs are well-suited for composition. When we compose views, the resulting view hierarchy is a tree of structs, which can be efficiently created and updated by SwiftUI.
   4. **Declarative syntax**: Structs lend themselves well to a declarative syntax, where we define the desired outcome of a view hierarchy, rather than specifying the imperative steps required to achieve that outcome. SwiftUI leverages this declarative syntax to simplify UI development and reduce code complexity.
-  <br>
-
-  Overall, using structs for views in SwiftUI allows for efficient, predictable, and composable UI development using a declarative syntax.
   </details>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -3110,7 +3102,7 @@ The difficulty of the questions is classified by these colours:
   - It is less performant than directly accessing a view through a property because it requires the superview to search through its subviews to find the one with the specified tag.
   <br>
 
-  Overall, it is generally recommended to avoid using `viewWithTag()` when possible and instead use properties to store references to views that need to be accessed multiple times. However, in some cases where quick access to a view is needed and the tag value is guaranteed to be unique, using `viewWithTag()` can be a convenient solution.
+  In short, it is generally recommended to avoid using `viewWithTag()` when possible and instead use properties to store references to views that need to be accessed multiple times. However, in some cases where quick access to a view is needed and the tag value is guaranteed to be unique, using `viewWithTag()` can be a convenient solution.
   </details>
 
 - 🟩 [What is the difference between `@IBOutlet` and `@IBAction`?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-atiboutlet-and-atibaction)
