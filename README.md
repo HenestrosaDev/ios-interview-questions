@@ -61,7 +61,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
   
-  This answer depends on your experience with VoiceOver, but here is an example answer:
+  The answer depends on your experience with VoiceOver. Here is how I would approach it:
  
   >I would say that I have a fair amount of experience testing with VoiceOver. It is an essential part of making sure that an iOS app is accessible to all users, including those who are visually impaired. To test with VoiceOver, the developer can enable VoiceOver on their test device and navigate through the app using only VoiceOver. This involves listening to the VoiceOver descriptions of each element on the screen and verifying that they are accurate and meaningful.
   >
@@ -98,8 +98,8 @@ The difficulty of the questions is classified by these colours:
 - 🟧 [What accommodations have you added to apps to make them more accessible?](https://www.hackingwithswift.com/interview-questions/what-accommodations-have-you-added-to-apps-to-make-them-more-accessible)
   <details>
     <summary>Answer</summary>
-  
-  This answer depends on your experience adding accommodations to make apps more accessible, but here is an example answer:
+
+  The answer depends on your experience with adding accommodations to make apps more accessible. Here is how I would approach it:
   
   >- **Implementing Dynamic Type**: This allows users to adjust the font size in the app to better suit their needs.
   >- **Providing alternative text for images**: This allows users with visual impairments to understand the content of the app.
@@ -501,7 +501,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  This answer depends on your experience with functional programming, but here is an example answer:
+  The answer depends on your experience with functional programming. Here is how I would approach it:
   
   >I would say that I have a fair amount of experience in functional programming. It is a programming paradigm that emphasizes the use of functions to solve problems. In functional programming, functions are treated as first-class citizens and can be passed as arguments to other functions, returned as values from functions, and assigned to variables or constants. Functional programming encourages the use of immutable data structures and avoids changing state and mutable state.
   >
@@ -620,7 +620,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  This answer depends on your experience with Core Data, but here is an example answer:
+  The answer depends on your experience with Core Data. Here is how I would approach it:
   
   >I would say that I have a fair amount of experience using Core Data. I have used it in the following projects:
   >
@@ -633,7 +633,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  This answer depends on your experience with Core Graphics, but here is an example answer:
+  The answer depends on your experience with Core Graphics. Here is how I would approach it:
   
   >I would say that I have a fair amount of experience using Core Data. I have used it for the following purposes:
   >
@@ -757,7 +757,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  This answer depends on your experience with Core Image, but here is an example answer:
+  The answer depends on your experience with Core Image. Here is how I would approach it:
 
   >I would say that I have a fair amount of experience using Core Image. I have used it for the following purposes: 
   >
@@ -771,8 +771,8 @@ The difficulty of the questions is classified by these colours:
     <summary>Answer</summary>
 
   iBeacons are now deprecated, so I wouldn't bother preparing this question. However, I will provide its answer for the sake of completeness.
-  
-  This answer depends on your experience with iBeacons, but here is an example answer:
+
+  The answer depends on your experience with iBeacons. Here is how I would approach it:
   
   >I haven't had much experience with it due to its low popularity. However, I once made a project to send notifications or special offers to customers who were browsing nearby products in a store.
   </details>
@@ -781,7 +781,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
   
-  This answer depends on your experience with StoreKit, but here is an example answer:
+  The answer depends on your experience with StoreKit. Here is how I would approach it:
   
   >I integrated StoreKit into two applications. One was a game that used StoreKit to allow players to purchase new levels and characters, and the other was an English learning app that allowed users to subscribe to a monthly plan that gave them access to unlimited content within the app.  
   </details>
@@ -790,7 +790,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  This answer depends on your experience with GCD, but here is an example answer:
+  The answer depends on your experience with GCD. Here is how I would approach it:
 
   >I have used GCD in multiple projects to perform time-consuming tasks in the background, such as network requests or file operations, without blocking the main thread and freezing the UI. I have used the main queue to handle UI-related tasks and global queues for general-purpose tasks  
   </details>
@@ -825,7 +825,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  This answer depends on your experience with `NSAttributedString`, but here is an example answer:
+  The answer depends on your experience with `NSAttributedString`. Here is how I would approach it:
 
   >I have used it to display stylized text in views, such as `UILabel`, `UIButton` and `UITextView`. It allows us to apply attributed to specific parts of a string, such as font, color and paragraph style. It is useful for creating headings, bullet points or highlighted text. 
   </details>
@@ -902,7 +902,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  This answer depends on how we prefer to create UI layouts. Here's what I would answer:
+  The answer depends on your preference for creating UI layouts. Here is how I would approach it:
 
   >I like to create them in code because it gives me more flexibility and control over the layout and can be useful for more complex and dynamic UIs. However, creating UI layouts in code can be more time-consuming, and you have to be tidy enough to avoid disorganized UI code that can lead to confusion with the team. Keep in mind that, if we use UIKit, there is no way to have a visual representation of what the final UI will be at runtime, so it's important to the code clean and organized.  
   </details>
@@ -1400,7 +1400,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  This answer depends on your experience with Face ID or Touch ID, but here is an example answer:
+  The answer depends on your experience with Face ID or Touch ID. Here is how I would approach it:
 
   >I have used them as an alternative way for the user to log in an application that had sensible data such as bank movements and stock positions. I have also used them in an application that stored sensible information in the keychain to which the user could access by logging in using Face ID or Touch ID.   
   </details>
@@ -1420,7 +1420,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  This answer depends on our experience with the keychain, but here is an example answer:
+  The answer depends on your experience with the keychain. Here is how I would approach it:
   
   >I have used the Keychain Services API to store and retrieve sensible data of an app, such as user passwords and API tokens. It's very convenient to use an access control mechanism along with the keychain, such as requiring a passcode or biometric authentication, to ensure that only authorized users can access the data.
   </details>
@@ -3221,7 +3221,7 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
   
-  This answer depends on our experience with UIKit, but here are a few examples:
+  The answer depends on your experience with UIKit. Here are some examples of how I would approach it:
 
   >- **Core Image**: A framework that provides image processing capabilities. It allows developers to apply a variety of filters to images and manipulate them in various ways.
   >- **UIDocumentInteractionController**: Allows users to share documents with other apps or services. It's useful for apps that need to work with documents of various types, such as PDFs or Word documents
