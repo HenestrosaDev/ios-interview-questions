@@ -137,7 +137,7 @@ The difficulty of the questions is classified by these colours:
   - **Mutability**: In general, classes are more flexible and mutable than structs. We can add and remove properties and methods from a class at runtime, while a struct's properties and methods are fixed at compile time.
   - **Initialization**: Structs have member-wise initializers automatically generated for them by default, while classes do not. This means that when we create a new instance of a struct, we can pass in all of its properties as arguments to the initializer. With classes, we need to define our own initializer(s) to achieve the same effect.
   - **Memory management**: Classes are managed by reference counting, meaning that instances are deallocated when their reference count drops to zero. Structs, on the other hand, are copied by value, and their lifetimes are determined by the scope in which they're defined.
-  <br>
+  <br />
 
   In general, we should choose classes when we need the features they provide, such as inheritance or reference types, and choose structs when we want to take advantage of their predictability, immutability, and value semantics.
   </details> 
@@ -203,7 +203,7 @@ The difficulty of the questions is classified by these colours:
   - **Order**: Arrays have a specific order, and the elements in an array are accessed using their index, whereas sets are unordered, and the elements in a set are accessed using their value.
   - **Duplicates**: Arrays can contain duplicate values, whereas sets only contain unique values.
   - **Performance**: Sets are optimized for fast membership testing, which means that they are typically faster than arrays when checking whether an element exists in the collection. However, sets are typically slower than arrays when accessing elements by index.
-  <br>
+  <br />
 
   In general, we would use an array when we need to maintain the order of our elements or when we need to allow duplicates, and we would use a set when we need to ensure that our elements are unique or when we need to quickly test for membership.
   </details>
@@ -230,7 +230,7 @@ The difficulty of the questions is classified by these colours:
   - `useDefaultKeys`: This strategy uses the property names as the keys in the JSON.
   - `convertFromSnakeCase`: This strategy converts keys in the JSON from snake_case to camelCase.
   - `custom`: This strategy allows us to define our own key mapping using a closure.
-  <br>
+  <br />
 
   Using the correct key decoding strategy is important because it ensures that our data is decoded correctly into our Swift objects, which can help prevent bugs and ensure that our app works as expected.
   </details>
@@ -270,7 +270,7 @@ The difficulty of the questions is classified by these colours:
   - **Thread safety**: Immutable objects are inherently thread-safe, as they cannot be changed by multiple threads simultaneously. This can make concurrent programming much easier and less error-prone.
   - **Clarity and simplicity**: When objects are immutable, it is clear that their state cannot change, which can make code easier to reason about and understand. Immutability can also simplify certain algorithms and data structures, such as functional programming techniques.
   - **Performance**: In some cases, immutable data structures can be more performant than mutable ones. This is because they do not need to perform additional checks and operations to ensure their state is consistent.
-  <br>
+  <br />
       
   In summary, immutability can improve code safety, clarity, performance, and simplify concurrency, and is therefore an important concept in programming.
   </details> 
@@ -322,7 +322,7 @@ The difficulty of the questions is classified by these colours:
   - To generate unique filenames or file IDs in a file system.
   - To track application usage or events in analytics.
   - To prevent collisions when generating random numbers.
-  <br>
+  <br />
 
   UUIDs are important because they provide a way to create unique identifiers that are almost guaranteed to be unique. Even when generating a large number of UUIDs, the probability of generating two identical UUIDs is very low. This makes UUIDs useful in situations where uniqueness is important, such as distributed systems, databases, and file systems.
   </details> 
@@ -453,7 +453,7 @@ The difficulty of the questions is classified by these colours:
   - **Model**: This is the data layer of the application. It contains the data and the logic for manipulating that data. In an iOS app, the model might represent the data that is stored in a database or fetched from a web service.
   - **View**: This is the presentation layer of the application. It contains the user interface elements that the user interacts with. In an iOS app, views might include things like buttons, labels, text fields, and images.
   - **Controller**: This is the glue that connects the model and the view. It handles user input and updates the model and view accordingly. In an iOS app, controllers might include things like view controllers, which manage the views in a particular section of the app.
-  <br>  
+  <br />  
 
   The goal of MVC is to separate the concerns of the model, view, and controller so that changes to one component don't affect the others. For example, if we need to update the model, we can do so without changing the view or the controller. This makes it easier to maintain and modify our code over time.
 
@@ -529,7 +529,7 @@ The difficulty of the questions is classified by these colours:
   - `NotificationCenter` - This is another singleton class provided by Apple that provides a mechanism for broadcasting messages within an application. It's important that there is only one instance of this class, as otherwise notifications could get lost.
   - `UserDefaults` - This is a singleton class provided by Apple that provides a way to store small amounts of data between application launches. It's important that there is only one instance of this class, as otherwise data could be overwritten or lost.
   - `FileManager` - This is a singleton class provided by Apple that provides a way to interact with the file system. It's important that there is only one instance of this class, as otherwise multiple instances could interfere with each other.
-  <br>  
+  <br />  
 
   In general, singletons should be used sparingly, as they can lead to tight coupling and make code harder to test. However, in certain cases where there should only be one instance of a particular object, and that object needs to be easily accessible from many parts of the codebase, a singleton can be a good solution.
   </details>
@@ -596,7 +596,7 @@ The difficulty of the questions is classified by these colours:
   - **Data syncing**: CloudKit provides automatic syncing of data between devices, while Core Data requires developers to implement their own syncing solution.
   - **Server-side processing**: CloudKit provides server-side processing of data using Cloud Functions, while Core Data does not have this capability.
   - **Scalability**: CloudKit can handle large amounts of data and multiple users, while Core Data may struggle with scaling to larger datasets.
-  <br>
+  <br />
 
   In summary, CloudKit is a cloud-based storage and syncing solution, while Core Data is a local data storage and management framework. Depending on the needs of an app, one or both of these technologies may be used.
   </details>
@@ -611,7 +611,7 @@ The difficulty of the questions is classified by these colours:
   - **Physics engine**: Both frameworks have built-in physics engines to simulate realistic movements and interactions between objects. However, SpriteKit's physics engine is more lightweight and designed for 2D games, while SceneKit's physics engine is more advanced and can handle more complex interactions in 3D environments.
   - **Animation tools**: SpriteKit provides a powerful set of tools for creating animations, including the ability to animate textures, colors, and other properties. SceneKit also has animation tools, but they are designed more for creating complex 3D animations with keyframe animation.
   - **Rendering pipeline**: The rendering pipeline in SpriteKit is optimized for 2D graphics, while SceneKit's pipeline is optimized for 3D graphics. This means that SpriteKit can handle large numbers of 2D sprites with ease, while SceneKit can handle complex 3D models and scenes.
-  <br>
+  <br />
 
   The choice between SpriteKit and SceneKit depends on the specific needs of the project. For simple 2D games, SpriteKit is often the better choice due to its ease of use and performance. For more complex 3D games or apps, SceneKit provides a more robust set of tools for creating complex scenes and interactions.
   </details>
@@ -653,7 +653,7 @@ The difficulty of the questions is classified by these colours:
   - **Using `SFSafariViewController`**: This is a built-in view controller that displays web content in Safari’s user interface. We can use this view controller to show web pages, authenticate users with web-based services, and enable features such as Reader mode, content blockers, and more. This is an easy and secure way to display web content without worrying about implementing navigation or security features.
   - **Using `UIWebView`**: This is an older iOS class that is now deprecated and replaced by WKWebView. However, if we need to support older versions of iOS, we can still use `UIWebView` to display web content. The process is similar to using `WKWebView`, but the behavior and features of the web view may be different.
   - **Using a third-party library**: There are many third-party libraries available that can help us display web content in our app. For example, `Alamofire` can be used to fetch web content and display it using a native view controller or custom UI.
-  <br>
+  <br />
 
   The choice of which method to use depends on our specific needs and the level of control and customization we require over the appearance and behavior of the web content.
   </details>
@@ -688,7 +688,7 @@ The difficulty of the questions is classified by these colours:
   - We need to persist data across app launches.
   - We need to share data between different parts of our app.
   - We need to store data that is specific to the user, such as user preferences or settings.
-  <br>
+  <br />
 
   `UserDefaults` is not a good choice for:
 
@@ -696,7 +696,7 @@ The difficulty of the questions is classified by these colours:
   - Sensitive data that requires encryption or secure storage.
   - Complex data modeling or relationships.
   - High-performance requirements.
-  <br>
+  <br />
 
   In general, `UserDefaults` is best suited for small, simple, and non-sensitive data that needs to be persisted across app launches and accessed easily from different parts of the app. If we need to store more complex data, we may need to consider using other storage solutions such as Core Data or a third-party database.
   </details>
@@ -728,7 +728,7 @@ The difficulty of the questions is classified by these colours:
   - **Handle the response**: Once the request is sent, we'll get a response in the form of an HTTP status code, headers, and possibly a body containing the response data. We can handle this response by implementing the completion handler provided by the data task.
   - **Parse the response**: Depending on the format of the response data, we may need to parse it into a usable format, such as JSON or XML. We can use libraries like `JSONSerialization` or third-party libraries like `Alamofire` to help with this.
   - **Handle errors**: Network requests can fail for a variety of reasons, such as a poor internet connection or a server error. We should handle these errors gracefully by displaying appropriate error messages to the user and providing options for retrying the request or canceling it altogether.
-  <br>
+  <br />
   
   These are the basic steps to make a network request in an iOS app, but the specifics may vary depending on our app's requirements and the API we're interacting with.
   </details>
@@ -854,7 +854,7 @@ The difficulty of the questions is classified by these colours:
   - Support for recording both audio and video
   - Support for live broadcasting to popular streaming platforms
   - Built-in support for sharing recorded videos via social media, messaging apps, and more
-  <br>
+  <br />
   
   In short, ReplayKit is a useful tool for developers who want to give their users an easy way to share their app experiences with others, or for those who want to incorporate gameplay or app demo videos into their marketing efforts.
   </details>
@@ -959,7 +959,7 @@ The difficulty of the questions is classified by these colours:
   - **Preview canvas**: With SwiftUI, we can see a live preview of our UI as we create it. This helps us to quickly iterate on our design and catch any issues before compiling and running the app.
   - **Cross-platform development**: SwiftUI can be used to build user interfaces for multiple platforms, including iOS, macOS, watchOS, and tvOS, with a single codebase. This can save time and reduce development costs for applications that need to be deployed on multiple platforms.
   - **Accessibility**: SwiftUI includes accessibility features such as VoiceOver and dynamic type, which makes it easier to build apps that are accessible to everyone.
-  <br>
+  <br />
 
   Disadvantages of SwiftUI compared to UIKit:
 
@@ -1004,7 +1004,7 @@ The difficulty of the questions is classified by these colours:
   - App transport security settings
   - Supported audio and video formats
   - App extensions and plug-ins
-  <br>
+  <br />
 
   In a nutshell, the Info.plist file is a powerful tool for configuring our app and communicating its requirements and capabilities to the system.
   </details>
@@ -1179,7 +1179,7 @@ The difficulty of the questions is classified by these colours:
   - **Performance**: Objective-C is less performant than Swift because it has a dynamic message resolution mechanism. That is, for every function call you do, Objective-C will look into a resolution table an it will decide on runtime where to send the message. Both Swift and Objective-C use ARC, so memory management is basically equivalent for both, except that Objective-C passes everything by reference, which may be slightly faster but very error prone. In contrast, Swift passes everything that is not a class by copy, except for data containers that uses the COW strategy. That is, Copy On Write, where instances are only copied when they are locally modified. That makes Swift safer and more performant than Objective-C.
   - **Safety**: Swift is designed to be a safer language than Objective-C. It has features like optional types and safe memory management that help prevent common programming errors.
   - **Interoperability**: Objective-C and Swift are interoperable, which means that we can use them together in the same project. This is particularly useful when we're migrating an existing Objective-C codebase to Swift.
-  <br>
+  <br />
   
   Swift is a more modern and powerful language than Objective-C, and is increasingly becoming the language of choice for iOS and macOS development. However, Objective-C is still widely used and is a valuable skill to have as an iOS developer.
   </details>
@@ -1640,7 +1640,7 @@ The difficulty of the questions is classified by these colours:
     
     - `willSet`: The `willSet` observer gets called just before the value of the property is about to be set. It receives the new value as a parameter, which we can use to perform some action before the value is set.
     - `didSet`: The `didSet` observer gets called immediately after the value of the property has been set. It receives the old value as a parameter, which we can use to perform some action after the value has been set.
-    <br>
+    <br />
 
     Here is an example:
 
@@ -1951,7 +1951,7 @@ The difficulty of the questions is classified by these colours:
   1. `try`: This is used when we want to execute a throwing function or method and handle the errors that can be thrown using a `do-catch` block. The `try` keyword is placed before the function or method call that can throw an error.
   2. `try?`: This is used when we want to call a throwing function or method and convert any error that is thrown into an optional value. If the function or method call returns a value, it will be wrapped in an optional. If an error is thrown, the result will be `nil`.
   3. `try!`: This is used when we are absolutely certain that the function or method call will not throw an error, and we want to force the result to be unwrapped. If an error is thrown, our program will crash with a runtime error.
-  <br>
+  <br />
 
   In general, it is recommended to use `try` and handle errors using a `do-catch` block whenever possible, as this provides better error handling and makes our code more robust. `try?` and `try!` should be used sparingly, and only when we are sure that the function or method call will never fail.
   </details>
@@ -2009,7 +2009,7 @@ The difficulty of the questions is classified by these colours:
   
   - `String?` is an optional that may contain a `String` value or `nil`. To access the value, we need to use optional binding (e.g. `if let str = optionalString { ... }`) or force unwrap the optional (e.g. `let str = optionalString!`). Using `!` to force unwrap an optional that is `nil` will result in a runtime error.
   - `String!` is an implicitly unwrapped optional. It is an optional that is automatically unwrapped when it is accessed. This means we can use it like a non-optional value (e.g. `let strLength = optionalString.count`), but if the optional is `nil` and we try to access it, a runtime error will occur.
-  <br>
+  <br />
   
   Implicitly unwrapped optionals are useful when we have a value that is guaranteed to be set before it is accessed, but still need to be represented as an optional due to the initialization process. They are commonly used in situations where a value is set up in `init`, but is not available during the initialization phase. However, they should be used with caution as they can lead to runtime errors if the optional is unexpectedly `nil`. In general, it is safer to use regular optionals and unwrap them explicitly.
   </details>
@@ -2290,7 +2290,7 @@ The difficulty of the questions is classified by these colours:
   - `weak` creates an **optional** reference, while `unowned` creates a **non-optional** reference. This means that a `weak` reference can be `nil`, while an `unowned` reference can **never** be `nil`.
   - `weak` references must be declared as optional types using the question mark (`?`), while `unowned` references are declared as non-optional types using the exclamation mark (`!`).
   - `weak` references are automatically set to `nil` when the referenced object is deallocated, while `unowned` references can cause a runtime error if they are accessed after the referenced object has been deallocated.
-  <br>
+  <br />
   
   Here is an example of how to use `weak` and `unowned` references:
 
@@ -2634,7 +2634,7 @@ The difficulty of the questions is classified by these colours:
   - `macCatalyst`: Evaluates to true when the code is being compiled for a Mac Catalyst app, which is an iOS app that has been adapted to run on macOS.
   - `os`: Evaluates to true when the code is being compiled for a specific operating system, such as `os(macOS)` or `os(iOS)`.
   - `arch`: Evaluates to true when the code is being compiled for a specific processor architecture, such as `arch(x86_64)` or `arch(arm64)`.
-  <br>
+  <br />
   
   Here is an example of how to use the `targetEnvironment()` condition in Swift:
 
@@ -3003,7 +3003,7 @@ The difficulty of the questions is classified by these colours:
   1. Positioning child views relative to the parent view: By using the `GeometryReader` to get the size and position of the parent view, we can position child views within it using relative coordinates.
   2. Creating responsive layouts: By using the `GeometryReader` to get the size of the parent view, we can adjust the layout of child views to fit different screen sizes and orientations.
   3. Creating custom drawing: By using the `GeometryReader` to get the size of the parent view, we can create custom drawings that adapt to the size and position of the view.
-  <br>
+  <br />
 
   Some specific examples of when to use `GeometryReader` include:
 
@@ -3044,7 +3044,7 @@ The difficulty of the questions is classified by these colours:
   2. **Navigation**: Storyboards can be used to create the entire flow of an application's user interface, including navigation between different views, while XIBs are typically used to build specific views that are reused in multiple parts of an app.
   3. **Collaboration**: Since XIBs contain individual views, they can be more easily shared between developers, while storyboards are more complex and can be harder to manage in a team environment.
   4. **Flexibility**: XIBs provide more flexibility in terms of customizing individual views, while storyboards make it easier to manage the overall flow of an application's user interface.
-  <br>
+  <br />
 
   In summary, XIBs are used to build individual views or UI elements that can be reused in different parts of an app, while storyboards are used to design the overall flow of an app's user interface.
   </details>
@@ -3060,7 +3060,7 @@ The difficulty of the questions is classified by these colours:
   1. **Show Segue**: This type of segue is used to push a new view controller onto the navigation stack. The new view controller slides in from the right, and the current view controller slides out to the left.
   2. **Modally Present Segue**: This type of segue is used to present a view controller modally. The new view controller slides up from the bottom of the screen, covering the current view controller.
   3. **Custom Segue**: This type of segue is used to create a custom transition between view controllers. It allows the developer to define a custom animation or transition effect.
-  <br>
+  <br />
 
   Each segue has an identifier that is used to identify it in code. When a segue is triggered, the `prepare(for:sender:)` method is called on the current view controller, which allows the developer to pass data to the destination view controller before it is presented.
   </details>
@@ -3094,13 +3094,13 @@ The difficulty of the questions is classified by these colours:
   Pros: 
   - It is a quick and easy way to access a view from its superview without having to store a reference to it in a property.
   - It can be useful when dealing with dynamically generated views or when working with views that are not directly accessible in code (e.g. in a table view cell or collection view cell).
-  <br>  
+  <br />  
 
   Cons:
   - It can lead to code that is hard to read and maintain because the tag value is not easily discoverable in code.
   - It can be error-prone if multiple views have the same tag value or if the tag value is not unique.
   - It is less performant than directly accessing a view through a property because it requires the superview to search through its subviews to find the one with the specified tag.
-  <br>
+  <br />
 
   In short, it is generally recommended to avoid using `viewWithTag()` when possible and instead use properties to store references to views that need to be accessed multiple times. However, in some cases where quick access to a view is needed and the tag value is guaranteed to be unique, using `viewWithTag()` can be a convenient solution.
   </details>
@@ -3126,7 +3126,7 @@ The difficulty of the questions is classified by these colours:
 
   - `UIImage` is a class that represents an image in memory. It is often used as a source of data for a view that displays images, such as a `UIImageView`.
   - `UIImageView` is a subclass of `UIView` that is designed to display a `UIImage` on screen. It provides additional functionality for scaling, animating, and manipulating images, and is often used in conjunction with other view classes to build a user interface.
-  <br>
+  <br />
       
   In summary, `UIImage` represents the image data, while `UIImageView` is a view that displays the image data.
   </details>
@@ -3212,7 +3212,7 @@ The difficulty of the questions is classified by these colours:
   - **Heterogeneous data types**: Collection views are better suited for displaying different types of content, such as images, videos, and text, in the same view. Each cell in a collection view can be customized to display a different type of content, whereas in a table view, each row typically displays the same type of content.
   - **Interactivity**: Collection views provide more options for interactivity than table views. For example, we can implement drag-and-drop functionality, or add animations and gestures to individual cells.
   - **Horizontal scrolling**: Collection views are designed to handle both vertical and horizontal scrolling, whereas table views are typically used for vertical scrolling only.
-  <br>
+  <br />
   
   Overall, a collection view provides more customization options than a table view, making it a good choice when we need a high degree of control over the appearance and behavior of our collection of data.
   </details>
