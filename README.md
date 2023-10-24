@@ -46,6 +46,8 @@
 
 ## Before You Start
 
+I've made a blog post with all the contents of this file on [my website](https://henestrosaconh.com/blog/151-ios-interview-questions/).
+
 Questions taken from [hackingwithswift.com](https://www.hackingwithswift.com/interview-questions) and answered by me with the help of [Swift Book](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/), [Hacking with Swift](https://www.hackingwithswift.com/), [StackOverflow](https://www.stackoverflow.com/) and [ChatGPT](https://chat.openai.com/).
 
 The difficulty of the questions is classified by these colours:
