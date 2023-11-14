@@ -1,6 +1,7 @@
 <div id="top"></div>
 
 <div align="center">
+    <img src="banner.png" alt="Logo" width="260" height="128">
     <h1 align="center">iOS Interview Questions</h1>
     <p align="center">A compilation of 151 commonly asked <a href="https://www.hackingwithswift.com/interview-questions" target="_blank">interview questions</a> for iOS developers with their respective answer.</p>
     <p>
