@@ -5,24 +5,24 @@
     <h1 align="center">iOS Interview Questions</h1>
     <p align="center">A compilation of 151 commonly asked <a href="https://www.hackingwithswift.com/interview-questions" target="_blank">interview questions</a> for iOS developers with their respective answer.</p>
     <p>
-        <a href="https://github.com/HenestrosaConH/ios-interview-questions/stargazers">
-          <img alt="GitHub Contributors" src="https://img.shields.io/github/stars/HenestrosaConH/ios-interview-questions" />
+        <a href="https://github.com/HenestrosaDev/ios-interview-questions/stargazers">
+          <img alt="GitHub Contributors" src="https://img.shields.io/github/stars/HenestrosaDev/ios-interview-questions" />
         </a>
-        <a href="https://github.com/HenestrosaConH/ios-interview-questions/graphs/contributors">
-          <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/HenestrosaConH/ios-interview-questions" />
+        <a href="https://github.com/HenestrosaDev/ios-interview-questions/graphs/contributors">
+          <img alt="GitHub Contributors" src="https://img.shields.io/github/contributors/HenestrosaDev/ios-interview-questions" />
         </a>
-        <a href="https://github.com/HenestrosaConH/ios-interview-questions/issues">
-          <img alt="Issues" src="https://img.shields.io/github/issues/HenestrosaConH/ios-interview-questions" />
+        <a href="https://github.com/HenestrosaDev/ios-interview-questions/issues">
+          <img alt="Issues" src="https://img.shields.io/github/issues/HenestrosaDev/ios-interview-questions" />
         </a>
-        <a href="https://github.com/HenestrosaConH/ios-interview-questions/pulls">
-          <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/HenestrosaConH/ios-interview-questions" />
+        <a href="https://github.com/HenestrosaDev/ios-interview-questions/pulls">
+          <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/HenestrosaDev/ios-interview-questions" />
         </a>
-        <a href="https://github.com/HenestrosaConH/ios-interview-questions/blob/main/LICENSE">
-          <img alt="GitHub pull requests" src="https://img.shields.io/github/license/HenestrosaConH/ios-interview-questions" />
+        <a href="https://github.com/HenestrosaDev/ios-interview-questions/blob/main/LICENSE">
+          <img alt="GitHub pull requests" src="https://img.shields.io/github/license/HenestrosaDev/ios-interview-questions" />
         </a>
     </p>
     <p>
-        <a href="https://github.com/HenestrosaConH/ios-interview-questions/issues/new/choose">Report Issue</a> · <a href="https://github.com/HenestrosaConH/ios-interview-questions/discussions">Ask Question</a>
+        <a href="https://github.com/HenestrosaDev/ios-interview-questions/issues/new/choose">Report Issue</a> · <a href="https://github.com/HenestrosaDev/ios-interview-questions/discussions">Ask Question</a>
     </p>
 </div> 
 
@@ -3298,9 +3298,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Authors
 
 - Questions compiled by: Paul Hudson <[hackingwithswift.com](https://www.hackingwithswift.com/)>
-- Questions answered by: HenestrosaConH <[henestrosaconh@gmail.com](henestrosaconh@gmail.com)>
+- Questions answered by: HenestrosaDev <[henestrosadev@gmail.com](henestrosadev@gmail.com)>
 
-See also the list of [contributors](https://github.com/HenestrosaConH/ios-interview-questions/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/HenestrosaDev/ios-interview-questions/contributors) who participated in this project.
 
 ## Support
 
