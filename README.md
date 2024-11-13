@@ -526,15 +526,15 @@ The difficulty of the questions is classified by these colours:
   <details>
     <summary>Answer</summary>
 
-  Singletons are commonly used in situations where there should only be a single instance of a particular object in the application, and that instance needs to be easily accessible from multiple parts of the codebase. Here are a few examples of where singletons might be a good idea:
+    Singletons are commonly used in situations where there should only be a single instance of a particular object in the application, and that instance needs to be easily accessible from multiple parts of the codebase. Here are a few examples of where singletons might be a good idea:
 
-  - `UIApplication` - This is a singleton class provided by Apple that represents the entire application. There should only ever be one instance of this class in an application, and it needs to be accessible from many different parts of the codebase.
-  - `NotificationCenter` - This is another singleton class provided by Apple that provides a mechanism for broadcasting messages within an application. It's important that there is only one instance of this class, as otherwise notifications could get lost.
-  - `UserDefaults` - This is a singleton class provided by Apple that provides a way to store small amounts of data between application launches. It's important that there is only one instance of this class, as otherwise data could be overwritten or lost.
-  - `FileManager` - This is a singleton class provided by Apple that provides a way to interact with the file system. It's important that there is only one instance of this class, as otherwise multiple instances could interfere with each other.
+    - **Network managers**: Managing network calls and handling sessions, which benefit from a single instance to avoid multiple network configurations and duplicated state.
+    - **Database connections**: Creating a single connection to a database ensures efficient resource management and avoids conflicts or duplicated data handling.
+    - **Logging**: A singleton logging service can track events and errors across the app from a central point.
+    - **Analytics managers**: When collecting and sending analytics data, having a single instance to manage this flow ensures consistency and reduces potential duplicate entries.
   <br />  
 
-  In general, singletons should be used sparingly, as they can lead to tight coupling and make code harder to test. However, in certain cases where there should only be one instance of a particular object, and that object needs to be easily accessible from many parts of the codebase, a singleton can be a good solution.
+  They should be used sparingly, as they can lead to tight coupling and make code harder to test.
   </details>
 
 - 🟥 [What are phantom types and when would you use them?](https://www.hackingwithswift.com/interview-questions/what-are-phantom-types-and-when-would-you-use-them)
