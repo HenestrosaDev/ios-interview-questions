@@ -208,7 +208,9 @@ The difficulty of the questions is classified by these colours:
   - **Performance**: Sets are optimized for fast membership testing, which means that they are typically faster than arrays when checking whether an element exists in the collection. However, sets are typically slower than arrays when accessing elements by index.
   <br />
 
-  In general, we would use an array when we need to maintain the order of our elements or when we need to allow duplicates, and we would use a set when we need to ensure that our elements are unique or when we need to quickly test for membership.
+  We can convert an array to a set and vice versa. However, when we convert an array to a set, we have to keep in mind that we lose both the order of the elements and the duplicate elements. Also, if we want to store custom data types in a set, we need to make sure that it conforms to the `Hashable` protocol, which ensures a consistent way of generating hash values and checking for equality, so that duplicate objects aren't accidentally added.
+
+  To summarize, we would use an array when we need to maintain the order of our elements or when we need to allow duplicates, and we would use a set when we need to ensure that our elements are unique or when we need to quickly test for membership.
   </details>
 
 - 🟩 [What is the difference between the `Float`, `Double`, and `CGFloat` data types?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-the-float-double-and-cgfloat-data-types)
