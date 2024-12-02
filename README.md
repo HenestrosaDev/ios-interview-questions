@@ -841,7 +841,7 @@
 
 	The answer depends on your experience with `NSAttributedString`. Here is how I would approach it:
 
-	>I have used it to display stylized text in views, such as `UILabel`, `UIButton` and `UITextView`. It allows us to apply attributed to specific parts of a string, such as font, color and paragraph style. It is useful for creating headings, bullet points or highlighted text. 
+	>I have used it to display stylized text in views, such as `UILabel`, `UIButton` and `UITextView`. It allows us to apply attributes to specific parts of a string, such as font, color and paragraph style. It is useful for creating headings, bullet points or highlighted text. 
 	</details>
 
 - 🟧 [What is the purpose of GameplayKit?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-gameplaykit)
