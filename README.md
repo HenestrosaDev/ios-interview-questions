@@ -1430,11 +1430,30 @@
 	<details>
 		<summary>Answer</summary>
 
-	App Transport Security (ATS) is a security feature that was introduced in iOS 9 and later versions of iOS. ATS enforces best practices in the secure connections between an app and its back-end server. This means that the app must use HTTPS instead of HTTP to communicate with its server.
+	App Transport Security (ATS) is a security feature that was introduced in iOS 9 and later versions of iOS. It is enabled by default in all apps, and it blocks any non-secure (HTTP) connections by default to ensure that your app only communicates with servers using secure HTTPS connections, which encrypts the data sent.
 
-	ATS is enabled by default in all apps, and it blocks any non-secure (HTTP) connections by default. This improves the security of the app and protects user data. To enable a connection that is not compliant with ATS, we must configure our app's Info.plist file to include an exception for that connection.
+	To enable a connection that is not compliant with ATS, we must configure our app's `Info.plist` file to include an exception for that domain, such as the following:
 
-	In essence, ATS is a feature that enhances the security of the connection between the app and its back-end server by enforcing secure connections using HTTPS.
+	```xml
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key> 
+		<false/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>example.com</key> <!--Include your domain at this line -->
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+			</dict>
+		</dict>
+	</dict>
+ 	```
+ 	>Code taken from [this Stackoverflow post](https://stackoverflow.com/a/32560433/15675885).
 	</details>
 
 - 🟩 [What experience do you have of using the keychain?](https://www.hackingwithswift.com/interview-questions/what-experience-do-you-have-of-using-the-keychain)
