@@ -601,16 +601,17 @@
 	<details>
 		<summary>Answer</summary>
 
-	CloudKit and Core Data are two different technologies used in iOS app development. CloudKit is a cloud-based solution provided by Apple that allows developers to store data and files in iCloud and share that data between devices. Core Data, on the other hand, is a framework that allows developers to manage the data model layer of an app, including storing and retrieving data from a persistent store.
+	CloudKit is a cloud-based solution provided by Apple that allows developers to store data and files in iCloud and share that data between devices. Core Data, on the other hand, is a framework that allows developers to manage the data model layer of an app, including storing and retrieving data from a persistent store.
 
 	Some key differences between CloudKit and Core Data are:
 
-	- **Data storage**: CloudKit stores data in the cloud, while Core Data stores data locally on a device.
-	- **Data syncing**: CloudKit provides automatic syncing of data between devices, while Core Data requires developers to implement their own syncing solution.
+	- **Internet connection**: CloudKit requires an Internet connection to send data to the cloud, whereas Core Data doesn't because it stores the data locally on the device.
+ 	- **Apple Developer Account**: CloudKit requires an Apple Developer Account, whereas Core Data doesn't.
+	- **Data syncing**: CloudKit provides automatic syncing of data between devices, while Core Data requires developers to implement their own syncing solution. It's worth noting that Core Data can be combined with CloudKit to enable syncing using `NSPersistentCloudKitContainer`.
 	- **Server-side processing**: CloudKit provides server-side processing of data using Cloud Functions, while Core Data does not have this capability.
-	- **Scalability**: CloudKit can handle large amounts of data and multiple users, while Core Data may struggle with scaling to larger datasets.
+ 	- **Use cases**: CloudKit is better suited for apps that require real-time syncing and multi-user collaboration, such as shared notes, while Core Data is more appropriate for apps with complex data relationships that support caching, such as task trackers.
 	<br />
-
+	
 	In summary, CloudKit is a cloud-based storage and syncing solution, while Core Data is a local data storage and management framework. Depending on the needs of an app, one or both of these technologies may be used.
 	</details>
 
