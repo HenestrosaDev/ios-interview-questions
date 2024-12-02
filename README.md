@@ -2793,36 +2793,41 @@
 	<details>
 		<summary>Answer</summary>
 	
-	The `@Published` property wrapper is a feature in Swift that is part of the Combine framework used to sumplify comunication between different parts of an app. It allows us to declare a property in a class or structure as "published", meaning that any changes to that property will automatically trigger a notification to any subscribers (reactive property).
+	The `@Published` property wrapper in Swift is used in conjunction with the Combine framework to enable automatic publishing of changes to a property. It is most commonly used in `ObservableObject` classes to notify SwiftUI views or other subscribers about changes in the property value.
 
-	Here's how it works: when we declare a property with the `@Published` wrapper, the Swift compiler automatically generates a `Publisher` object that emits a new value every time the property is updated. We can then use this publisher to create a subscription, which allows us to react to any changes to the property.
+	Marking a property with `@Published` automatically creates a publisher for that property. This publisher will emit a new value whenever the value of the property changes, which will also trigger the `objectWillChange` publisher of the `ObservableObject` that SwiftUI observes to ensure the UI updates seamlessly. This eliminates the need to manually send updates or notifications when the value of the property changes, as Combine handles it automatically.
 
-	For example, consider the following class:
+	Here is an example:
 
 	```swift
+	import SwiftUI
 	import Combine
-
-	class ViewModel {
-		@Published var count = 0
+	
+	class Counter: ObservableObject {
+		@Published var count: Int = 0
+	}
+	
+	struct ContentView: View {
+		@StateObject private var counter = Counter()
+	
+		var body: some View {
+			VStack {
+				Text("Count: \(counter.count)")
+				Button("Increment") {
+					counter.count += 1
+				}
+			}
+		}
 	}
 	```
 	
-	In this case, the `ViewModel` class has a `count` property that is marked as `@Published`. Any changes to `count` will automatically trigger a notification to any subscribers. To subscribe to these notifications, we can create a `sink` using the `count` publisher:
-
-	```swift
-	let viewModel = ViewModel()
-
-	let cancellable = viewModel.$count.sink { newValue in
-		print("Count is now \(newValue)")
-	}
-
-	viewModel.count = 1 // Output: "Count is now 1"
-	viewModel.count = 2 // Output: "Count is now 2"
-	```
+	- `@Published var count: Int`: Marks the `count` property as a publisher. Any changes to `count` will notify subscribers.
+ 	- `@StateObject`: Used in SwiftUI to create and observe the `Counter` instance. SwiftUI listens to changes in the `objectWillChange` publisher and updates the UI automatically.
 	
-	In this example, the `sink` closure will be called every time the `count` property is updated, printing out the new value of `count`.
-	
-	In addition to all this, the `@Published` property wrapper is particularly useful when combined with other features of the Combine framework, such as `ObservableObject`, to create reactive data models.
+	Common pitfalls:
+	- **Not for structs or enums**: `@Published` works only in classes because it relies on reference semantics and the `ObservableObject` protocol.
+ 	- **Default behavior**: If you don't observe an `ObservableObject` instance properly in SwiftUI (e.g., by using `@StateObject` or `@ObservedObject`), the UI won't react to changes in `@Published` properties.
+  	- **Non-thread-safe**: Modifying `@Published` properties from non-main threads without ensuring thread safety can lead to unexpected behavior in the UI.
 	</details>
 
 - 🟩 [What does the `@State` property wrapper do?](https://www.hackingwithswift.com/interview-questions/what-does-the-atstate-property-wrapper-do)
