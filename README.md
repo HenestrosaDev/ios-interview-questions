@@ -752,20 +752,37 @@
 	<details>
 		<summary>Answer</summary>
 
-	`CGAffineTransform` is a struct that represents a two-dimensional affine transformation used in Core Graphics. It is often used for transforming views, images, and graphics in iOS and macOS applications.
+	`CGAffineTransform` is a struct representing a two-dimensional affine transformation used in Core Graphics on Apple platforms such as iOS and macOS. It's used to perform graphical transformations such as rotating, scaling, translating, shearing, or combining multiple transformations into a single transformation on a view, image, or graphic.
 
-	We would use `CGAffineTransform` when we want to transform a view, image, or graphic in some way, such as rotating it, scaling it, or translating it. The `CGAffineTransform` struct provides a way to perform these transformations in a simple and efficient manner.
+	>An **affine transformation** preserves lines and parallelism. For example, a square might turn into a rectangle or parallelogram, but lines within the shape will remain straight, and parallel lines will stay parallel.
 
-	For example, we might use `CGAffineTransform` to rotate a view by 45 degrees like this:
+	Here is an example in UIKit that uses all of the above transformations:
 
 	```swift
-	let rotationAngle = CGFloat.pi / 4.0
-	view.transform = CGAffineTransform(rotationAngle: rotationAngle)
+	let sqView = UIView(frame: CGRect(x: 100, y: 200, width: 100, height: 100))
+	sqView.backgroundColor = .blue
+	view.addSubview(sqView)
+ 
+	sqView.transform = CGAffineTransform(rotationAngle: .pi / 4)			// rotation (in radians)
+ 	sqView.transform = CGAffineTransform(scaleX: 1.5, y: 1.5) 			// scaling (resizes the view)
+ 	sqView.transform = CGAffineTransform(translationX: 50, y: 100)			// translation (moves the view to a new position)
+ 	sqView.transform = CGAffineTransform(a: 1, b: 0, c: 0.5, d: 1, tx: 0, ty: 0)	// shearing (skews the view)
+ 	sqView.transform = CGAffineTransform(translationX: 50, y: 100)			// combining transformations
+ 				.scaledBy(x: 2.0, y: 2.0)
+ 				.rotated(by: .pi / 4)
 	```
-	
-	This code creates a `CGAffineTransform` that represents a rotation by 45 degrees and sets the `transform` property of the `view` to that transform, causing the view to rotate by 45 degrees.
 
-	Other use cases for `CGAffineTransform` might include scaling a view, translating a view, or combining multiple transformations into a single transform.
+ 	To use `CGAffineTransform` in SwiftUI, we need to use the `transformEffect` modifier. However, there are other modifiers to apply specific transformations without the need to use `CGAffineTransform`, such as `rotationEffect` or `scaleEffect`:
+  
+  	```swift
+ 	Rectangle()
+		.fill(Color.blue)
+		.frame(width: 100, height: 100)
+		.transformEffect(CGAffineTransform(translationX: 50, y: 100))  // same visual translation as `.offset(x: 50, y: 100)`
+		.rotationEffect(.degrees(45))
+		.scaleEffect(CGSize(width: 1.5, height: 2))
+		.overlay(Text("Transformed").foregroundColor(.white))
+	```
 	</details>
 
 - 🟧 [How much experience do you have using Core Image? Can you give examples?](https://www.hackingwithswift.com/interview-questions/how-much-experience-do-you-have-using-core-image-can-you-give-examples)
