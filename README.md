@@ -591,6 +591,8 @@
 	In this example, we define two phantom types `Username` and `Password`, which are essentially just wrappers around `String`. We use these phantom types to create a `User` struct, which takes two generic type parameters `U` and `P` that represent the phantom types for the username and password, respectively.
 
 	By using phantom types in this way, we can ensure that only valid strings are used to create a user. Attempting to create a user with an invalid password (in this case, an integer) will result in a compiler error.
+
+	For more information, see this [Hacking with Swift](https://www.hackingwithswift.com/plus/advanced-swift/how-to-use-phantom-types-in-swift) post.
 	</details>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
