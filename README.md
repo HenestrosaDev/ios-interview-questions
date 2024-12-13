@@ -182,11 +182,11 @@
 	<details>
 		<summary>Answer</summary>
 
-	The `Codable` protocol is used in Swift to encode and decode data to and from a specific format, such as JSON or property list (plist). It is a type alias that combines the `Encodable` and `Decodable` protocols.
+	The `Codable` protocol is is a type-safe way to encode and decode data to and from different formats, such as JSON or property list (plist). It is a type alias that combines the `Encodable` and `Decodable` protocols.
 
-	By adopting the `Codable` protocol, a Swift type can be encoded to a binary or textual format that can be sent over a network or saved to disk, and then decoded back into a Swift object. This makes it easy to work with data from external sources such as web APIs, databases, and file systems.
+	By conforming to the `Codable` protocol, a Swift type can be encoded to a binary or textual format that can be sent over a network or saved to disk, and then decoded back into a Swift object. This makes it easy to work with data from external sources such as web APIs, databases, and file systems.
 
-	The `Codable` protocol provides a convenient and type-safe way to work with data. It eliminates the need to write custom serialization and deserialization code, which can be time-consuming and error-prone. Instead, the Swift compiler can automatically generate the necessary code based on the structure of the type being encoded or decoded.
+	This protocol also eliminates the need to write custom serialization and deserialization code, although it's still an option if needed. Such tasks can be time-consuming and error-prone. Instead, the Swift compiler automatically generates the necessary code based on the structure of the type being encoded or decoded.
 	</details>
 
 - 🟩 [What is the difference between an array and a set?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-an-array-and-a-set)
