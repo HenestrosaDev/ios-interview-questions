@@ -123,8 +123,6 @@
 	In an array, each element is accessed by its index, which is an integer starting from zero. The order of the elements in the array is determined by their position in the array.
 
 	In a dictionary, each value is associated with a unique key, which can be of any hashable type, such as a string or an integer. Keys are used to look up values in the dictionary, rather than indices. Unlike arrays, the order of the elements in a dictionary is not guaranteed.
-
-	In summary, arrays are used when we have a collection of elements that we want to access in a specific order using an index, while dictionaries are used when we want to associate values with keys and look them up by those keys, without relying on any specific order of the elements.
 	</details> 
 
 - 🟩 [What are the main differences between classes and structs in Swift?](https://www.hackingwithswift.com/interview-questions/what-are-the-main-differences-between-classes-and-structs-in-swift)
