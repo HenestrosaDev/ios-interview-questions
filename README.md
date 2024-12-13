@@ -216,11 +216,11 @@
 	On the other hand, `CGFloat` is a type alias defined by Apple that can represent floating-point values with the same precision as the platform's native `Float` or `Double` type. `CGFloat` is often used in Core Graphics and UIKit frameworks for graphics-related calculations and drawing operations.
 	</details>
 
-- 🟩 [What’s the importance of key decoding strategies when using `Codable`?](https://www.hackingwithswift.com/interview-questions/whats-the-importance-of-key-decoding-strategies-when-using-codable)
+- 🟩 [What's the importance of key decoding strategies when using `Codable`?](https://www.hackingwithswift.com/interview-questions/whats-the-importance-of-key-decoding-strategies-when-using-codable)
 	<details>
 		<summary>Answer</summary>
 
-	Key decoding strategies are important when using `Codable` because they allow us to map the keys of our JSON (or other data formats) to the Swift properties of our structs or classes. This is important because the keys of our JSON may not match the property names we want to use in our Swift code, or they may be in a different format.
+	They are essential because they allow us to map the keys of our JSON (or other data formats) to the Swift properties of our structs or classes. This is crucial because the keys of our JSON may not match the property names we want to use in our Swift code.
 
 	There are several key decoding strategies available in Swift, including:
 
