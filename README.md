@@ -232,15 +232,11 @@
 	Using the correct key decoding strategy is important because it ensures that our data is decoded correctly into our Swift objects, which can help prevent bugs and ensure that our app works as expected.
 	</details>
 
-- 🟩 [When using arrays, what’s the difference between `map()` and `compactMap()`?](https://www.hackingwithswift.com/interview-questions/when-using-arrays-whats-the-difference-between-map-and-compactmap)
+- 🟩 [When using arrays, what's the difference between `map()` and `compactMap()`?](https://www.hackingwithswift.com/interview-questions/when-using-arrays-whats-the-difference-between-map-and-compactmap)
 	<details>
 		<summary>Answer</summary>
 
-	Both `map()` and `compactMap()` are higher-order functions available for types that conform to the `Sequence` protocol in Swift (e.g., arrays and sets).
-
-	The `map()` function takes a closure as its argument, applies the closure to each element of the array, and returns an array with the transformed elements.
-	
-	On the other hand, `compactMap()` also takes a closure as its argument and applies the closure to each element of the array. However, unlike `map()`, `compactMap()` returns an array with the transformed elements, but only if they are not `nil`. If the transformed element is `nil`, it is discarded from the returned array. Therefore, `compactMap()` is useful when we want to transform elements of an array that may have `nil` values and remove them from the result.
+	Both `map()` and `compactMap()` are higher-order functions available for types that conform to the `Sequence` protocol in Swift (e.g., arrays and sets). Both take a closure as an argument and apply the closure to each element of the array. However, the `map()` function returns an array with the transformed elements, while `compactMap()` returns an array with the non-nil transformed elements. Therefore, `compactMap()` is useful when we want to transform elements of an array that may have `nil` values and remove them from the result.
 
 	Here's an example:
 
