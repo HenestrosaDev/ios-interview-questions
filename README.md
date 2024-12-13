@@ -270,9 +270,9 @@
 	<details>
 		<summary>Answer</summary>
 	
-	One-sided ranges are a feature introduced in Swift 4 that allow us to create a range that includes all elements from a starting index or up to an ending index.
+	One-sided ranges are a feature introduced in Swift 4 that allow us to create a range that includes all elements from a starting index or up to an ending index. I would use them to perform operations on collections, such as slicing arrays, iterating over subsets, or working with substrings, without having to explicitly define both endpoints.
 
-	The syntax for a one-sided range is either `..<` or `...`, with one of the operands omitted. The `..<` operator creates a range that does not include the value of the right-hand operand, while the `...` operator creates a range that includes the value of the right-hand operand.
+	The syntax for a one-sided range is either `..<`, `start...`, or `...end`. The `..<` operator creates a range that **does not include** the value of the right operand, while the `...` operator creates a range that **includes** the value of the right/left operand.
 
 	For example, if we have an array `numbers` with 5 elements, we can use a one-sided range to access a subset of the elements:
 
@@ -287,9 +287,7 @@
 	let subset2 = numbers[..<3]
 	// subset2 is [1, 2, 3]
 	```
-		
-	One-sided ranges can be particularly useful when we don't know the length of the collection in advance or want to perform an operation on a portion of the collection without knowing its exact boundaries. They can also make code more concise and easier to read by avoiding the need for explicit range bounds.
-	</details> 
+ 	</details> 
 
 - 🟧 [What does it mean when we say “strings are collections in Swift”?](https://www.hackingwithswift.com/interview-questions/what-does-it-mean-when-we-say-strings-are-collections-in-swift)
 	<details>
