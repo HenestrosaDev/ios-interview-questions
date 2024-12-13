@@ -376,15 +376,49 @@
  	```
 	</details> 
 
-- 🟧 [When would you use Swift’s `Result` type?](https://www.hackingwithswift.com/interview-questions/when-would-you-use-swifts-result-type)
+- 🟧 [When would you use Swift's `Result` type?](https://www.hackingwithswift.com/interview-questions/when-would-you-use-swifts-result-type)
 	<details>
 		<summary>Answer</summary>
 
-	Swift’s `Result` type is useful when dealing with operations that can result in success or failure. It is a type that represents either a successful result or an error that occurred during an operation.
+	Swift's `Result` type is a generic enumeration that represents the success or failure of an operation. It is commonly used for handling asynchronous tasks or error-prone operations in a concise, expressive, and type-safe way.
 
-	Using `Result` can help improve the clarity of code, as it provides a clear separation between the successful and error paths. It also allows for more flexibility in handling errors, as the errors can be represented in any type that conforms to the `Error` protocol.
+	For example, we might use `Result` when making a network request. The successful result would be the data received from the network request, while the failure result would be an error that occurred during the request (e.g. a timeout, network error, or invalid response). Here is an example:
 
-	For example, we might use `Result` when making a network request. The successful result would be the data received from the network request, while the failure result would be an error that occurred during the request (e.g. a timeout, network error, or invalid response). By using `Result`, we can handle the successful and failure cases separately, and provide appropriate feedback to the user.
+	```swift
+	enum NetworkError: Error {
+		case badURL
+		case requestFailed
+		case unknown
+	}
+
+ 	// Network request
+	func fetchData(from url: String, completion: (Result<Data, NetworkError>) -> Void) {
+		guard let url = URL(string: url) else {
+			completion(.failure(.badURL))
+			return
+		}
+		
+		URLSession.shared.dataTask(with: url) { data, response, error in
+			if let _ = error {
+				completion(.failure(.requestFailed))
+			} else if let data = data {
+				completion(.success(data))
+			} else {
+				completion(.failure(.unknown))
+			}
+		}.resume()
+	}
+	
+	// Usage
+	fetchData(from: "https://example.com") { result in
+		switch result {
+		case .success(let data):
+			print("Data received: \(data)")
+		case .failure(let error):
+			print("Error occurred: \(error)")
+		}
+	}
+ 	```
 	</details> 
 
 - 🟥 [What is type erasure and when would you use it?](https://www.hackingwithswift.com/interview-questions/what-is-type-erasure-and-when-would-you-use-it)
