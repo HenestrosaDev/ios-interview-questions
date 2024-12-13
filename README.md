@@ -302,7 +302,9 @@
 	<details>
 		<summary>Answer</summary>
 
-	`UUID` stands for Universally Unique Identifier. It is a 128-bit value that is used to identify information in a unique way. UUIDs are used to identify unique objects, resources, or entities in a system or application.
+	`UUID` stands for Universally Unique Identifier. It is a 128-bit value that is used to identify _almost unique_ objects, resources, or entities in a system or application where uniqueness is important, such as distributed systems, databases, or file systems.
+
+	They are _almost unique_ because there exists a probability of generating two identical UUIDs, although it's extremely small and depends on the number of entities created and the speed at which we create them.
 
 	In Swift, the `UUID` class is used to generate UUIDs. We can use UUIDs in a variety of situations where we need a unique identifier, such as:
 
@@ -311,9 +313,6 @@
 	- To generate unique filenames or file IDs in a file system.
 	- To track application usage or events in analytics.
 	- To prevent collisions when generating random numbers.
-	<br />
-
-	UUIDs are important because they provide a way to create unique identifiers that are almost guaranteed to be unique. Even when generating a large number of UUIDs, the probability of generating two identical UUIDs is very low. This makes UUIDs useful in situations where uniqueness is important, such as distributed systems, databases, and file systems.
 	</details> 
 
 - 🟧 [What's the difference between a value type and a reference type?](https://www.hackingwithswift.com/interview-questions/whats-the-difference-between-a-value-type-and-a-reference-type)
