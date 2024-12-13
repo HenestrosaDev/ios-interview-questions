@@ -319,13 +319,61 @@
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, value types are data types that are copied when they are assigned to a new variable or passed to a function, while reference types are not copied but are passed around as a reference to the same instance of the data.
+	In Swift, value types and reference types are two fundamental ways in which data is managed in memory. They differ in how they handle assignment, copying, and reference sharing.
 
-	Value types in Swift include basic data types like `Int`, `Double`, `Bool`, and `String`, as well as more complex types such as structs and enums. When a value type is copied, it creates a new instance with the same data as the original, but any modifications to the copied instance do not affect the original instance.
+	A **value type** creates a new copy of its data when it is assigned to a variable, or passed to a function. Changes to one instance of a value type do not affect other instances.
 
-	On the other hand, reference types include classes, functions, and closures. When a reference type is assigned to a new variable or passed to a function, it creates a new reference to the same instance of the data. Any modifications to the referenced instance will affect all references to that instance.
+	Value types in Swift include basic data types like `Int`, `Double`, `Bool`, and `String`, as well as more complex types such as structs and enums. Here is an example:
 
-	Understanding the difference between value types and reference types is important for understanding how Swift handles memory management and can help avoid issues such as unintended side effects and memory leaks.
+	```swift
+	struct Point {
+		var x: Int
+		var y: Int
+	}
+	
+	var point1 = Point(x: 1, y: 2)
+	var point2 = point1  // Creates a copy of `point1`
+	point2.x = 10        // Modifying `point2` does not affect `point1`
+	
+	print(point1.x)  // Output: 1
+	print(point2.x)  // Output: 10
+ 	```
+
+	However, value types can be modified from a function if the parameter is defined with the `inout` keyword. Those modifications will be reflected in the original value outside the function. For example, if you want to double a number in place—i.e., change the value directly rather than returning a new one—you might write a function like this:
+
+  	```swift
+	func doubleInPlace(number: inout Int) {
+		number *= 2
+	}
+   	```
+
+   	To use it, you first need to make a variable integer—you can't use constant integers with `inout`, because they might get changed. You also need to pass the parameter to `doubleInPlace` using an ampersand, `&`, before its name, which is an explicit recognition that you know it's being used as `inout`.
+
+  	```swift
+	var myNum = 10 
+	doubleInPlace(number: &myNum)
+   	```
+
+	On the other hand, a **reference type** include classes, functions, and closures. It doesn't create a copy when assigned to a new variable or passed to a function. Instead, it creates a new reference (or pointer) to the same instance in memory. Changes to one reference affect all references.
+
+	```swift
+	class Point {
+		var x: Int
+		var y: Int
+		
+		init(x: Int, y: Int) {
+			self.x = x
+			self.y = y
+		}
+	}
+	
+	var point1 = Point(x: 1, y: 2)
+	var point2 = point1  // Both `point1` and `point2` reference the same instance
+	point2.x = 10        // Modifying `point2` also affects `point1`
+	
+	print(point1.x)  // Output: 10
+	print(point2.x)  // Output: 10
+ 	```
 	</details> 
 
 - 🟧 [When would you use Swift’s `Result` type?](https://www.hackingwithswift.com/interview-questions/when-would-you-use-swifts-result-type)
