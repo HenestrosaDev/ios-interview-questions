@@ -2215,9 +2215,9 @@
 	<details>
 		<summary>Answer</summary>
 	
-	Generics allow us to write flexible, reusable functions and types that can work with different types of data. With generics, we can define functions and types that can operate on a range of different data types, without having to rewrite the code for each type. This can help reduce code duplication and improve code readability.
+	Generics are a way of making a data type act in a variety of ways depending on how it is created. They allow us to write flexible, reusable functions and types that can work with different types of data without having to rewrite the code for each type. This helps us to reduce code duplication and improve readability.
 
-	Generics are especially useful when we need to create functions or data structures that can work with different types of data, such as arrays, dictionaries, or sorting algorithms. For example, we could write a function to sort an array of integers, and then reuse that same function to sort an array of strings, without having to rewrite the sorting algorithm.
+	To use them in Swift, you need to enclose the name of a generic placeholder in angle brackets, like this: `struct Queue<T> {`. The `T` doesn't mean anything special—it could be `R` or `Element`—but `T` is commonly used.
 
 	Here's a simple example of a generic function that takes an array of any type and returns the largest element:
 
@@ -2243,8 +2243,6 @@
 	let largestName = findLargestElement(in: names)
 	print(largestName) // Output: Optional("John")
 	```
-	
-	Generics allow us to write flexible and reusable code that can work with different types of data, making our code more concise and easier to maintain.
 	</details>
 
 - 🟧 [What are multi-pattern catch clauses?](https://www.hackingwithswift.com/interview-questions/what-are-multi-pattern-catch-clauses)
