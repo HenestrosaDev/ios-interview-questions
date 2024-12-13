@@ -425,82 +425,80 @@
 	<details>
 		<summary>Answer</summary>
 
-	Type erasure is a technique in Swift to abstract away the implementation details of a generic type. It is useful when we want to hide the complexity of a generic type by exposing a simpler, type-erased version of it.
+	Type erasure is a technique in Swift that allows you to work with values of generic or protocol-constrained types in a way that hides their specific underlying type, making it possible to use a uniform interface while still maintaining type safety. 
 
-	In Swift, we can use protocols with associated types to define generic types. However, when working with protocols, we cannot use them directly as a type because they have associated types that need to be specified. This can be problematic when we need to pass a generic type as a parameter or return type because the associated type is not known until runtime.
+	It is often used to:
+
+	- Work with heterogeneous collections or APIs that require a single type.
+	- Pass around protocol-constrained types without exposing the concrete type.
+	- Abstract over generic or protocol requirements, especially with protocols that include associated types or self-requirements.
+
+	Type erasure is necessary because some protocols in Swift cannot be used directly as a concrete type because they either have:
+
+	- **Associated types**, such as `Collection` or `Equatable`, which depend on generic parameters, making them inherently incomplete without a specific type.
+ 	- References to `Self`, which cannot be used as a type for variables or collections.
+
+ 	The following example reflects the previous explanation:
+  
+	```swift
+	protocol Shape {
+		func area() -> Double
+	}
 	
-	Type erasure solves this problem by providing a way to create a type-erased wrapper around a generic type. This wrapper exposes a simplified, non-generic interface that can be used as a parameter or return type. Type erasure works by creating a concrete type that conforms to a protocol and hides the implementation details of the generic type.
+	struct Circle: Shape {
+		let radius: Double
+		func area() -> Double { return .pi * radius * radius }
+	}
+	
+	struct Square: Shape {
+		let side: Double
+		func area() -> Double { return side * side }
+	}
+	
+	// You can't do this:
+	let shapes: [Shape] = [Circle(radius: 5), Square(side: 10)]
+	// Error: Protocol 'Shape' can only be used as a generic constraint because it has Self or associated type requirements.
+ 	```
 
-	One common use case for type erasure is in the implementation of a type-erased collection. For example, we may have a collection that is defined as an array of a protocol with an associated type, but you want to be able to use it in a generic context without specifying the associated type. In this case, you could use a type-erased wrapper around the collection that exposes a non-generic interface.
-
-	Another common use case for type erasure is in the implementation of a dependency injection framework. In this case, we may want to create a type-erased wrapper around a protocol that defines the dependencies needed by a component. The wrapper can then be used to inject the dependencies without exposing the implementation details of the protocol.
-
-	Here's an example:
+	Type erasure solves this problem by wrapping protocol-conforming objects in a type that hides the underlying type. Following the previous example, we would do the following to apply it:
 
 	```swift
-	protocol Drawable {
-		func draw(in context: CGContext)
-	}
-
-	struct Circle: Drawable {
-		let radius: CGFloat
-			
-		func draw(in context: CGContext) {
-			let rect = CGRect(x: -radius, y: -radius, width: 2 * radius, height: 2 * radius)
-			context.addEllipse(in: rect)
-			context.drawPath(using: .stroke)
-		}
+	protocol Shape {
+		func area() -> Double
 	}
 	
-	struct Square: Drawable {
-		let size: CGFloat
-		
-		func draw(in context: CGContext) {
-			let rect = CGRect(x: -size / 2, y: -size / 2, width: size, height: size)
-			context.addRect(rect)
-			context.drawPath(using: .stroke)
-		}
+	struct Circle: Shape {
+		let radius: Double
+		func area() -> Double { return .pi * radius * radius }
 	}
 	
-	class DrawableWrapper {
-		private let drawFunction: (CGContext) -> Void
+	struct Square: Shape {
+		let side: Double
+		func area() -> Double { return side * side }
+	}
+	
+	// Type erasure wrapper
+	struct AnyShape: Shape {
+		private let _area: () -> Double
 		
-		init<T: Drawable>(_ drawable: T) {
-			self.drawFunction = { context in
-				let drawing = drawable as Drawable
-				drawing.draw(in: context)
-			}
+		init<S: Shape>(_ shape: S) {
+			_area = shape.area
 		}
 		
-		func draw(in context: CGContext) {
-			drawFunction(context)
+		func area() -> Double {
+			return _area()
 		}
 	}
+	
+	// Using the wrapper
+	let shapes: [AnyShape] = [AnyShape(Circle(radius: 5)), AnyShape(Square(side: 10))]
+	
+	for shape in shapes {
+		print("Area: \(shape.area())")
+	}
+ 	```
 
-	let circle = Circle(radius: 50)
-	let square = Square(size: 100)
-	
-	let circleWrapper = DrawableWrapper(circle)
-	let squareWrapper = DrawableWrapper(square)
-	
-	let context = CGContext(
-		data: nil, 
-		width: 200, 
-		height: 200, 
-		bitsPerComponent: 8, 
-		bytesPerRow: 0, 
-		space: CGColorSpaceCreateDeviceRGB(), 
-		bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-	)!
-	context.translateBy(x: 100, y: 100)
-	
-	circleWrapper.draw(in: context)
-	squareWrapper.draw(in: context)
-	```
-	
-	In this example, we have two types that conform to the `Drawable` protocol: `Circle` and `Square`. We then define a `DrawableWrapper` class that takes any object that conforms to the `Drawable` protocol and stores a closure that can draw the object in a given `CGContext`. This allows us to "erase" the concrete type of the object and treat it as a `Drawable` protocol type. We can then create `DrawableWrapper` objects for `Circle` and `Square`, and call their `draw(in:)` methods without needing to know their concrete types.
-
-	Type erasure is a powerful technique in Swift that can be used to simplify the interfaces of generic types and hide their implementation details. It is particularly useful when we need to work with generic types in a context where the associated types are not known until runtime.
+	However, for common cases, Swift provides built-in type erasers, such as `AnyCollection` (type-erased wrapper for collections), and `AnyPublisher` (type-erased wrapper for publishers, part of the Combine framework).
 	</details> 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
