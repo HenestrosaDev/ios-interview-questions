@@ -80,8 +80,6 @@
 	Dynamic Type is a feature in iOS that allows users to adjust the font size of text displayed in apps. It gives users the ability to increase or decrease the size of the text to make it easier to read, and it also helps to ensure that text is legible for people with visual impairments.
 
 	We can use Dynamic Type to make an app more accessible and user-friendly. Instead of specifying a fixed font size for the text, we can use Dynamic Type to allow the user's preferred text size to be applied throughout an app. We can do this by using font size constants that are tied to the user's preferred text size setting, such as `UIFontTextStyleBody` or `UIFontTextStyleHeadline`.
-
-	By using Dynamic Type, we can make sure that an app's text is legible and comfortable to read for a wide range of users, including those who have difficulty reading small text or who prefer larger font sizes.
 	</details>
 
 - 🟩 [What are the main problems we need to solve when making accessible apps?](https://www.hackingwithswift.com/interview-questions/what-are-the-main-problems-we-need-to-solve-when-making-accessible-apps)
