@@ -145,7 +145,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, tuples are a lightweight way to group multiple values into a single compound value. A tuple can contain two or more values of any type, including other tuples. Tuples are useful when we want to pass around a single value that consists of multiple values, and we don't want to create a separate custom data structure.
+	In Swift, tuples are a lightweight way to group multiple values into a single compound value. A tuple can contain two or more values of any type, including other tuples. They are useful when we want to pass around a single value that consists of multiple values, and creating a separate custom data structure would be overkill. In a sense, they are like anonymous structs.
 
 	One of the primary benefits of tuples is that they allow us to group together a small number of related values in a concise and expressive way. For example, we could use a tuple to represent a point in two-dimensional space with an x-coordinate and y-coordinate. Instead of defining a custom class or struct to hold these two values, we can use a tuple with two elements, like this:
 
@@ -176,8 +176,6 @@
 	```
 	
 	In this example, the `calculateMinMax` function returns a tuple with two values: the minimum and maximum values in an array of integers. The tuple is marked as optional, in case the input array is empty.
-
-	Tuples are a useful tool for organizing related data, and they can simplify code in certain situations where a custom data structure would be overkill.
 	</details>
 
 - 🟩 [What does the `Codable` protocol do?](https://www.hackingwithswift.com/interview-questions/what-does-the-codable-protocol-do)
