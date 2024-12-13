@@ -257,15 +257,13 @@
 	<details>
 		<summary>Answer</summary>
 
-	Immutability is important for several reasons:
+	Immutability is important for the following reasons:
 
 	- **Avoiding unintended changes**: When a variable or object is mutable, it can be changed at any time, leading to unintended changes that can cause bugs and errors. By making variables and objects immutable, we can avoid such unintended changes.
 	- **Thread safety**: Immutable objects are inherently thread-safe, as they cannot be changed by multiple threads simultaneously. This can make concurrent programming much easier and less error-prone.
 	- **Clarity and simplicity**: When objects are immutable, it is clear that their state cannot change, which can make code easier to reason about and understand. Immutability can also simplify certain algorithms and data structures, such as functional programming techniques.
 	- **Performance**: In some cases, immutable data structures can be more performant than mutable ones. This is because they do not need to perform additional checks and operations to ensure their state is consistent.
 	<br />
-			
-	In summary, immutability can improve code safety, clarity, performance, and simplify concurrency, and is therefore an important concept in programming.
 	</details> 
 
 - 🟧 [What are one-sided ranges and when would you use them?](https://www.hackingwithswift.com/interview-questions/what-are-one-sided-ranges-and-when-would-you-use-them)
