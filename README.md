@@ -699,11 +699,145 @@
 	<details>
 		<summary>Answer</summary>
 
-	Protocol-oriented programming is a programming paradigm that emphasizes the use of protocols to define the behavior of objects rather than relying on class inheritance. In this approach, we create protocols that define a set of methods, properties, and other requirements that an object must fulfill in order to conform to the protocol. Then, we can create structs, classes, or enums that conform to the protocol and implement the required methods and properties.
+	Protocol-Oriented Programming (POP) is a programming paradigm that emphasizes the use of protocols (interfaces) to define behaviors, rather than relying solely on inheritance from base classes. It’s about composing functionality through protocols instead of creating deep class hierarchies.
 
-	One of the benefits of protocol-oriented programming is that it allows for more modular and reusable code, as protocols can be used to define common behavior that can be shared across multiple types. This can help to reduce code duplication and make it easier to write code that is flexible and easy to maintain.
+	Swift is designed with protocol-oriented programming in mind and encourages this approach as an alternative to object-oriented programming (OOP).
 
-	In Swift, protocol-oriented programming is often used in conjunction with value types, such as structs and enums, which can help to improve performance and reduce memory usage compared to traditional object-oriented programming using class inheritance. Additionally, Swift's protocol extensions and default implementations can make it easy to add behavior to types that conform to a protocol without having to rewrite the same code over and over again.
+	A **protocol** is like a "contract" or "blueprint" that defines a set of methods, properties, or requirements. Any type (class, struct, or enum) that adopts a protocol agrees to implement those requirements.
+
+	For example:
+
+	```swift
+	protocol Drivable {
+		func start()
+		func drive()
+	}
+	```
+
+	Here, the `Drivable` protocol defines the "contract" that anything that is `Drivable` must have `start()` and `drive()` methods.
+
+	In object-oriented programming, you often use inheritance to share behavior:
+
+	```swift
+	class Vehicle {
+		func start() {
+			print("Starting vehicle")
+		}
+	}
+	
+	class Car: Vehicle {
+		func drive() {
+			print("Driving car")
+		}
+	}
+	```
+
+	This works, but:
+
+	- You can only inherit from one class (single inheritance).
+	- If unrelated types need similar behavior, you either:
+		- Create artificial parent-child relationships, which may not make sense.
+		- Duplicate code across multiple classes.
+	<br />
+ 
+	Instead of relying on inheritance, POP allows you to use protocols to share behavior across any type (class, struct, or enum). This avoids the limitations of single inheritance and makes code more modular and reusable.
+
+	```swift
+	protocol Drivable {
+		func start()
+		func drive()
+	}
+	
+	struct Car: Drivable {
+		func start() {
+			print("Starting car")
+		}
+	
+		func drive() {
+			print("Driving car")
+		}
+	}
+	
+	struct Bicycle: Drivable {
+		func start() {
+			print("Starting bicycle")
+		}
+		
+		func drive() {
+			print("Riding bicycle")
+		}
+	}
+	```
+
+ 	Here:
+
+	- Both `Car` and `Bicycle` conform to the `Drivable` protocol.
+	- They can share behavior without being related by inheritance.
+ 	<br />
+	
+	Key benefits of Protocol-Oriented Programming:
+
+	- **Flexibility**: Any type (class, struct, or enum) can conform to a protocol, so you’re not tied to a single class hierarchy.
+ 	- **Composition over inheritance**: You can "compose" multiple behaviors by conforming to multiple protocols, rather than relying on deep inheritance trees.
+		```swift
+		protocol Drivable {
+			func drive()
+		}
+		
+		protocol Flyable {
+			func fly()
+		}
+		
+		struct FlyingCar: Drivable, Flyable {
+			func drive() {
+				print("Driving on the road")
+			}
+			
+			func fly() {
+				print("Flying in the sky")
+			}
+		}
+  		```
+  	- **Value types**: Protocols work seamlessly with value types like struct and enum, which are preferred in Swift because they are safer (immutable by default) and more efficient.
+  	- **Swift support**: It provides the following features to take advantage of this paradigm:
+  		- Protocol extensions to implement a default behavior.
+			```swift
+			protocol Drivable {
+				func start()
+				func drive()
+			}
+			
+			extension Drivable {
+				func start() {
+					print("Starting the vehicle")
+				}
+			}
+
+  	 		struct Car: Drivable {
+				func drive() {
+					print("Driving car")
+				}
+			}
+				
+			let car = Car()
+			car.start() // "Starting the vehicle"
+			car.drive() // "Driving car"
+  	 		```
+  	 	- Protocol composition into a single requirement using `&`.
+			```swift
+			protocol Flyable {
+				func fly()
+			}
+			
+			protocol Drivable {
+				func drive()
+			}
+			
+			func useFlyingCar(vehicle: Flyable & Drivable) {
+				vehicle.fly()
+				vehicle.drive()
+			}
+  	  		```
 	</details>
 
 - 🟧 [What experience do you have of functional programming?](https://www.hackingwithswift.com/interview-questions/what-experience-do-you-have-of-functional-programming)
