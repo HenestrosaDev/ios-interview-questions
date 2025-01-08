@@ -846,9 +846,17 @@
 
 	The answer depends on your experience with functional programming. Here is how I would approach it:
 	
-	>I would say that I have a fair amount of experience in functional programming. It is a programming paradigm that emphasizes the use of functions to solve problems. In functional programming, functions are treated as first-class citizens and can be passed as arguments to other functions, returned as values from functions, and assigned to variables or constants. Functional programming encourages the use of immutable data structures and avoids changing state and mutable state.
+	>I would say that I have a fair amount of experience with functional programming, as I have used languages that support functional programming, such as Scala, Swift and Kotlin. It is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing state or mutable data. It focuses on using pure functions, immutable data, and function composition.
 	>
-	>I have used some languages that support functional programming such as Scala, Swift and Kotlin. In Swift, functional programming features include higher-order functions, closures, map, filter, and reduce. These features make it possible to write more concise and expressive code that is easier to reason about and test.
+ 	>Here are the key concepts of this paradigm:
+	>
+ 	>- **Pure deterministic functions**: Functions that have no side effects and return the same output for the same input.
+	>- **First-class functions**: Functions are treated as values, which means that you can assign a function to a variable, pass it around as an argument, or return it from other functions.
+	>- **Higher-order functions**: Functions that take one or more functions as arguments and can also return a function.
+	>- **Immutability**: Once data is created, it cannot be changed.
+ 	><br />
+	> 
+	>Overall, this paradigm makes code more compositional, more predictable due to pure functions, more testable due to immutability, and easier to manage concurrency due to immutability.
 	</details>
 
 - 🟥 [Can you explain KVO, and how it's used on Apple's platforms?](https://www.hackingwithswift.com/interview-questions/can-you-explain-kvo-and-how-its-used-on-apples-platforms)
