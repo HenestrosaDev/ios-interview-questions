@@ -863,11 +863,79 @@
 	<details>
 		<summary>Answer</summary>
 
-	KVO stands for Key-Value Observing, and it's a design pattern used in Apple's platforms to observe changes to the properties of objects. With KVO, we can register an object to observe changes to the values of a specified property of another object, and receive a notification when the value of that property changes.
+	Key-Value Observing (KVO) is a design pattern used in UIKit to observe changes to the properties of objects. With KVO, we can register an object to observe changes to the values of a specified property of another object, and receive a notification when the value of that property changes.
 
 	To use KVO, we typically define an observer object and register it with the object that we want to observe. When the value of a property changes, the observed object sends a notification to the observer object, which can then take some action based on the new value.
 
-	KVO can be useful in many situations, such as updating a UI when the value of a model object changes, or observing changes to a property of a third-party library. However, it's important to use KVO with care, as it can introduce complexity and potential bugs if not used correctly.
+	For example, let's say we have a `User` model that has a `name` property. We want to be notified whenever the name property changes so that we can update the user interface. To do this, we would follow these steps:
+
+	1. Define the model (`User`) with a property that you want to observe (`name`).
+ 
+		```swift
+		import Foundation
+		
+		class User: NSObject {
+			@objc dynamic var name: String
+		
+			init(name: String) {
+				self.name = name
+			}
+		}
+	   	```
+
+		The `@objc dynamic` modifier is required for KVO to work. The `@objc` part allows Swift properties to be accessed from Objective-C runtime (which KVO relies on), and `dynamic` ensures that the property is available for runtime observation.
+
+	2. Set up the observer to watch the property.
+
+		```swift
+		import UIKit
+		
+		class ViewController: UIViewController {
+		
+			var user: User!
+			
+			override func viewDidLoad() {
+				super.viewDidLoad()
+				
+				// Create the User object
+				user = User(name: "John Doe")
+				
+				// Register for KVO to observe the 'name' property
+				user.addObserver(self, forKeyPath: #keyPath(User.name), options: [.new, .old], context: nil)
+				
+				// Change the name property
+				user.name = "Jane Doe"
+			}
+			
+			// This method will be called when the 'name' property changes
+			override func observeValue(
+  				forKeyPath keyPath: String?,
+  				of object: Any?,
+  				change: [NSKeyValueChangeKey : Any]?,
+  				context: UnsafeMutableRawPointer?
+  			) {
+				if keyPath == #keyPath(User.name) {
+					if let newValue = change?[.newKey] as? String {
+						print("The name has changed to \(newValue)")
+					}
+				}
+			}
+			
+			deinit {
+				// Remove the observer when done
+				user.removeObserver(self, forKeyPath: #keyPath(User.name))
+			}
+		}
+		```
+
+		Explanation:
+
+		- `addObserver(_:forKeyPath:options:context:)`: This method registers the observer (`self`) to watch the `name` property on the `user` object. We specify the `keyPath` (which is the property name `name`), and we also specify that we want to receive both the new and old values when the property changes.
+		- `observeValue(forKeyPath:of:change:context:)`: This is the method that gets called whenever the observed property changes. Here, we can check which key path was changed (`keyPath`), and take action based on the new value.
+		- `removeObserver(_:forKeyPath:)`: This is very important. You must always remove observers when they are no longer needed to avoid memory leaks or unexpected behavior. In this case, we remove the observer in the `deinit` method to make sure it's cleaned up when the view controller is deallocated.
+		<br />
+
+	Overall, KVO can be useful in many situations, such as updating a UI when the value of a model object changes, or observing changes to a property of a third-party library. However, it's important to use KVO with care, as KVO notifications are usually delivered on the same thread that changes the observed property. If you're observing from a background thread, make sure you properly handle UI updates on the main thread. In addition, it can be resource-intensive, especially when observing many properties. For large applications using UIKit, consider alternative patterns like `NSNotificationCenter` or **reactive programming**.
 	</details>
 
 - 🟥 [Can you give some examples of where singletons might be a good idea?](https://www.hackingwithswift.com/interview-questions/can-you-give-some-examples-of-where-singletons-might-be-a-good-idea)
