@@ -522,33 +522,78 @@
 	<details>
 		<summary>Answer</summary>
 
-	MVC stands for Model-View-Controller, which is a common design pattern used in software development. In the context of Apple's platforms, it is used to separate the code that handles user interactions and business logic from the code that handles the presentation of data.
+	MVC stands for Model-View-Controller, which is a common design pattern used in software development. It's used to separate the concerns of each component so that changes to one don't affect the others. For example, if we need to update the **Model**, we can do so without changing the **View** or the **Controller**. This makes it easier to maintain and modify our code over time.
 
 	Here's a brief overview of each component:
 
-	- **Model**: This is the data layer of the application. It contains the data and the logic for manipulating that data. In an iOS app, the model might represent the data that is stored in a database or fetched from a web service.
-	- **View**: This is the presentation layer of the application. It contains the user interface elements that the user interacts with. In an iOS app, views might include things like buttons, labels, text fields, and images.
-	- **Controller**: This is the glue that connects the model and the view. It handles user input and updates the model and view accordingly. In an iOS app, controllers might include things like view controllers, which manage the views in a particular section of the app.
-	<br />  
+	- **Model**:
+ 		- Data layer of the application that contains the business logic.
+ 		- Contains the data and the logic for manipulating that data, including notifying the controller when data changes.
+ 		- In an iOS app, the **Model** might represent the data that is stored in a database or fetched from a web service.
+	- **View**:
+ 		- Presentation layer of the application.
+ 		- Contains the user interface elements that the user interacts with.
+ 		- Views might include things like buttons, labels, text fields, and images.
+		- In an iOS app, they can be created using UIKIt (programatically or with the Interface Builder) or SwiftUI.
+	- **Controller**:
+ 		- Acts as the glue that connects the **Model** and the **View**.
+ 		- Handles user input and updates the **Model** and **View** accordingly.
+ 		- In an iOS app using UIKit, controllers are usually `UIViewControllers`, which handle user input and update the model and other views accordingly.
+	<br />
 
-	The goal of MVC is to separate the concerns of the model, view, and controller so that changes to one component don't affect the others. For example, if we need to update the model, we can do so without changing the view or the controller. This makes it easier to maintain and modify our code over time.
+	This is how the three components interact:
 
-	In Apple's platforms, MVC is used extensively. View controllers are the primary controllers in iOS apps, and they are responsible for managing the views in a particular section of the app. They also handle user input and update the model and other views accordingly. The model is often represented by data structures or objects that are defined in separate files, and the view is created using Interface Builder or by creating views programmatically.
-	</details>
+	1. The user interacts with the **View** (e.g., taps a button).
+ 	2. The **Controller** processes the input and updates the **Model**.
+	3. The **Model** updates its data and notifies the **Controller**.
+	4. The **Controller** updates the View to reflect changes in the **Model**.
+ 	<br />
+
+  	In UIKit, this pattern often ends up with too much responsibility, leading to the infamous "Massive View Controller" problem. This can be mitigated by using additional patterns such as delegation, observers, or dependency injection to offload some responsibility. In addition, the **Controller** is tightly coupled to the **View**, making it less flexible than more modern patterns like MVVM.
+  	</details>
 
 - 🟧 [Can you explain MVVM, and how it might be used on Apple's platforms?](https://www.hackingwithswift.com/interview-questions/can-you-explain-mvvm-and-how-it-might-be-used-on-apples-platforms)
 	<details>
 		<summary>Answer</summary>
 
-	MVVM stands for Model-View-ViewModel, and it is an architecture pattern that is commonly used in developing software for Apple's platforms. Like the MVC pattern, MVVM is designed to help developers organize their code and separate concerns in a logical way.
+	MVVM stands for Model-View-ViewModel, and it is an architecture pattern that is commonly used in developing software for Apple's platforms to improve the separation of concerns and make code more testable and maintainable. It builds on the principles of MVC, but provides a better way to manage data binding and logic, especially when dealing with complex UIs.
 
-	In MVVM, the Model represents the data and the business logic of the application. The View is responsible for displaying the data and handling user input. The ViewModel is a mediator between the View and the Model, and it provides data and behavior to the View in a way that is easily consumed.
+	Here's a brief overview of each component:
 
-	The ViewModel in MVVM is often considered the most important component. It provides a separation of concerns between the View and the Model, allowing developers to test the ViewModel independently of the View. The ViewModel typically exposes data and behavior using properties and methods, which the View can bind to.
+	- **Model** (the same as in MVC):
+		- Data layer of the application that contains the business logic.
+ 		- Contains the data and the logic for manipulating that data, including notifying the controller when data changes.
+ 		- In an iOS app, the model might represent the data that is stored in a database or fetched from a web service.
+ 	- **View**:
+ 		- Represents the UI of your app, displaying data to the user.
+ 		- Views might include things like buttons, labels, text fields, and images.
+		- Binds to the **ViewModel** to automatically reflect changed in the data.
+		- In an iOS app, they can be created using UIKIt (programatically or with the Interface Builder) or SwiftUI.
+ 	- **ViewModel**:
+   		- Acts as the glue that connects the **Model** and the **View**.
+ 		- Contains presentation logic; transforms raw data from the **Model** into a form suitable for display in the **View**.
+   		- Keeps the **View** updated when the **Model** changes, often using data binding.
+ 		- Should be independent of the UI framework, making it testable and reusable.
+   		- Helps reduce "Massive View Controller" problems, as seen in the MVC pattern.
+	<br />  
 
-	One of the key benefits of using MVVM is that it allows developers to write highly testable code. Because the ViewModel is responsible for providing data and behavior to the View, developers can easily test the ViewModel in isolation, without having to worry about the complexities of the View or the Model.
+	This is how the three components interact:
 
-	In addition to testability, MVVM can also improve code organization, reduce coupling, and make it easier to maintain and refactor code. On Apple's platforms, MVVM is commonly used in conjunction with frameworks such as UIKit, SwiftUI, and Combine to build complex, scalable, and maintainable applications.
+	1. The user interacts with the **View** (e.g., taps a button).
+	2. The **View** notifies the **ViewModel** of the user's action.
+	3. The **ViewModel** processes the input and updates the **Model**.
+	4. The **Model** updates its data.
+ 	5. The **ViewModel** observes changes in the **Model** and updates its own state.
+  	6. The **View** observes the **ViewModel** and updates automatically to reflect the changes.
+ 	<br />  
+
+	This interaction differs from MVC in that:
+
+	- The **ViewModel** handles both user input and interaction with the **Model** (there's no **Controller** in MVVM).
+	- The **View** is bound to the **ViewModel**, so it automatically updates itself when the **ViewModel** changes via data binding.
+ 	<br />  
+
+	MVVM naturally fits into SwiftUI because of its declarative and reactive nature, as `ObservableObject`, `@State` and `@Published` make it easy to bind the **View** and the **ViewModel**. Although UIKit doesn't have built-in data binding like SwiftUI, you can still use delegates, closure callbacks, or Combine to connect the **View** and **ViewModel**. However, it might add extra layers of complexity to small projects.
 	</details>
 
 - 🟧 [How would you explain dependency injection to a junior developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-dependency-injection-to-a-junior-developer)
