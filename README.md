@@ -600,11 +600,99 @@
 	<details>
 		<summary>Answer</summary>
 
-	Dependency injection is a programming design pattern that is used to make code more modular and testable. In this pattern, instead of creating objects or dependencies within a class or function, we pass them in as parameters from the outside. This helps to reduce the coupling between components and makes it easier to change or update parts of our code without having to make changes to many different places.
+	Dependency injection is a design pattern that is used to make code more flexible, reusable, and testable. In this pattern, instead of creating objects or dependencies within a class or function, we pass them in as parameters from the outside. This helps to reduce the coupling between components and makes it easier to change or update parts of our code without having to make changes to many different places.
 
-	For example, let's say we have a `UserManager` class that is responsible for fetching and managing user data. Instead of having the `UserManager` class create its own dependencies, such as a network client, we pass in the dependencies as parameters when we create an instance of the `UserManager`. This way, we can easily swap out different network clients without having to modify the `UserManager` code.
+	In simpler terms: Instead of a class building what it needs, it gets given what it needs.
 
-	Dependency injection helps to make our code more flexible, modular, and easier to test.
+	A dependency is just something that a class relies on to do its work. For example:
+
+	- A restaurant (class) needs ingredients (dependencies) to cook food.
+	- Without DI: The restaurant has its own farm, fishing boat, and supply chain to get ingredients (tightly coupled).
+	- With DI: The ingredients are delivered by a supplier (loose coupling). If the supplier changes, the restaurant can still function without altering how it cooks.
+   	<br />
+
+	If a class creates its own dependencies, it becomes tightly coupled to them, meaning:
+
+	- You can't easily replace the dependency (e.g., for testing or updates).
+	- The class becomes harder to understand and maintain.
+ 	<br />
+
+	For example:
+
+	```swift
+	class Restaurant {
+		let supplier = IngredientSupplier() // Restaurant is its own IngredientSupplier
+		
+		func prepareMeal() {
+			let ingredients = supplier.deliverIngredients()
+			print("Meal prepared with \(ingredients)")
+		}
+	}
+ 	```
+
+	Here:
+
+	- The `Restaurant` is tightly coupled to the `IngredientSupplier` class.
+	- If the restaurant stops to supply the ingredients you'd have to rewrite the restaurant's operations.
+ 	<br />
+
+  	To solve these issues, we can use dependency injection to pass the dependency (an ingredient supplier) into the class, so the class doesn't create it itself. In the context of the example, imagine that the restaurant now relies on an external ingredient supplier:
+
+  	```swift
+	class Restaurant {
+		let supplier: IngredientSupplier // Dependency is injected
+		
+		init(supplier: IngredientSupplier) {
+			self.supplier = supplier
+		}
+		
+		func prepareMeal() {
+			let ingredients = supplier.deliverIngredients()
+			print("Meal prepared with \(ingredients)")
+		}
+	}
+   	```
+
+   	Now:
+
+  	- The restaurant does'’t care how the ingredients are sourced.
+  	- You can easily swap suppliers without changing the code of the `Restaurant` class.
+	<br />
+
+	---
+
+ 	On a separate note, there are three types of dependency injection:
+
+  	- **Constructor injection**: Dependencies are passed into the class when it's created.
+ 		```swift
+		class Restaurant {
+			let supplier: IngredientSupplier
+			
+			init(supplier: IngredientSupplier) {
+				self.supplier = supplier
+			}
+		}
+  		```
+  	- **Property injection**: Dependencies are assigned to properties after the object is created.
+		```swift
+		class Restaurant {
+			var supplier: IngredientSupplier?
+		
+			func prepareMeal() {
+				let ingredients = supplier.deliverIngredients()
+				print("Meal prepared with \(ingredients)")
+			}
+		}
+  		```
+  	- **Method injection**:
+		```swift
+		class Restaurant {
+			func prepareMeal() {
+				let ingredients = supplier.deliverIngredients()
+				print("Meal prepared with \(ingredients)")
+			}
+		}
+  		```
 	</details>
 
 - 🟧 [How would you explain protocol-oriented programming to a new Swift developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-protocol-oriented-programming-to-a-new-swift-developer)
