@@ -1105,23 +1105,18 @@
 
 	`UserDefaults` is a convenient way to store small amounts of user-related data such as preferences, settings, and configurations. It's essentially a key-value store that provides an interface for storing and retrieving data using simple API.
 
-	`UserDefaults` is useful when:
+	`UserDefaults` is useful for:
 
-	- We need to store simple data that doesn't require complex data modeling.
-	- We need to persist data across app launches.
-	- We need to share data between different parts of our app.
-	- We need to store data that is specific to the user, such as user preferences or settings.
+  	- Small, user-specific preferences and settings, such as the preferred language or theme.
+	- Lightweight, non-critical data that doesn't change frequently.
+	- Boolean flags, user states, and app configuration.
 	<br />
 
 	`UserDefaults` is not a good choice for:
 
-	- Large amounts of data or binary data.
-	- Sensitive data that requires encryption or secure storage.
-	- Complex data modeling or relationships.
-	- High-performance requirements.
-	<br />
-
-	In general, `UserDefaults` is best suited for small, simple, and non-sensitive data that needs to be persisted across app launches and accessed easily from different parts of the app. If we need to store more complex data, we may need to consider using other storage solutions such as Core Data or a third-party database.
+	- Large or complex data (use **Core Data**, **SQLite**, or **Realm** for this).
+	- Long-term or relational data persistence (use **Core Data**, **SQLite**, or **Realm** for this).
+	- Sensitive data that requires encryption or secure storage (use **Keychain** for this).
 	</details>
 
 - 🟩 [What is the purpose of `NotificationCenter`?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-notificationcenter)
