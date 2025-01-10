@@ -1130,6 +1130,24 @@
 	Observers can register with the notification center to receive notifications about specific events. When a notification is posted, the notification center sends the notification to all registered observers. The observers can then take appropriate action based on the content of the notification.
 
 	`NotificationCenter` is a powerful tool for decoupling different parts of an app, and it's commonly used to handle situations such as updating the UI when a data model changes, responding to system events such as keyboard or screen orientation changes, and notifying other parts of the app when a user completes a task. However, it's not suitable for communication between unrelated apps, or for sharing large amounts of data between different parts of an app. In those cases, other mechanisms such as URL schemes or app extensions may be more appropriate.
+
+	Here is an example:
+
+  	```swift
+	// Payload (optional)
+	let userInfo = ["newData": "Example Data"]
+
+	// Post a notification with a payload to `NotificationCenter` to announce an event
+	NotificationCenter.default.post(name: Notification.Name("DataUpdated"), object: nil, userInfo: userInfo)
+
+	// Register observer for a specific notification
+	NotificationCenter.default.addObserver(self, selector: #selector(handleDataUpdate), name: Notification.Name("DataUpdated"), object: nil)
+
+	// Method that handles the `DataUpdated` notification
+	@objc func handleDataUpdate(notification: Notification) {
+		print("Data has been updated!")
+	}
+   	```
 	</details>
 
 - 🟩 [What steps would you follow to make a network request?](https://www.hackingwithswift.com/interview-questions/what-steps-would-you-follow-to-make-a-network-request)
