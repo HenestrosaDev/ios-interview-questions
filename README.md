@@ -655,7 +655,7 @@
 
    	Now:
 
-  	- The restaurant does'’t care how the ingredients are sourced.
+  	- The restaurant does't care how the ingredients are sourced.
   	- You can easily swap suppliers without changing the code of the `Restaurant` class.
 	<br />
 
@@ -699,7 +699,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	Protocol-Oriented Programming (POP) is a programming paradigm that emphasizes the use of protocols (interfaces) to define behaviors, rather than relying solely on inheritance from base classes. It’s about composing functionality through protocols instead of creating deep class hierarchies.
+	Protocol-Oriented Programming (POP) is a programming paradigm that emphasizes the use of protocols (interfaces) to define behaviors, rather than relying solely on inheritance from base classes. It's about composing functionality through protocols instead of creating deep class hierarchies.
 
 	Swift is designed with protocol-oriented programming in mind and encourages this approach as an alternative to object-oriented programming (OOP).
 
@@ -777,7 +777,7 @@
 	
 	Key benefits of Protocol-Oriented Programming:
 
-	- **Flexibility**: Any type (class, struct, or enum) can conform to a protocol, so you’re not tied to a single class hierarchy.
+	- **Flexibility**: Any type (class, struct, or enum) can conform to a protocol, so you're not tied to a single class hierarchy.
  	- **Composition over inheritance**: You can "compose" multiple behaviors by conforming to multiple protocols, rather than relying on deep inheritance trees.
 		```swift
 		protocol Drivable {
@@ -1071,13 +1071,13 @@
 
 	There are different ways of showing web content to users in Swift, including:
 
-	- **Using `WKWebView`**: This is a native iOS class that allows us to display web content in our app. We can load any website or HTML content using the `load(_:)` method of `WKWebView`. We can also customize the appearance and behavior of the web view using various properties and delegate methods.
-	- **Using `SFSafariViewController`**: This is a built-in view controller that displays web content in Safari’s user interface. We can use this view controller to show web pages, authenticate users with web-based services, and enable features such as Reader mode, content blockers, and more. This is an easy and secure way to display web content without worrying about implementing navigation or security features.
-	- **Using `UIWebView`**: This is an older iOS class that is now deprecated and replaced by WKWebView. However, if we need to support older versions of iOS, we can still use `UIWebView` to display web content. The process is similar to using `WKWebView`, but the behavior and features of the web view may be different.
-	- **Using a third-party library**: There are many third-party libraries available that can help us display web content in our app. For example, `Alamofire` can be used to fetch web content and display it using a native view controller or custom UI.
+ 	- **Opening a URL in the full Safari app**: This can be done `UIApplication.shared.open(url)`. It's a simple method that provides access to all Safari features, as it opens the safari app. However, it leaves the app and the app loses the control over the content.
+ 	- **Using `WKWebView`**: This is a native iOS class that allows us to embed a fully featured browser in our app. We can load any website or HTML content using the `load(_:)` method of `WKWebView`. We can also customize the web view's appearance and behavior using various properties and delegate methods, as well as executing JavaScript and working offline with local HTML.
+	- **Using `SFSafariViewController`**: This is a built-in view controller that displays web content in Safari's user interface. We can use this view controller to show web pages, authenticate users with web-based services, and enable features such as Reader mode, content blockers, and more. This is an easy and secure way to display web content without worrying about implementing navigation or security features.
+	- **Using `UIWebView`**: This is an older iOS class that is now deprecated and replaced by `WKWebView`. However, if we need to support older versions of iOS, we can still use `UIWebView` to display web content. The process is similar to using `WKWebView`, but the behavior and features of the web view may be different.
 	<br />
 
-	The choice of which method to use depends on our specific needs and the level of control and customization we require over the appearance and behavior of the web content.
+	The choice of method depends on our specific needs and the level of control and customization required for the appearance and behavior of web content.
 	</details>
 
 - 🟩 [What class would you use to list files in a directory?](https://www.hackingwithswift.com/interview-questions/what-class-would-you-use-to-list-files-in-a-directory)
@@ -1105,14 +1105,14 @@
 
 	`UserDefaults` is a convenient way to store small amounts of user-related data such as preferences, settings, and configurations. It's essentially a key-value store that provides an interface for storing and retrieving data using simple API.
 
-	`UserDefaults` is useful for:
+	✅ `UserDefaults` is useful for:
 
   	- Small, user-specific preferences and settings, such as the preferred language or theme.
 	- Lightweight, non-critical data that doesn't change frequently.
 	- Boolean flags, user states, and app configuration.
 	<br />
 
-	`UserDefaults` is not a good choice for:
+	❌ `UserDefaults` is not a good choice for:
 
 	- Large or complex data (use **Core Data**, **SQLite**, or **Realm** for this).
 	- Long-term or relational data persistence (use **Core Data**, **SQLite**, or **Realm** for this).
@@ -1123,13 +1123,11 @@
 	<details>
 		<summary>Answer</summary>
 
-	The `NotificationCenter` class in Swift is used for broadcasting information within an application. It is a publish-subscribe pattern that allows objects to communicate with each other without having direct dependencies.
+	The `NotificationCenter` class in Swift is a messaging system used to broadcast information within an app. It allows different parts of your app to communicate without tightly coupling them. When an event happens, one or more objects can post a notification to the notification center, which then broadcasts the notification to any interested observers.
 
-	The purpose of `NotificationCenter` is to enable communication between different parts of an app in a loosely coupled manner. When an event happens, one or more objects can post a notification to the notification center, which then broadcasts the notification to any interested observers.
+	It is a powerful tool for decoupling different parts of an app. It is commonly used to handle situations such as updating the UI when a data model changes, responding to system events such as keyboard or screen orientation changes, and notifying other parts of the app when a user completes a task—like logging in or switching themes. However, it's not suitable for communication between unrelated apps, or for sharing large amounts of data between different parts of an app. In those cases, other mechanisms such as URL schemes or app extensions may be more appropriate.
 
-	Observers can register with the notification center to receive notifications about specific events. When a notification is posted, the notification center sends the notification to all registered observers. The observers can then take appropriate action based on the content of the notification.
-
-	`NotificationCenter` is a powerful tool for decoupling different parts of an app, and it's commonly used to handle situations such as updating the UI when a data model changes, responding to system events such as keyboard or screen orientation changes, and notifying other parts of the app when a user completes a task. However, it's not suitable for communication between unrelated apps, or for sharing large amounts of data between different parts of an app. In those cases, other mechanisms such as URL schemes or app extensions may be more appropriate.
+	Observers can register with the `NotificationCenter` to receive notifications about specific events. When a notification is posted, the notification center sends the notification to all registered observers. The observers can then take appropriate action based on the content of the notification.
 
 	Here is an example:
 
@@ -1154,18 +1152,94 @@
 	<details>
 		<summary>Answer</summary>
 
-	To make a network request in an iOS app, we would typically follow these steps:
+	1. **Create the URL**
 
-	- **Create a URL**: We need to create a `URL` object to specify the server we want to interact with and the specific endpoint we want to hit. We can do this using the URL class.
-	- **Create a `URLRequest`**: Once we have a `URL`, we can create a `URLRequest` object to encapsulate information like the HTTP method we want to use (e.g., GET, POST, PUT), headers, and any parameters we want to send.
-	- **Create a `URLSession`**: We'll use the `URLSession` class to send the request and handle the response. We can configure the session with settings like whether to use caching and how to handle cookies.
-	- **Create a data task**: We'll create a data task using the `URLSession` object we just created. The data task represents the request and response, and we can use it to send the request and handle the response.
-	- **Send the request**: We can use the data task's `resume()` method to send the request.
-	- **Handle the response**: Once the request is sent, we'll get a response in the form of an HTTP status code, headers, and possibly a body containing the response data. We can handle this response by implementing the completion handler provided by the data task.
-	- **Parse the response**: Depending on the format of the response data, we may need to parse it into a usable format, such as JSON or XML. We can use libraries like `JSONSerialization` or third-party libraries like `Alamofire` to help with this.
-	- **Handle errors**: Network requests can fail for a variety of reasons, such as a poor internet connection or a server error. We should handle these errors gracefully by displaying appropriate error messages to the user and providing options for retrying the request or canceling it altogether.
+		```swift
+		guard let url = URL(string: "https://api.example.com/data") else {
+			print("Invalid URL")
+			return
+		}
+		```
+
+	2. **Create a `URLRequest`** (optional)
+
+		If you need to customize the request (e.g., set HTTP method, headers):
+
+		```swift
+		var request = URLRequest(url: url)
+		request.httpMethod = "GET"  // or "POST", "PUT", etc.
+		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		```
+
+	3. **Create a `URLSession`**
+		This creates a data task to perform the request:
+
+		```swift
+		let task = URLSession.shared.dataTask(with: request) { data, response, error in
+			// Handle the response here
+		}
+		```
+		
+	4. **Handle the response**
+		```swift
+		// Check for errors.
+		if let error = error {
+				print("Error: \(error.localizedDescription)")
+				return
+		}
+
+		// Validate the HTTP response (status code).
+		guard let httpResponse = response as? HTTPURLResponse,
+				(200...299).contains(httpResponse.statusCode) else {
+			print("Invalid response")
+			return
+		}
+
+		// Make sure there is data.
+		guard let data = data else {
+			print("No data received")
+			return
+		}
+
+		do {
+			// Parse the data (e.g., JSON decoding).
+			let decodedObject = try JSONDecoder().decode(MyModel.self, from: data)
+			print("Decoded: \(decodedObject)")
+		} catch {
+			// Handle decoding error.
+			print("Decoding error: \(error)")
+		}
+		```
+
+	5. **Start the task**
+		```swift
+		task.resume()
+		```
+
+	6. **Bonus: Using `async/await`** (iOS 15+)
+		```swift
+		func fetchData() async {
+			guard let url = URL(string: "https://api.example.com/data") else { return }
+		
+			do {
+				let (data, response) = try await URLSession.shared.data(from: url)
+
+				guard let httpResponse = response as? HTTPURLResponse,
+							(200...299).contains(httpResponse.statusCode) else {
+						print("Invalid response")
+						return
+				}
+
+				let decodedObject = try JSONDecoder().decode(MyModel.self, from: data)
+				print("Decoded: \(decodedObject)")
+			} catch {
+				print("Network error: \(error)")
+			}
+		}
+		```
+
 	<br />
-	
+
 	These are the basic steps to make a network request in an iOS app, but the specifics may vary depending on our app's requirements and the API we're interacting with.
 	</details>
 
@@ -1216,7 +1290,27 @@
 	>
 	>- **Enhancing photos**: I have used CoreImage to apply filters to photos, such as adjusting brightness, contrast, and saturation, or adding special effects like vignettes or blurs.
 	>- **Real-time image analysis**: I have used it to perform real-time image analysis, such as detecting faces and facial features, tracking motion, or recognizing objects in a scene.
-	>- **Applying filters to video**: I have used it used to apply filters to live video streams, such as applying a sepia or black-and-white filter to a video feed from the camera.
+	>- **Applying filters to an image**:
+	>
+	>	```swift
+	>	import CoreImage
+	>	import UIKit
+	>	
+	>	let image = UIImage(named: "example.jpg")!
+	>	let ciImage = CIImage(image: image)!
+	>	
+	>	let filter = CIFilter(name: "CISepiaTone")!
+	>	filter.setValue(ciImage, forKey: kCIInputImageKey)
+	>	filter.setValue(0.8, forKey: kCIInputIntensityKey)
+	>	
+	>	let context = CIContext()
+	>	if let outputImage = filter.outputImage,
+	>	   let cgImage = context.createCGImage(outputImage, from: outputImage.extent)
+	>	{
+	>	    let filteredImage = UIImage(cgImage: cgImage)
+	>	    // Use filteredImage in an UIImageView, etc.
+	>	}
+	>	```
 	</details>
 
 - 🟧 [How much experience do you have using iBeacons? Can you give examples?](https://www.hackingwithswift.com/interview-questions/how-much-experience-do-you-have-using-ibeacons-can-you-give-examples)
@@ -1236,7 +1330,75 @@
 	
 	The answer depends on your experience with StoreKit. Here is how I would approach it:
 	
-	>I integrated StoreKit into two applications. One was a game that used StoreKit to allow players to purchase new levels and characters, and the other was an English learning app that allowed users to subscribe to a monthly plan that gave them access to unlimited content within the app.  
+	>I integrated StoreKit into two applications. One was a game that used StoreKit to allow players to purchase new levels and characters, and the other was an English learning app that allowed users to subscribe to a monthly plan that gave them access to unlimited content within the app.
+ 	
+ 	Here are a few code examples to demonstrate your knowledge of StoreKit:
+  
+	1. **Fetching products from App Store**
+		```swift
+		import StoreKit
+		class IAPManager: NSObject, SKProductsRequestDelegate {
+			var products = [SKProduct]()
+	
+			func fetchProducts() {
+				let productIdentifiers: Set<String> = ["com.example.app.coins100", "com.example.app.premium"]
+				let request = SKProductsRequest(productIdentifiers: productIdentifiers)
+				request.delegate = self
+				request.start()
+			}
+	
+			func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+				products = response.products
+				for product in products {
+					print("Product: \(product.localizedTitle), price: \(product.price)")
+				}
+			}
+		}
+		```
+	
+	2. **Purchasing a product**
+		```swift
+		func purchase(product: SKProduct) {
+		let payment = SKPayment(product: product)
+		SKPaymentQueue.default().add(payment)
+		}
+		```
+	
+		Don't forget to add yourself as a transaction observer:
+		```swift
+		SKPaymentQueue.default().add(self)
+		```
+	
+		and implement transaction observer methods:
+		```swift
+		extension IAPManager: SKPaymentTransactionObserver {
+			func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+				for transaction in transactions {
+					switch transaction.transactionState {
+					case .purchased:
+						print("Purchase successful!")
+						SKPaymentQueue.default().finishTransaction(transaction)
+					case .failed:
+						print("Purchase failed: \(transaction.error?.localizedDescription ?? "unknown error")")
+						SKPaymentQueue.default().finishTransaction(transaction)
+					case .restored:
+						print("Purchase restored")
+						SKPaymentQueue.default().finishTransaction(transaction)
+					default:
+						break
+					}
+				}
+			}
+		}
+		```
+	
+	3. **Restoring purchases**
+		```swift
+		func restorePurchases() {
+			SKPaymentQueue.default().restoreCompletedTransactions()
+		}
+		```
+  
 	</details>
 
 - 🟧 [How much experience do you have with GCD?](https://www.hackingwithswift.com/interview-questions/how-much-experience-do-you-have-with-gcd)
@@ -1245,16 +1407,69 @@
 
 	The answer depends on your experience with GCD. Here is how I would approach it:
 
-	>I have used GCD in multiple projects to perform time-consuming tasks in the background, such as network requests or file operations, without blocking the main thread and freezing the UI. I have used the main queue to handle UI-related tasks and global queues for general-purpose tasks  
+	>Grand Central Dispatch (GCD) is Apple's low-level concurrency and threading API used in Swift to that abstracts thread management, making concurrency easier and safer. I have used it in multiple projects to perform time-consuming tasks in the background, such as network requests or file operations, without blocking the main thread and freezing the UI. I have used the main queue to handle UI-related tasks and global queues for general-purpose tasks.
+
+	Here are a few code examples to demonstrate your knowledge of GCD:
+
+	1. **Running a task asynchronously on a background queue**
+		```swift
+		DispatchQueue.global(qos: .background).async {
+			// Do heavy work here
+
+			DispatchQueue.main.async {
+					// Update UI here
+			}
+		}
+		```
+
+	2. **Creating a custom serial queue**
+		```swift
+		let serialQueue = DispatchQueue(label: "com.example.mySerialQueue")
+		serialQueue.async {
+			// Tasks executed one by one in order
+		}
+		```
+
+	3. **Using `DispatchGroup` to wait for multiple async tasks**
+		```swift
+		let group = DispatchGroup()
+
+		group.enter()
+		DispatchQueue.global().async {
+			// Task 1
+			group.leave()
+		}
+
+		group.enter()
+		DispatchQueue.global().async {
+			// Task 2
+			group.leave()
+		}
+
+		group.notify(queue: DispatchQueue.main) {
+			print("Both tasks finished")
+		}
+		```
+
+	4. **Using a `DispatchSemaphore` to limit concurrency**
+		```swift
+		let semaphore = DispatchSemaphore(value: 2) // Limit to 2 concurrent tasks
+
+		DispatchQueue.global().async {
+			semaphore.wait()
+			// Perform task
+			semaphore.signal()
+		}
+		```		
 	</details>
 
 - 🟧 [What class would you use to play a custom sound in your app?](https://www.hackingwithswift.com/interview-questions/what-class-would-you-use-to-play-a-custom-sound-in-your-app)
 	<details>
 		<summary>Answer</summary>
 
-	I would use the `AVAudioPlayer` class in Swift.
+	I would use the `AVAudioPlayer` class in Swift. It's designed for playing audio files from your app bundle or file system. It supports formats like `.mp3`, `.wav`, `.m4a`, etc. and allows control over playback (play, pause, stop)
 
-	Here is an example code snippet that shows how to play a sound file named "mySoundFile.mp3" from the app's main bundle:
+	Here is an example code snippet that shows how to play a sound file named `mySoundFile.mp3` from the app's main bundle:
 
 	```swift
 	import AVFoundation
@@ -1280,7 +1495,19 @@
 
 	The answer depends on your experience with `NSAttributedString`. Here is how I would approach it:
 
-	>I have used it to display stylized text in views, such as `UILabel`, `UIButton` and `UITextView`. It allows us to apply attributes to specific parts of a string, such as font, color and paragraph style. It is useful for creating headings, bullet points or highlighted text. 
+	>`NSAttributedString` is a class used to create immutable (read-only) strings with rich text attributes (like fonts, colors, styles, etc.) attached to ranges of characters. I have used it to display stylized text in views, such as `UILabel`, `UIButton` and `UITextView`. It is useful for creating headings, bullet points or highlighted text.
+
+	Here is a code example for creating a `NSAttributedString`:
+
+	```swift
+	let attributedString = NSMutableAttributedString(string: "Hello, World!")
+
+	// Make "Hello" bold
+	attributedString.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 18), range: NSRange(location: 0, length: 5))
+
+	// Make "World" red
+	attributedString.addAttribute(.foregroundColor, value: UIColor.red, range: NSRange(location: 7, length: 5))
+	```
 	</details>
 
 - 🟧 [What is the purpose of GameplayKit?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-gameplaykit)
@@ -1308,6 +1535,37 @@
 	- Support for live broadcasting to popular streaming platforms
 	- Built-in support for sharing recorded videos via social media, messaging apps, and more
 	<br />
+
+	Here is a basic example for starting a recording:
+
+	```swift
+	import ReplayKit
+
+	let recorder = RPScreenRecorder.shared()
+
+	func startRecording() {
+		recorder.isMicrophoneEnabled = true
+		recorder.startRecording { error in
+			if let error = error {
+				print("Recording failed: \(error.localizedDescription)")
+			} else {
+				print("Recording started")
+			}
+		}
+	}
+	```
+
+ 	And stopping the recording:
+
+	```swift
+	recorder.stopRecording { previewVC, error in
+		if let previewVC = previewVC {
+			previewVC.previewControllerDelegate = self
+			// Present the preview so user can trim, save, or share
+			present(previewVC, animated: true)
+		}
+	}
+ 	```
 	
 	In short, ReplayKit is a useful tool for developers who want to give their users an easy way to share their app experiences with others, or for those who want to incorporate gameplay or app demo videos into their marketing efforts.
 	</details>
@@ -1327,6 +1585,16 @@
 	```
 
 	This would sort the array of people in ascending order based on their `name` property.
+
+	It is also useful for sorting Core Data fetch results by passing in `NSSortDescriptor`s to determine the sort order:
+
+	```swift
+	let request = NSFetchRequest<Person>(entityName: "Person")
+	let sortByName = NSSortDescriptor(key: "lastName", ascending: true, selector: #selector(NSString.localizedCaseInsensitiveCompare(_:)))
+	request.sortDescriptors = [sortByName]
+ 	```
+
+ 	It's encoraged to use `NSSortDescriptor` instead of a Sort cloure because it's more declarative and works well with Objective-C APIs like `NSArray`. Moreover, it's required for Core Data fetches and makes sorting logic reusable and composable.
 	</details>
 
 - 🟥 [Can you name at least three different `CALayer` subclasses?](https://www.hackingwithswift.com/interview-questions/can-you-name-at-least-three-different-calayer-subclasses)
@@ -1344,7 +1612,24 @@
 	<details>
 		<summary>Answer</summary>
 
-	`CADisplayLink` is a class in UIKit that links the screen refresh rate with the app's drawing loop. Its purpose is to synchronize an app's drawing with the device's display refresh rate, which is typically 60 frames per second. When a `CADisplayLink` object is added to the app's run loop, the system notifies the app each time the display is about to refresh. This allows the app to update its content before the screen is redrawn, ensuring smooth and fluid animations. `CADisplayLink` is commonly used in game development and other apps with complex graphics or animations.
+	`CADisplayLink` is a class in UIKit that creates a timer that synchronizes your app's rendering with the display's refresh rate (usually 60 or 120 Hz on modern iOS devices). When a `CADisplayLink` object is added to the app's run loop, the system notifies the app each time the display is about to refresh. This allows the app to update its content before the screen is redrawn, ensuring smooth and fluid animations.
+
+	Here is an example usage:
+
+	```swift
+	var displayLink: CADisplayLink?
+
+	func startDisplayLink() {
+		displayLink = CADisplayLink(target: self, selector: #selector(updateFrame))
+		displayLink?.add(to: .main, forMode: .default)
+	}
+
+	@objc func updateFrame() {
+		// Update animation frame, move objects, or redraw view
+	}
+	```
+
+	`CADisplayLink` is commonly used in game development and other apps with complex graphics or animations.
 	</details>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -3212,7 +3497,7 @@
 
 ## SwiftUI
 
-- 🟩 [How would you explain SwiftUI’s environment to a new developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-swiftuis-environment-to-a-new-developer)
+- 🟩 [How would you explain SwiftUI's environment to a new developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-swiftuis-environment-to-a-new-developer)
 	<details>
 		<summary>Answer</summary>
 	
