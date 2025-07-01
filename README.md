@@ -1803,7 +1803,7 @@
 	
 	This question is specific to the person being asked. However, here's what I would answer:
 	
-	>I make sure to check the Swift documentation and release notes regularly to see what changes have been made in each new version of the language. I also keep an eye on any announcements made each year at WWDC. 
+	>I make sure to check the Swift documentation and release notes regularly to see what changes have been made in each new version of the language. I also keep an eye on any announcements made each year at WWDC, as well as visiting websites focused on Swift content, such as [Swift by Sundell](https://www.swiftbysundell.com) and [Hacking with Swift](https://www.hackingwithswift.com).
 	</details>
 
 - 🟩 [How familiar are you with XCTest? Have you ever created UI tests?](https://www.hackingwithswift.com/interview-questions/how-familiar-are-you-with-xctest-have-you-ever-created-ui-tests)
@@ -1813,6 +1813,46 @@
 	This question is specific to the person being asked. However, here's what I would answer:
 	
 	>I'm very familiar with XCTest as it's a testing framework built into Xcode for unit testing. I have created UI tests by using the `XCUIApplication` API to launch the app and, then, using `XCUIElement` API to simulate user interactions with the UI, such as tapping buttons. Once this is settled, I use assertions to verify the expected behavior of the UI elements, such as checking if a label displays the correct text or if a button is enabled or disabled.
+	>
+	>Here is the code that reflects the process:
+	>
+	>```swift
+	>import XCTest
+	>
+	>class MyAppUITests: XCTestCase {
+	>
+	>	var app: XCUIApplication!
+	>
+	>	override func setUp() {
+	>		super.setUp()
+	>		continueAfterFailure = false
+	>
+	>		app = XCUIApplication()
+	>		app.launch()
+	>	}
+	>
+	>	func testButtonTapUpdatesLabel() {
+	>		// Simulate a user tapping a button
+	>		let button = app.buttons["SubmitButton"]
+	>		XCTAssertTrue(button.exists, "Submit button should exist")
+	>		XCTAssertTrue(button.isEnabled, "Submit button should be enabled")
+	>		button.tap()
+	>
+	>		// Verify that a label updates after tapping the button
+	>		let label = app.staticTexts["StatusLabel"]
+	>		XCTAssertTrue(label.exists, "Status label should exist")
+	>		XCTAssertEqual(label.label, "Submission Successful", "Label should display success message")
+	>	}
+	>
+	>	func testButtonIsDisabledInitially() {
+	>		// Verify that a button is disabled on app launch
+	>		let button = app.buttons["SubmitButton"]
+	>		XCTAssertTrue(button.exists)
+	>		XCTAssertFalse(button.isEnabled, "Submit button should be disabled at launch")
+	>	}
+	>}
+	>```
+
 	</details>
 
 - 🟩 [How has Swift changed since it was first released in 2014?](https://www.hackingwithswift.com/interview-questions/how-has-swift-changed-since-it-was-first-released-in-2014)
@@ -1822,10 +1862,9 @@
 	Since its first release in 2014, Swift has undergone significant changes and improvements. Some key changes include:
 
 	- **ABI Stability**: One of the most significant changes was the introduction of ABI (Application Binary Interface) stability with Swift 5.0. This enabled developers to write code in Swift that could be distributed as binary frameworks, making it easier to use Swift code in projects and reducing the size of binary files.
-	- **Language Evolution**: Swift has continued to evolve, with new features and improvements introduced with each new release. Some notable additions include better error handling, enhanced optionals, protocol extensions, and a more powerful switch statement.
-	- **Open Source**: Swift was open-sourced in 2015, which enabled developers to contribute to the language and the community to grow. Since then, Swift has become one of the fastest-growing programming languages, and many companies and organizations have adopted it for their projects.
-	- **Improved Interoperability**: Swift has improved its interoperability with other languages, making it easier to use Swift code with Objective-C, C, and other languages. This has been achieved through enhancements to the Swift runtime and the introduction of new bridging mechanisms.
-	- **Tooling and Infrastructure**: The Swift tooling and infrastructure have also seen significant improvements over the years, making it easier to build, test, and distribute Swift code. This includes improvements to Xcode, the Swift Package Manager, and the Swift REPL.
+	- **Language evolution**: Swift has continued to evolve, with new features and improvements introduced with each new release. Some notable additions include better error handling, enhanced optionals, protocol extensions, and a more powerful switch statement.
+	- **Open source**: Swift was open-sourced in 2015, which enabled developers to contribute to the language and the community to grow. Since then, Swift has become one of the fastest-growing programming languages, and many companies and organizations have adopted it for their projects.
+	- **Tooling and ecosystem growth**: The Swift tooling and infrastructure have also seen significant improvements over the years, making it easier to build, test, and distribute Swift code. This includes improvements to Xcode, the Swift Package Manager, and the introduction of SwiftUI.
 	</details>
 
 - 🟩 [If you could have Apple add or improve one API, what would it be?](https://www.hackingwithswift.com/interview-questions/if-you-could-have-apple-add-or-improve-one-api-what-would-it-be)
@@ -1861,7 +1900,7 @@
 
 	This question is specific to the person being asked. However, here's what I would answer:
 
-	>I haven't contributed to an open source project yet, but I have created open source apps that you can check on my GitHub account. As for iOS open source projects, I have uploaded the 100 Days of Swift course by Paul Hudson with all challenges and milestone projects made by me, a modified version of Sean Allen's GitHub Followers course and an app that connects to the OpenWeatherAPI to display the weather for a user-input location on a map along with 4 locations relative to the input location.   
+	>I have created open source projects that you can check on my GitHub account. Moreover, I have submitted pull requests that were merged into some projects such as Alamofire.
 	</details>
 
 - 🟩 [What process do you take to perform code review?](https://www.hackingwithswift.com/interview-questions/what-process-do-you-take-to-perform-code-review)
@@ -1875,7 +1914,8 @@
 	>3. **Test the code**: Make sure the code works as intended. Test different scenarios, and try to identify edge cases that might break the code. If we find a bug, report it, and suggest a fix.
 	>4. **Check for code quality**: Analyze the code for quality issues like complexity, duplication, and maintainability. Identify areas that could be improved, and suggest solutions to the problems we find.
 	>5. **Provide constructive feedback**: Provide feedback that is constructive, objective, and actionable. Use examples to illustrate our point, and suggest alternative solutions where appropriate. Avoid being overly critical or dismissive, and keep the feedback focused on improving the code.
-	>6. **Follow up**: After the code review, follow up with the developer to make sure they understood our feedback and have addressed the issues we raised. Encourage them to ask questions if they need clarification, and be open to discussing any concerns they might have.
+	>6. **Approve or request changes**: Approve if the code is ready to merge or request changes with clear guidance. Block only for correctness, security or design issues; not style nitpicks.
+ 	>7. **Follow up**: After the code review, follow up with the developer to make sure they understood our feedback and have addressed the issues we raised. Encourage them to ask questions if they need clarification, and be open to discussing any concerns they might have.
 	</details>
 
 - 🟧 [Have you ever filed bugs with Apple? Can you walk me through some?](https://www.hackingwithswift.com/interview-questions/have-you-ever-filed-bugs-with-apple-can-you-walk-me-through-some)
