@@ -1642,7 +1642,7 @@
 
 	The answer depends on your preference for creating UI layouts. Here is how I would approach it:
 
-	>I like to create them in code because it gives me more flexibility and control over the layout and can be useful for more complex and dynamic UIs. However, creating UI layouts in code can be more time-consuming, and you have to be tidy enough to avoid disorganized UI code that can lead to confusion with the team. Keep in mind that, if we use UIKit, there is no way to have a visual representation of what the final UI will be at runtime, so it's important to the code clean and organized.  
+	>I prefer creating them in code because it gives me more flexibility and control over the layout, which is useful for more complex and dynamic UIs. It's also easier to manage with version control and refactoring, especially with the introduction of SwiftUI and its declarative approach, which makes building layouts easier and more intuitive than with UIKit. Storyboards, on the other hand, are faster to prototype and easily support segues and Auto Layout constraints. However, they are prone to merge conflicts, and it's difficult to reuse views or create complex, dynamic UIs.
 	</details>
 
 - 🟩 [How would you add a shadow to one of your views?](https://www.hackingwithswift.com/interview-questions/how-would-you-add-a-shadow-to-one-of-your-views)
@@ -1696,12 +1696,13 @@
 	- **Declarative syntax**: SwiftUI uses a declarative syntax, which makes it easier to read and write code. Instead of describing the steps to create a UI, we simply declare the desired UI components and their properties, and SwiftUI takes care of the implementation details.
 	- **Preview canvas**: With SwiftUI, we can see a live preview of our UI as we create it. This helps us to quickly iterate on our design and catch any issues before compiling and running the app.
 	- **Cross-platform development**: SwiftUI can be used to build user interfaces for multiple platforms, including iOS, macOS, watchOS, and tvOS, with a single codebase. This can save time and reduce development costs for applications that need to be deployed on multiple platforms.
+	- **Better state management**: Built-in `@State`, `@Binding`, `@ObservedObject` make managing UI state reactive and easier to reason about.
 	- **Accessibility**: SwiftUI includes accessibility features such as VoiceOver and dynamic type, which makes it easier to build apps that are accessible to everyone.
 	<br />
 
 	Disadvantages of SwiftUI compared to UIKit:
 
-	- **Learning curve**: SwiftUI has a different syntax and paradigm compared to UIKit, so there is a learning curve for developers who are already familiar with UIKit.
+	- **Less documentation and community support**: Compared to UIKit, which has over a decade of documentation, tutorials, and StackOverflow questions, SwiftUI still lags.
 	- **Limited feature set**: SwiftUI is a newer technology compared to UIKit, so it doesn't yet have the same level of features and flexibility as UIKit.
 	- **Limited backwards compatibility**: SwiftUI requires a minimum deployment target of iOS 13 or macOS 10.15, which means that it can't be used for apps that need to support older operating systems.
 	</details>
@@ -1726,22 +1727,23 @@
 	<details>
 		<summary>Answer</summary>
 
-	The `Info.plist` file is a property list file that contains essential information about an app. It is used by the system to determine how our app interacts with the user and the system. The `Info.plist` file contains key-value pairs that describe various aspects of our app, such as its name, version number, icon files, supported devices, required capabilities, and much more.
+	The `Info.plist` (Information Property List) file in an iOS app contains metadata used by the system to configure and manage your app. You store app settings and configuration keys that the OS or certain APIs need at runtime. The `Info.plist` file contains key-value pairs that describe various aspects of our app, such as its name, version number, icon files, supported devices, required capabilities, and much more.
 		
 	Some examples of settings that can be stored in the `Info.plist` file include:
 
-	- App name and version number
-	- Supported device orientations
-	- Supported device types
-	- Required device capabilities
-	- Required background modes
-	- App icons and launch images
-	- URL schemes and document types
-	- Required permissions and entitlements
-	- Localizations and language settings
-	- App transport security settings
-	- Supported audio and video formats
-	- App extensions and plug-ins
+	- `CFBundleDisplayName`: App name
+	- `CFBundleIdentifier`: App identifier
+	- `CFBundleVersion`: App version
+	- `UISupportedInterfaceOrientations`: Supported device orientations
+	- `UIRequiredDeviceCapabilities`: Required device capabilities
+	- `UIBackgroundModes`: Required background modes
+	- `UILaunchStoryboardName`: App icons and launch images
+	- `CFBundleURLTypes`: URL schemes
+	- `CFBundleDocumentTypes`: Document types
+	- `NSCameraUsageDescription`: Required camera permissions
+	- `CFBundleDevelopmentRegion`: Localizations and language settings
+	- `NSAppTransportSecurity`: App transport security settings
+	- `CFBundleDocumentTypes`: Supported audio and video formats
 	<br />
 
 	In a nutshell, the `Info.plist` file is a powerful tool for configuring our app and communicating its requirements and capabilities to the system.
@@ -1762,11 +1764,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	Both `Color` in SwiftUI and `UIColor` in UIKit expect their values to be within the range of 0 to 1. If a color value is set outside this range, it will be automatically clamped to the closest valid value.
-
-	For example, if we create a `Color` with RGB values of (1.2, 0.5, 0.3), the resulting color will be (1.0, 0.5, 0.3), as the red value is clamped to the maximum value of 1.0.
-
-	Similarly, if we create a `UIColor` with RGB values of (256, 128, 64), the resulting color will be (1.0, 0.5, 0.25), as all three values are clamped to the maximum value of 1.0.
+	In the old days, values outside of 0 and 1 were clamped, or forced to 0 or 1, because they were meaningless. However, A standard sRGB color space clamps each color component—`red`, `green`, and `blue`—to a range of 0 to 1, but SwiftUI colors use an extended sRGB color space, so you can use component values outside that range. This makes it possible to create colors using the `Color.RGBColorSpace.sRGB` or `Color.RGBColorSpace.sRGBLinear` color space that make full use of the wider gamut of a diplay that supports `Color.RGBColorSpace.displayP3`.
 	</details>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
