@@ -1,5 +1,3 @@
-<div id="top"></div>
-
 <div align="center">
 	<img src="banner.png" alt="Logo" width="260" height="128">
 	<h1 align="center">iOS Interview Questions</h1>
@@ -2013,9 +2011,32 @@
 	1. **Identify the objects involved**: The first step is to identify the objects involved in the retain cycle. We can use Xcode's memory debugger, Instruments, to track down the objects and identify the relationships between them.
 	2. **Check the object relationships**: Once we have identified the objects, check the relationships between them. Look for strong references between the objects.
 	3. **Use `weak` or `unowned` references**: If we find a strong reference between two objects that is causing the retain cycle, we can break the cycle by using a `weak` or `unowned` reference instead.
-	4. **Use capture lists**: If we are using closures or blocks that are capturing objects and causing the retain cycle, we can use capture lists to break the cycle.
-	5. **Use a `weak` delegate**: If we have a delegate that is causing the retain cycle, we can make the delegate reference weak.
-	6. **Use `deinit` to clean up**: Finally, we can use the `deinit` method to clean up any resources that might be causing the retain cycle.
+		
+		```swift
+		class MyViewController: UIViewController {
+			var onComplete: (() -> Void)?
+
+			func loadData() {
+				onComplete = { [weak self] in
+						self?.doSomething()
+				}
+			}
+		}
+  		```
+
+	4. **Use a `weak` delegate**: If we have a delegate that is causing the retain cycle, we can make the delegate reference weak.
+
+		```swift
+		weak var delegate: SomeDelegate?
+  		```
+  
+	5. **Use `deinit` to clean up**: Finally, we can use the `deinit` method to clean up any resources that might be causing the retain cycle.
+
+		```swift
+		deinit {
+			print("MyViewController deinitialized")
+		}
+  		```
 	</details>
 
 - 🟧 [What is an efficient way to cache data in memory?](https://www.hackingwithswift.com/interview-questions/what-is-an-efficient-way-to-cache-data-in-memory)
@@ -2057,13 +2078,33 @@
 	<details>
 		<summary>Answer</summary>
 
-	When it comes to identifying and resolving battery life issues, there are several steps we can take to optimize the performance of an app and minimize its impact on the user's device. Here are some steps we can take:
+	Here's how you can do it effectively:
 
-	- **Optimize drawing**: Drawing can be a major drain on battery life, especially if the app is constantly redrawing the screen. To optimize drawing, consider using techniques such as layer masking, off-screen rendering, and Core Graphics to minimize the amount of drawing that needs to be done.
-	- **Batch network requests**: Network requests can also be a significant battery drain, especially if the app is making many small requests instead of a few larger ones. To optimize network performance, we need to consider batching requests whenever possible, and using techniques such as caching and compression to minimize the amount of data that needs to be transferred.
-	-  **Minimize work when the user isn't interacting with the app**: When the user isn't interacting with the app, it's important to minimize the amount of work that's being done. This includes things like suspending background tasks, pausing animations, and reducing the frequency of updates.
-	- **Use energy profiling tools**: Xcode includes a variety of energy profiling tools that can help us identify which parts of the app are using the most energy. By using these tools, we can identify and optimize the parts of the app that are having the biggest impact on battery life.
-	- **Test on real devices**: Finally, it's important to test the app on real devices to get an accurate sense of its impact on battery life. Different devices have different battery capacities and usage patterns, so it's important to test the app on a variety of devices to get a complete picture of its performance.
+	1. **Identify symptons or user reports**
+		- High battery drain when the app is running or after using specific features.
+		- Device feels hot
+		- Users report performance or battery issues in reviews or feedback.
+	2. **Profile with instruments**
+		Xcode tools to use:
+		- **Energy log**: Identifies which parts of the app are using the most energy. We have to identify spikes in energy use from CPU, GPU, networking, location and background activity.
+		- **Time profiler**: Shows CPU usage over time and pinpoints CPU-intensive code paths.
+		- **Network instruments**: Look for excessive or frequent requests.
+		- **Leaks and allocations**: Check for memory leaks that may cause unintended background processing.
+  	3. **Analyze common causes**
+		- **Excessive background activity**: When the user isn't interacting with the app, it's important to minimize the amount of work that's being done. This includes things like suspending background tasks, stop GPS tracking if not needed, and using `beginBackgroundTask` along with `backgroundTaskIdentifier` for background tasks.
+		- **High CPU/GPU usage**: Drawing can be a major drain on battery life, especially if the app is constantly redrawing the screen. To optimize drawing, consider using techniques such as layer masking, off-screen rendering, and Core Graphics to minimize the amount of drawing that needs to be done. In addition, heavy logic in main/UI thread can be battery-consuming, so it's important to offload work to background threads.
+		- **Frequent network calls**: Network requests can also be a significant battery drain, especially if the app is making many small requests instead of a few larger ones. To optimize network performance, we need to consider batching requests whenever possible, and using techniques such as throttling, caching and compression to minimize the amount of data that needs to be transferred.
+		- **Location services misuse**: Use significant location change or region monitoring when full GPS accuracy isn't needed. Also avoid using `startUpdatingLocation` when not needed.
+		- **Timers or background tasks**: Uncontrolled `Timer` firing while app is idle or unmanaged `DispatchSource`, `RunLoop`, or `CADisplayLink` are common causes. To fix this, we need to invalidate timers when not in use and use system callbacks/events when possible.
+		- **Push notifications**: Excessive silent push notifications wake up the app in the background, so we need to limit silent push usage; only use them when there's new data or real purpose.
+	4. **Implement fixes and re-test**
+		- Use instruments again after applying changes.
+		- Compare battery impact before and after.
+		- Test on real devices, not just the simulator.
+	- **Extra tips**
+		- Use `OSLog` for low-overhead logging when profiling energy or background activity.
+		- Respect system throttling—iOS aggressively limits background tasks, timers, and networking in low-power mode.
+		- Avoid keeping Bluetooth/Wi-Fi hardware active unnecessarily.
 	</details>
 
 - 🟧 [What steps do you take to identify and resolve crashes?](https://www.hackingwithswift.com/interview-questions/what-steps-do-you-take-to-identify-and-resolve-crashes)
@@ -2072,20 +2113,21 @@
 
 	Identifying and resolving crashes is a crucial part of app development, and there are several steps that can be taken to accomplish this:
 
-	1. **Reproduce the crash**: The first step is to reproduce the crash. Try to determine what the user was doing when the crash occurred and replicate the conditions that led to the crash. This can be done by looking at crash logs, user feedback, or using a debugging tool like Xcode's Instruments.
-	2. **Analyze the crash logs**: Once we have reproduced the crash, analyze the crash logs from, for example, the Xcode Console or Firebase Crashlytics. Look for any patterns or commonalities between the crashes. Determine if the crashes are related to a specific device, iOS version, or action.
-	3. **Debug the code**: Use a debugger like Xcode's LLDB to debug the code and identify the root cause of the crash. Look for memory leaks, null pointer exceptions, and other common programming errors that can cause crashes. We can also use breakpoints, `assert()` and `precondition()` to make sure that the data handled at a particular point in the app at runtime is correct. 
-	4. **Optimize the code**: Once we have identified the cause of the crash, optimize the code to prevent the crash from occurring in the future. This may involve refactoring the code, optimizing algorithms, or reducing memory usage.
-	5. **Test the fix**: After making changes to the code, test the fix to ensure that the crash no longer occurs. Use automated tests to verify the fix and perform manual testing to ensure that the app is functioning as expected.
+	1. **Capture the crash**: We can get crash reports from Xcode Organizer and Firebase Crashlytics. The key info to gather is the stack trace, the exception type, thread and symbol name, device OS version, device model, app version, and the reproduction steps (if known).
+	2. **Analyze the stack trace**: Look at Thread 0 or the crashing thread and look for the details that pinpoint the part of the code that is crashing. Look for common patterns like force unwrap, array out-of-bounds, nil object access or retain cycles leading to `EXC_BAD_ACCESS`.
+	3. **Reproduce the crash locally**: Try to determine what the user was doing when the crash occurred and replicate the conditions that led to the crash. Use breakpoints, `print()` / `debugPrint()`, or `NSLog()` to trace state, and `assert()` and `precondition()` to make sure that the data handled at a particular point in the app at runtime is correct. 
+	4. **Fix the root cause**: Once we have identified the cause of the crash, change the code to prevent the crash from occurring in the future. This may involve refactoring the code, optimizing algorithms, or reducing memory usage.
+	5. **Test the fix thoroughly**: After making changes to the code, test the fix to ensure that the crash no longer occurs. Use automated tests to verify the fix and perform manual testing to ensure that the app is functioning as expected.
+	6. **Monitor post-release**: Re-deploy the app with the fix and monitor crash frequency in Crashlytics (or similar).
 	</details>
 
 - 🟥 [How does Swift handle memory management?](https://www.hackingwithswift.com/interview-questions/how-does-swift-handle-memory-management)
 	<details>
 		<summary>Answer</summary>
 
-	Swift uses Automatic Reference Counting (ARC) for memory management. ARC automatically frees up memory that is no longer being used by keeping track of the number of references to each instance of an object. When the reference count of an object drops to zero, the object is deallocated.
+	Swift uses **Automatic Reference Counting (ARC)** for memory management. ARC automatically frees up memory that is no longer being used by keeping track of the number of references to each instance of an object. When the reference count of an object drops to zero, the object is deallocated. This is why structs and enums (value types) aren't involved—only classes use ARC.
 
-	ARC works by inserting code at compile-time that automatically manages the reference counting of objects. Swift tracks strong references, which keep an object alive as long as there is at least one strong reference to it, and weak and unowned references, which allow references to an object without keeping it alive.
+	ARC works by inserting code at compile-time that automatically manages the reference counting of objects. Swift tracks strong references, which keep an object alive as long as there is **at least one strong reference to it**, and `weak` and `unowned` references, which allow references to an object without keeping it alive.
 
 	Here's an example:
 
@@ -2102,31 +2144,152 @@
 			print("\(name) is being deinitialized")
 		}
 	}
-	
+
 	func testARC() {
+		// Declare three optional Person references
 		var person1: Person?
 		var person2: Person?
 		var person3: Person?
-		
-		person1 = Person(name: "Alice")
-		person2 = Person(name: "Bob")
-		person3 = Person(name: "Charlie")
-		
-		person1?.name // prints "Alice"
-		person2?.name // prints "Bob"
-		person3?.name // prints "Charlie"
-		
-		person1 = nil
-		person2 = nil
-		person3 = nil
+			
+		// ARC allocates memory and increases reference count to 1 for each new object
+		person1 = Person(name: "Alice")   // Prints: "Alice is being initialized"
+		person2 = Person(name: "Bob")     // Prints: "Bob is being initialized"
+		person3 = Person(name: "Charlie") // Prints: "Charlie is being initialized"
+			
+		// Accessing the `name` property to demonstrate objects are alive
+		person1?.name // "Alice"
+		person2?.name // "Bob"
+		person3?.name // "Charlie"
+			
+		// Set all references to nil
+		// ARC decreases reference count for each Person instance to 0
+		// Since no strong references remain, ARC deallocates the objects
+		person1 = nil  // Prints: "Alice is being deinitialized"
+		person2 = nil  // Prints: "Bob is being deinitialized"
+		person3 = nil  // Prints: "Charlie is being deinitialized"
 	}
-	
+
+	// Call the function — all ARC behavior happens within this scope
 	testARC()
 	```
 
-	In this example, we define a `Person` class with a `name` property and a `deinit` method that prints a message when the object is being deallocated. In the `testARC` function, we create three instances of `Person` and assign them to variables `person1`, `person2`, and `person3`. We then print the `name` property of each person, which confirms that they were initialized successfully.
+  	Nonetheless, ARC alone isn't enough to avoid all memory issues—particularly **retain cycles**. To prevent these cycles from causing memory leaks, Swift provides the following language features to allow developers to create references between objects without increasing the reference count, which helps ARC determine when it's safe to deallocate memory:
 
-	Finally, we set each variable to `nil`, which removes the strong reference to the corresponding instance of `Person`. Because there are no more strong references to these objects, ARC automatically deallocates them, calling the `deinit` method for each instance and printing a message indicating that the object is being deallocated.
+	- **Capture lists in closures**: Since closures are reference types and can outlive the scope in which they're defined, they may retain `self`, creating a retain cycle if `self` also holds a strong reference to the closure (like storing it as a property). To solve this, Swift allows us to use a capture list to explicitly define how variables should be captured. Using `[weak self]` or `[unowned self]` in the closure's capture list ensures that the closure doesn't keep a strong reference to the surrounding object. This breaks the cycle and allows memory to be freed properly when it's no longer needed.
+
+		```swift
+		class ViewModel {
+			var name: String = "Swift"
+			var onNameUpdate: (() -> Void)?
+	
+			func setupClosure() {
+				onNameUpdate = { [weak self] in
+					guard let self else { return }
+					print("Name is \(self.name)")
+				}
+			}
+	
+			deinit {
+				print("ViewModel deinitialized")
+			}
+		}
+		```
+
+	- **`weak` reference**: It's used when one object refers to another, but shouldn't keep it alive. For example, in a delegate pattern, a child object might have a reference to its parent. Making this reference `weak` ensures the child doesn't keep the parent alive indefinitely. `weak` references must always be declared as optional, since the object they point to can be deallocated at any time—and when that happens, the reference is automatically set to `nil`. This prevents dangling pointers and makes the code safe.
+
+		```swift
+		class Owner {
+			var pet: Pet?
+
+			deinit {
+				print("Owner deinitialized")
+			}
+		}
+
+		class Pet {
+			weak var owner: Owner?  // weak reference
+
+			deinit {
+				print("Pet deinitialized")
+			}
+		}
+
+		var john: Owner? = Owner()
+		var fluffy: Pet? = Pet()
+
+		john?.pet = fluffy
+		fluffy?.owner = john  // no strong reference cycle
+
+		john = nil
+		fluffy = nil
+
+		// Output:
+		// "Owner deinitialized"
+		// "Pet deinitialized"
+		```
+
+	- **`unowned` reference**: It's similar to `weak`, but it's used when the referring object is guaranteed to outlive the object it references. Unlike `weak`, an `unowned` reference is non-optional. This is a performance optimization, but it comes with a trade-off: if the referenced object is deallocated and the `unowned` reference is accessed, the app will crash. Therefore, you should only use unowned when you're certain of the ownership relationship—for instance, in closures where the lifecycle is tightly controlled. It's safer to just use `weak`, as `unowned` is rarely used because of making the app potentially crash.
+
+		```swift
+		class Customer {
+			var creditCard: CreditCard?
+	
+			deinit {
+				print("Customer deinitialized")
+			}
+		}
+	
+		class CreditCard {
+			unowned var owner: Customer  // unowned reference
+	
+			init(owner: Customer) {
+				self.owner = owner
+			}
+	
+			deinit {
+				print("CreditCard deinitialized")
+			}
+		}
+	
+		var john: Customer? = Customer()
+		john?.creditCard = CreditCard(owner: john!)  // No cycle
+	
+		john = nil
+	
+		// ✅ Output:
+		// "Customer deinitialized"
+		// "CreditCard deinitialized"
+		```
+
+		Here is a table summing up the key differences between `weak` and `unowned`:
+	
+		<table>
+			<tr>
+				<th>FEATURE</th>
+				<th><code>weak</code></th>
+				<th><code>unowned</code></th>
+			</tr>
+			<tr>
+				<td><strong>Optional</strong></td>
+				<td>Yes (<code>var x: Type?</code>)</td>
+				<td>No (<code>var x: Type</code>)</td>
+			</tr>
+			<tr>
+				<td><strong>Becomes nil</strong></td>
+				<td>Yes</td>
+				<td>No</td>
+			</tr>
+			<tr>
+				<td><strong>Safe access</strong></td>
+				<td>Optional binding</td>
+				<td>Unsafe if object dealloc'd</td>
+			</tr>
+			<tr>
+				<td><strong>Use when</strong></td>
+				<td>Referenced object may become <code>nil</code></td>
+				<td>Object must outlive the reference</td>
+			</tr>
+		</table>
 
 	Swift also has support for manual memory management using unsafe pointer types and memory allocation functions, but this is generally not recommended except for certain low-level system programming tasks.
 	</details>
@@ -2135,11 +2298,55 @@
 	<details>
 		<summary>Answer</summary>
 
-	ARC (Automatic Reference Counting) is a memory management system in Swift that automatically tracks and manages the allocation and deallocation of memory for our app's objects. ARC keeps track of how many references or pointers there are to an object in memory and automatically deallocates the object when there are no more references to it.
+	**Automatic Reference Counting (ARC)** is a memory management system in Swift that automatically tracks and manages the allocation and deallocation of memory for an app's objects. ARC keeps track of how many references or pointers there are to an object in memory and automatically deallocates the object when there are no more references to it.
 
 	In other words, when we create an object in Swift, ARC automatically assigns it a reference count of 1. Every time we create a new reference to the same object, for example by assigning it to a new variable or passing it as an argument to a function, the reference count is incremented by 1. When a reference to the object is removed, the reference count is decremented by 1. When the reference count reaches 0, ARC deallocates the object from memory.
 	
-	ARC makes memory management easier and less error-prone for developers because we don't have to manually keep track of how many references there are to an object and when to deallocate it. However, it's important to be aware of potential retain cycles, where objects hold strong references to each other, preventing them from being deallocated, and to use weak or unowned references in these cases.
+	ARC makes memory management easier and less error-prone for developers because we don't have to manually keep track of how many references there are to an object and when to deallocate it.
+
+	Here is an example:
+
+	```swift
+	class Person {
+		let name: String
+	
+		init(name: String) {
+			self.name = name
+			print("\(name) is being initialized")
+		}
+	
+		deinit {
+			print("\(name) is being deinitialized")
+		}
+	}
+	
+	var person: Person? = Person(name: "Alice")  // ARC count = 1
+	person = nil  // ARC count = 0 → deinit called, memory freed
+ 	```
+
+	When the last reference is set to `nil`, ARC knows the object is no longer needed and deallocates it.
+
+	Although ARC handles most memory management, it can't detect retain cycles, where two objects hold strong references to each other. This prevents ARC from deallocating them.
+
+	Here is an example of a retain cycle:
+
+	```swift
+	class Owner {
+		var pet: Pet?
+	}
+	
+	class Pet {
+		var owner: Owner?
+	}
+	```
+
+	If both `owner` and `pet` reference each other strongly, they keep each other alive—even when the rest of your code is done with them. To fix it, we can use `weak` or `unowned` to break the cycle:
+
+	```swift
+	class Pet {
+		weak var owner: Owner?  // now ARC won't retain the owner
+	}
+	```
 	</details>
 
 - 🟥 [What steps do you take to identify and resolve a memory leak?](https://www.hackingwithswift.com/interview-questions/what-steps-do-you-take-to-identify-and-resolve-a-memory-leak)
@@ -2148,30 +2355,103 @@
 
 	Here are the steps I would take to identify and resolve a memory leak:
 
-	1. **Use a memory profiler**: The first step is to use a memory profiler tool such as Xcode's Instruments or third-party tools like Heapshot or Leak Detective to identify the source of the leak.
-	2. **Analyze the leaked objects**: Once the memory profiler identifies the source of the leak, analyze the leaked objects and their ownership graph to understand the root cause.
-	3. **Check for strong reference cycles**: Look for strong reference cycles between objects that can prevent the system from releasing the memory. We can use tools like the Memory Graph Debugger to visualize object relationships and identify cycles.
-	4. **Use `weak` references**: Use weak or unowned references where appropriate to break reference cycles and allow the system to release memory.
-	5. **Avoid using singletons**: Singletons can lead to memory leaks if not implemented correctly. Avoid using singletons or ensure they are properly implemented.
-	6. **Use autorelease pools**: Use autorelease pools to ensure temporary objects are released quickly and do not accumulate.
-	7. **Check for resource-intensive operations**: If the memory leak is not related to reference cycles, check for resource-intensive operations such as image processing or network requests that may cause memory to be consumed rapidly.
-	8. **Optimize code**: Optimize code by minimizing the creation of unnecessary objects, reducing the scope of variables, and avoiding retain cycles.
-	9. **Test the fix**: Once we have identified the cause of the leak and applied a fix, test the app to ensure the issue has been resolved and there are no side effects.
+	1. **Recognize the symptons**: Look for signs like increasing memory over time, objects not getting deallocated, app slowdown or crashes due to memory pressure and `deinit` methods never being called.
+	2. **Use Xcode's memory debugging tools**:
+		- **Memory graph debugger**: Run the app in debug mode and click on the **Memory graph** icon to open the memory graph debugger. There, we need to look for orphaned objects still in memory, reference cycles (shown as lines in the graph), and objects that should be deallocated but persist.
+		- **Allocations & Leaks**: Open **Xcode > Services > Allocations & Leaks**. To start a session, run the app normally and look for retained objects that never go away. Use **Mark generation** to compare before/after memory states.
+	3. **Analyze the retention graph**: Use the memory graph to trace what's retaining the leaked object. Most leaks are caused by closures capturing `self` strongly, delegates not marked `weak`, and static singletons holding onto instances.
+	4. **Fix common memory leaks patterns**
+		- **Closures**
+			Closures retain captured variables by default. Use capture lists:
+
+			```swift
+			// ⛔ Retain cycle
+			self.callback = {
+				self.doSomething()
+			}
+			
+			// ✅ Fixed
+			self.callback = { [weak self] in
+				self?.doSomething()
+			}
+			```
+
+		- **Closures**
+			Always declare delegates as `weak` to avoid strong reference cycles:
+
+			```swift
+			weak var delegate: SomeDelegate?
+			```
+
+		- **Parent–child cycles**
+			For objects that reference each other (e.g., `Parent` and `Child`), make one reference `weak`:
+
+			```swift
+			class Child {
+				weak var parent: Parent?
+			}
+			```
+	5. **Test the fix**: Re-run the memory graph and the Allocations & Leaks service to ensure that the objects are properly deallocated (`deinit` prints, gone from graph). Also, monitor the app during normal usage, especially screen transitions, to check that there are no memory leaks.
+	6. **Prevent future leaks**: Use `deinit` to track object lifecycles and be mindful of how closures and async code capture `self`. Also use `weak` or `unowned` as needed, as well as avoiding strong references in singletons or static variables unless necessary.
 	</details>
 
 - 🟥 [What steps do you take to identify and resolve performance issues?](https://www.hackingwithswift.com/interview-questions/what-steps-do-you-take-to-identify-and-resolve-performance-issues)
 	<details>
 		<summary>Answer</summary>
 
-	Identifying and resolving performance issues can be a complex and iterative process. Here are some general steps that can be taken:
+	Identifying and resolving performance issues can be a complex and iterative process. It involves a methodical approach combining profiling tools, code analysis, and targeted optimization. Here are some general steps that can be taken:
 
-	1. **Identify the problem**: Before we can fix a performance issue, we need to identify what is causing it. Use profiling tools such as Instruments to identify which parts of our code are taking the most time and resources. Look for patterns in the data and try to narrow down the problem as much as possible.
-	2. **Optimize algorithms and data structures**: Once we have identified the problem, look for ways to optimize the code that is causing the issue. This may involve using more efficient algorithms or data structures, or reorganizing the code to reduce unnecessary work.
-	3. **Optimize I/O and network access**: If our app is doing a lot of I/O or network access, look for ways to optimize these operations. This may involve reducing the frequency of network requests or using more efficient I/O methods.
-	4. **Reduce memory usage**: Memory usage can be a common cause of performance issues, especially on mobile devices. Look for ways to reduce the amount of memory our app is using, such as by reusing objects or releasing resources when they are no longer needed.
-	5. **Use background processing**: If our app is doing a lot of work in the foreground, consider moving some of this work to the background to improve performance. This may involve using GCD or `NSOperationQueue` to manage concurrent tasks.
-	6. **Test and iterate**: Once we have made changes to our code to improve performance, test the app again using profiling tools to see if the changes have had the desired effect. Iterate on the process until we are satisfied with the app's performance.
-	7. **Consider hardware limitations**: Remember that different devices have different hardware capabilities, and what works well on one device may not work as well on another. Be sure to test our app on a range of devices to ensure that it performs well on all of them.
+	1. **Recognize the symptons**: Look for issues like slow app launch, laggy scrolling ir UI stutters, delayed button taps or animations, and high CPU/GPU usage.
+	2. **Profile with Xcode instruments**: Launch Xcode instruments to collect real performance data. The key instruments are the following:
+		- **Time Profiler**
+			- Shows where your app spends time (CPU usage).
+			- Identify heavy methods or long-running tasks.
+		- **Core Animation**
+			- Detects dropped frames or rendering bottlenecks.
+			- Watch for spikes in layout, compositing, or offscreen rendering.
+		- **Allocations & Leaks**
+			- Detect excessive memory allocations.
+			- Prevent memory churn or leaks causing slowdowns.
+		- **Energy Log**
+			- Detect high power usage from CPU, GPU, networking, or background work.
+	3. **Isolate the bottleneck**: Look for patterns in long function calls, synchronous work on the main thread (e.g., image decoding, JSON parsing), nested loops or large view hierarchies, and blocking network or file operations. Use Xcode's Debug Navigator (<kbd>⌘7</kbd>) to watch CPU, memory, and FPS live.
+	4. **Fix common performance issues**
+	   	- **Heavy work on main thread**
+
+			Move work off the main queue:
+			
+			```swift
+			DispatchQueue.global().async {
+				let result = performHeavyTask()
+				DispatchQueue.main.async {
+					self.updateUI(with: result)
+				}
+			}
+	  		```
+  
+		- **Inefficient algorithms or loops**
+			- Avoid `O(n^2)` loops.
+			- Use sets/dictionaries instead of arrays for lookups.
+			- Cache repeated calculations.
+		
+		- **UI overdraw or slow rendering**
+			- Flatten view hierarchies.
+			- Avoid unnecessary transparency, shadows, and masks.
+			- Use rasterization carefully.
+			- Profile with Core Animation.
+		
+		- **Image rocessing**
+			- Resize or decode images off the main thread.
+			- Use tools like `SDWebImage`, `ImageIO`, or Core Graphics smartly.
+			- Use `NSCache` for in-memory caching.
+		
+		- **Networking**
+			- Avoid redundant requests or polling.
+			- Use background fetch or batching.
+			- Cache responses where appropriate.
+
+	5. **Test and iterate**: Once we have made changes to our code to improve performance, test the app again using profiling tools to see if the changes have had the desired effect. Iterate on the process until we are satisfied with the app's performance.
+	6. **Consider hardware limitations**: Remember that different devices have different hardware capabilities, and what works well on one device may not work as well on another. Be sure to test our app on a range of devices to ensure that it performs well on all of them.
 	</details>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
