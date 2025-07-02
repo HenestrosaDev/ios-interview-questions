@@ -2464,7 +2464,7 @@
 
 	The answer depends on your experience with Face ID or Touch ID. Here is how I would approach it:
 
-	>I have used them as an alternative way for the user to log in an application that had sensible data such as bank movements and stock positions. I have also used them in an application that stored sensible information in the keychain to which the user could access by logging in using Face ID or Touch ID.   
+	>I have used them as an alternative login method for applications that stored sensitive information, such as bank transactions and stock positions. I have also used them in an application that stored sensitive information in the keychain, which users could access by logging in with Face ID or Touch ID.
 	</details>
 
 - 🟩 [How would you explain App Transport Security to a new iOS developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-app-transport-security-to-a-new-ios-developer)
@@ -2503,7 +2503,7 @@
 
 	The answer depends on your experience with the keychain. Here is how I would approach it:
 	
-	>I have used the Keychain Services API to store and retrieve sensible data of an app, such as user passwords and API tokens. It's very convenient to use an access control mechanism along with the keychain, such as requiring a passcode or biometric authentication, to ensure that only authorized users can access the data.
+	>I have used the iOS Keychain to securely store an retrieve sensitive data, such as authentication tokens or user credentials. I ensure that the keychain items use appropriate accessibility levels depending on the use case—for example, `.whenUnlocked` for tokens that should only be available when the device is unlocked, or `.whenPasscodeSetThisDeviceOnly` with `.userPresence` to add biometric protection via Face ID or Touch ID. It's very convenient to use an access control mechanism along with the keychain, such as requiring a passcode or biometric authentication, to ensure that only authorized users can access the data.
 	</details>
 
 - 🟧 [How would you calculate the secure hash value for some data?](https://www.hackingwithswift.com/interview-questions/how-would-you-calculate-the-secure-hash-value-for-some-data)
