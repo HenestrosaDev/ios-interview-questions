@@ -2281,8 +2281,8 @@
 			</tr>
 			<tr>
 				<td><strong>Safe access</strong></td>
-				<td>Optional binding</td>
-				<td>Unsafe if object dealloc'd</td>
+				<td>Safe (optional binding)</td>
+				<td>Crashes if accessed after dealloc</td>
 			</tr>
 			<tr>
 				<td><strong>Use when</strong></td>
@@ -2539,7 +2539,7 @@
 	<details>
 		<summary>Answer</summary>
 	 
-	In Swift, we can compare two tuples to ensure their values are identical using the `==` operator. The `==` operator returns `true` if the corresponding elements of the tuples are equal, and `false` otherwise.
+	In Swift, we can compare two tuples to ensure their values are identical using the `==` operator, **as long as the types inside the tuples conform to `Equatable`**. The `==` operator returns `true` if the corresponding elements of the tuples are equal, and `false` otherwise.
 
 	Here's an example: 
 	
@@ -2549,23 +2549,17 @@
 	let tuple3 = (2, "world")
 
 	if tuple1 == tuple2 {
-		print("tuple1 and tuple2 are identical")
+		print("tuple1 and tuple2 are identical")  // ✅ printed
 	} else {
-		print("tuple1 and tuple2 are different")
+		print("tuple1 and tuple2 are different")  // ❌ not printed
 	}
 
 	if tuple1 == tuple3 {
-		print("tuple1 and tuple3 are identical")
+		print("tuple1 and tuple3 are identical")  // ❌ not printed
 	} else {
-		print("tuple1 and tuple3 are different")
+		print("tuple1 and tuple3 are different")  // ✅ printed
 	}
 	```
-	
-	In this example, we define three tuples: `tuple1`, `tuple2`, and `tuple3`. We then use the `==` operator to compare `tuple1` and `tuple2`, and print the result. Since both tuples have the same values, the `==` operator returns `true` and we print "**tuple1 and tuple2 are identical**".
-
-	Next, we use the `==` operator to compare `tuple1` and `tuple3`, and print the result. Since the values of the two tuples are different, the `==` operator returns false, and we print "**tuple1 and tuple3 are different**".
-
-	So, in summary, to compare two tuples and ensure their values are identical, we can simply use the `==` operator.
 	</details>
 
 - 🟩 [How would you explain operator overloading to a junior developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-operator-overloading-to-a-junior-developer)
@@ -2589,28 +2583,20 @@
 	Here's an example of how we could use the `+` operator with a custom class `Vector2D` that represents a 2D vector:
 	
 	```swift
-	class Vector2D {
+	struct Vector2D {
 		var x: Double
 		var y: Double
 
-		init(x: Double, y: Double) {
-			self.x = x
-			self.y = y
+	 	// Define the + operator for Vector2D
+		static func +(lhs: Vector2D, rhs: Vector2D) -> Vector2D {
+			return Vector2D(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
 		}
-	}
-
-	// Define the + operator for Vector2D
-	static func +(lhs: Vector2D, rhs: Vector2D) -> Vector2D {
-		return Vector2D(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
 	}
 
 	let v1 = Vector2D(x: 1.0, y: 2.0)
 	let v2 = Vector2D(x: 3.0, y: 4.0)
-
-	let v3 = v1 + v2 // v3 is now a Vector2D with x=4.0 and y=6.0
+	let result = v1 + v2  // Vector(x: 4.0, y: 6,0)
 	```
-	
-	In this example, we define the `+` operator for `Vector2D` by adding the `x` and `y` components of the two vectors. We can then use the + operator to add two `Vector2D` instances together to get a new `Vector2D` instance with the sum of the `x` and `y` properties.
 	 </details>
 	 
 - 🟩 [How would you explain protocols to a new Swift developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-protocols-to-a-new-swift-developer)
@@ -2618,6 +2604,8 @@
 		<summary>Answer</summary>
 		
 	In Swift, a protocol is a blueprint of methods, properties, and other requirements that a class, structure, or enumeration can conform to. Essentially, a protocol defines a set of rules or guidelines that a type must follow in order to implement that protocol.
+
+	To establish a real-world analogy to protocols, think of them as a power plug interface. The wall outlet defines the shape (contract), and any device that wants to plug in (conform to the protocol) has to match that shape. However, the function of the device is irrelevant as long as it plugs in the same way.
 		
 	Protocols are similar to interfaces in other programming languages, but with additional capabilities. They allow us to define a set of methods and properties that a type must implement, but they can also provide default implementations for some methods and allow us to add constraints on associated types.
 
@@ -2643,7 +2631,7 @@
 		
 	In this example, we define a class called `Circle` that conforms to the `Drawable` protocol by implementing the `draw()` method.
 
-	We can also use protocols as types, which allows we to pass any object that conforms to a specific protocol as a parameter or store it as a property. For example:
+	We can also use protocols as types, which allows us to pass any object that conforms to a specific protocol as a parameter or store it as a property. For example:
 
 	```swift
 	func drawObject(object: Drawable) {
@@ -2652,13 +2640,12 @@
 	```
 		
 	In this example, we define a function called `drawObject()` that takes an object conforming to the `Drawable` protocol as a parameter. The function then calls the `draw()` method on the object, which is guaranteed to be implemented by any object conforming to the `Drawable` protocol.
-		
-	Protocols are a powerful feature of Swift that allow we to define a set of rules or guidelines that types must follow in order to implement a specific behavior. They provide a flexible and extensible way to define interfaces between types and to write reusable code.
 	</details>
 
 - 🟩 [In which situations do Swift functions not need a `return` keyword?](https://www.hackingwithswift.com/interview-questions/in-which-situations-do-swift-functions-not-need-a-return-keyword)
 	<details>
 		<summary>Answer</summary>
+
 	In Swift, functions may not need a `return` keyword in two main situations:
 			
 	1. **Void functions**: If a function doesn't need to return a value, we can declare it as a "void" function by specifying the return type as `Void` or `()` (an empty tuple). In this case, we don't need to use the return keyword at all. For example:
@@ -2687,41 +2674,41 @@
 	
 	2. **Implicit returns**: If a function consists of a single expression, we can use an "implicit return" and omit the return keyword. The expression's value will be automatically returned as the result of the function. For example:
 
-	```swift
-	func square(_ x: Int) -> Int {
-		x * x
-	}
+		```swift
+		func square(_ x: Int) -> Int {
+			return x * x
+		}
+	
+		func sayHello() -> String {
+			return  "Hello, world!"
+		}
+		```
 
-	func sayHello() -> String {
-		"Hello, world!"
-	}
-	```
-
-	In both cases, we can omit the `-> Int` or `-> String` part and simply declare the function as:
-
-	```swift
-	func square(_ x: Int) -> Int {
-		x * x
-	}
-
-	func sayHello() -> String {
-		"Hello, world!"
-	}
-	```
-
-	Note that implicit returns can only be used for single-expression functions. If a function has multiple expressions, we must use the `return` keyword to explicitly return a value.
+		In both cases, we can omit the `-> Int` or `-> String` part and simply declare the function as:
+	
+		```swift
+		func square(_ x: Int) -> Int {
+			x * x
+		}
+	
+		func sayHello() -> String {
+			"Hello, world!"
+		}
+		```
+	
+		Note that implicit returns can only be used for single-expression functions. If a function has multiple expressions—more than one line—, we must use the `return` keyword to explicitly return a value.
 	</details>
 
 - 🟩 [What are property observers?](https://www.hackingwithswift.com/interview-questions/what-are-property-observers)
 	<details>
 		<summary>Answer</summary>
 
-	Property observers are a feature that allows us to observe and respond to changes in a property's value. Property observers are code blocks that get executed automatically whenever a property's value is about to be set or has just been set.
+	Property observers in Swift let us monitor and respond to changes in a property's value—_before or after_ it's set. They're useful for triggering some side-effect when a property changes, validating or log value changes, and updating dependent data or UI.
 	
-	There are two types of property observers: `willSet` and `didSet`.
+	There are two types of property observers:
 	
-	- `willSet`: The `willSet` observer gets called just before the value of the property is about to be set. It receives the new value as a parameter, which we can use to perform some action before the value is set.
-	- `didSet`: The `didSet` observer gets called immediately after the value of the property has been set. It receives the old value as a parameter, which we can use to perform some action after the value has been set.
+	- `willSet`: Called **just before** the new value is set. It receives the new value as a parameter, which we can use to perform some action before the value is set.
+	- `didSet`: Called **immediately after** the new value is set. It receives the old value as a parameter, which we can use to perform some action after the value has been set.
 	<br />
 
 	Here is an example:
@@ -2739,34 +2726,57 @@
 	}
 
 	let temp = Temperature()
-	temp.celsius = 25.0 // Output: About to set temperature to 25.0 degrees Celsius
-											//         Temperature was set from 0.0 to 25.0 degrees Celsius
-	temp.celsius = 30.0 // Output: About to set temperature to 30.0 degrees Celsius
-											//         Temperature was set from 25.0 to 30.0 degrees Celsius
+
+	temp.celsius = 25.0
+	// About to set temperature to 25.0 degrees Celsius
+	// Temperature was set from 0.0 to 25.0 degrees Celsius
+
+	temp.celsius = 30.0
+	// About to set temperature to 30.0 degrees Celsius
+	// Temperature was set from 25.0 to 30.0 degrees Celsius
 	```
 
-	In this example, we define a `Temperature` class with a `celsius` property that has both `willSet` and `didSet` observers. Whenever the value of `celsius` is about to be set, the `willSet` observer is called with the new value as a parameter. Similarly, whenever the value of `celsius` has been set, the `didSet` observer is called with the old value as a parameter.
-
-	In the example, we create an instance of the `Temperature` class and set the `celsius` property to two different values. Each time the property is set, the appropriate observer methods are called with the appropriate values.
+	Note that property observer **do not trigger** during initialization. Also, you **cannot use observers** on computed properties (those with `get`/`set`).
 	</details>
 
 - 🟩 [What are raw strings?](https://www.hackingwithswift.com/interview-questions/what-are-raw-strings)
 	<details>
 		<summary>Answer</summary>
 
-	A raw string is a string literal that allows us to include characters that would normally be interpreted as escape sequences, without the need for additional escaping. In Swift, they are enclosed in triple quotes (`"""`), and any characters within the string are interpreted literally, except for the closing triple quotes.
+	Raw strings in Swift are string literals that allow us to include characters like backslashes (`\`) and quotes (`"`) **without needing to escape them**. They're especially useful when working with **regex**, **file paths**, or **complex strings** where escaping would make the code hard to read.
 
-	Here's an example of a raw string in Swift:
+	Normally, we have to escape certain characters in strings:
 
 	```swift
-	let rawString = """
-	This is a raw string.
-	It can include "quotes" and newlines.
-	You don't need to escape them.
-	"""
+	let text = "This is a \"quoted\" word and a backslash: \\"
 	```
 
-	In this example, the `rawString` variable is assigned a raw string literal, which contains multiple lines of text, including double quotes and a newline character. Because the string is enclosed in triple quotes, the quotes and newline are interpreted literally, without the need for additional escaping.
+	With raw strings, we can write the same thing **without escaping**:
+
+	```swift
+	let rawText = #"This is a "quoted" word and a backslash: \"#
+	```
+
+	Raw strings are wrapped in **`#"` and `"#`** instead of just `"`.
+
+	We can even use **multiple `#` signs** if the string includes `#` characters:
+
+	```swift
+	let tricky = ##"String with a # and a quote: "#cool""##
+	```
+
+	To include interpolated values in a raw string, **match the number of `#` signs**:
+
+	```swift
+	let name = "Alice"
+	let greeting = #"Hello, \#(name)!"#  // Outputs: Hello, Alice!
+	```
+
+	It's better to use raw strings:
+	- Regex patterns (e.g. `"\\d{3}" → #"\d{3}"#`).
+	- File paths with backslashes.
+	- Copy-pasting JSON/XML or other code into strings.
+	- Reducing backslash overload in complex literals.
 	</details>
 
 - 🟩 [What does the `#error` compiler directive do?](https://www.hackingwithswift.com/interview-questions/what-does-the-error-compiler-directive-do)
@@ -2785,17 +2795,17 @@
 
 	```swift
 	#if os(macOS)
-		// Do some macOS-specific stuff
+	// Do some macOS-specific stuff
 	#elseif os(iOS)
-		// Do some iOS-specific stuff
+	// Do some iOS-specific stuff
 	#else
-		#error("Unsupported platform")
+	#error("Unsupported platform")
 	#endif
 	```
 	
-	In this example, the code checks the operating system using the `os` compiler directive. If the OS is macOS or iOS, it executes the appropriate code. If the OS is neither of those, it generates a compile-time error with the message "Unsupported platform".
+	In this example, the code checks the operating system using the `os` compiler directive. If the OS is macOS or iOS, it executes the appropriate code. If the OS is neither of those, it generates a compile-time error with the message `Unsupported platform`.
 
-	Using the #error directive can be helpful in catching issues early on in the development process, by preventing code that is not compatible with a particular platform or environment from being compiled.
+	Using the `#error` directive can be helpful in marking unfinished features during development, preventing code from compiling in unsupported conditions, flagging incomplete platform-specific branches, and enforcing checks during manual configuration.
 	</details>
 
 - 🟩 [What does the `#if swift` syntax do?](https://www.hackingwithswift.com/interview-questions/what-does-the-if-swift-syntax-do)
@@ -2810,11 +2820,11 @@
 
 	```swift
 	#if swift(>=5.0)
-		// Code that is only available in Swift 5.0 or later
+	// Code that is only available in Swift 5.0 or later
 	#elseif swift(>=4.0)
-		// Code that is only available in Swift 4.0 or later
+	// Code that is only available in Swift 4.0 or later
 	#else
-		// Code that is only available in earlier versions of Swift
+	// Code that is only available in earlier versions of Swift
 	#endif
 	```
 
@@ -2827,7 +2837,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, the `assert()` function is used to assert that a certain condition is true during runtime. If the condition evaluates to `false`, an assertion failure will occur, causing the program to terminate immediately.
+	In Swift, the `assert()` function is used to assert that a certain condition is `true` during runtime. If the condition evaluates to `false`, an assertion failure will occur, causing the program to terminate immediately.
 
 	The syntax for the `assert()` function is as follows:
 
@@ -2845,53 +2855,44 @@
 		return a / b
 	}
 
-	let result = divide(10, by: 5) // Returns 2
-	let invalidResult = divide(10, by: 0) // Assertion failure: "Cannot divide by zero"
+	let result = divide(10, by: 5)  // Returns 2
+	let invalidResult = divide(10, by: 0)  // ❌ Assertion failure: "Cannot divide by zero"
 	```
 
 	In this example, the `assert()` function is used to ensure that the divisor (`b`) is not zero when dividing `a` by `b`. If the divisor is zero, the assertion fails with the message "Cannot divide by zero", and the program terminates immediately.
 
-	The `assert()` function is a powerful tool for catching programming errors early on during runtime, and for ensuring that certain conditions are met before executing important code. It should be used judiciously to catch errors during development, but should be disabled or removed from production code to avoid unnecessary crashes.
+	The `assert()` function in Swift is used to **check assumptions during development**. If the condition we pass to `assert()` evaluates to `false`, it **stops the program at runtime** and prints an error message—but only in **debug builds**.
 	</details>
 
 - 🟩 [What does the `canImport()` compiler condition do?](https://www.hackingwithswift.com/interview-questions/what-does-the-canimport-compiler-condition-do)
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, the `canImport()` compiler condition is used to check whether a certain module can be imported. This is useful when we want to conditionally import a module based on whether it is available or not.
+	The `canImport()` compiler condition in Swift is used to check at **compile time** whether a module (like a framework or library) is available to import on the current platform or build configuration.
 
 	The syntax for the `canImport()` condition is as follows:
 
 	```swift
-	#if canImport(moduleName)
-		// Code that will be executed if the module can be imported
-	#else
-		// Code that will be executed if the module cannot be imported
+	#if canImport(ModuleName)
+	import ModuleName
 	#endif
 	```
 	
-	In this syntax, `moduleName` is the name of the module that we want to check for. If the module can be imported, the code in the first block will be executed; otherwise, the code in the second block will be executed.
+	If the specified module can be imported, the code inside the block is compiled. If it's not available, the block is skipped and no compile error occurs.
 
 	Here's an example of how we might use the `canImport()` condition:
 
 	```swift
-	#if canImport(FoundationNetworking)
-		import FoundationNetworking
-
-		let url = URL(string: "https://www.example.com")!
-		let request = URLRequest(url: url)
-
-		let task = URLSession.shared.dataTask(with: request) { data, response, error in
-			// ...
-		}
-
-		task.resume()
-	#else
-		// Fallback code for older versions of Swift that do not have FoundationNetworking
+	#if canImport(UIKit)
+	import UIKit
+	#elseif canImport(AppKit)
+	import AppKit
 	#endif
 	```
 	
-	This ensures that the `URLSession` code is only executed when the `FoundationNetworking` module is available.
+	This is useful when writing cross-platform Swift code (e.g., for iOS, macOS, Linux), where some modules exist only on certain platforms.
+
+	Bear in mind that if we try to import a module without wrapping it in `#if canImport`, and the module doesn't exist, the code will fail to compile.
 	</details>
 
 - 🟩 [What does the `CaseIterable` protocol do?](https://www.hackingwithswift.com/interview-questions/what-does-the-caseiterable-protocol-do)
@@ -2917,18 +2918,30 @@
 	
 	In this example, the `CompassDirection` enumeration is defined with four cases: `north`, `south`, `east`, and `west`. By conforming the enumeration to `CaseIterable`, the `allCases` property is automatically generated. The `for` loop at the bottom of the example uses this property to iterate over all the enumeration's cases and print them to the console.
 
-	`CaseIterable` is especially useful when we need to perform operations on all cases of an enumeration, for example, when we need to display all the options in a UI or validate that a user input is one of the valid cases.
+	`CaseIterable` is useful for:
+	- Populating UI components (e.g., `UIPickerView`, `SegmentedControl`).
+	- Displaying all options in a `Form` or `List` (especially in SwiftUI).
+	- Building settings screens, filters, or test cases.
+	- Serializing/deserializing enums.
+
+	Note that `CaseIterable` only works with enums **without associated values**. For enums with associated values, we must implement `allCases` manually:
+
+	```swift
+	enum Status {
+		case success(code: Int)
+		case failure(reason: String)
+		// ❌ Not CaseIterable by default
+	}
+ 	```
 	</details>
 
 - 🟩 [What does the `final` keyword do, and why would you want to use it?](https://www.hackingwithswift.com/interview-questions/what-does-the-final-keyword-do-and-why-would-you-want-to-use-it)
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, the `final` keyword is used to indicate that a class, property, or method cannot be subclassed, overridden, or modified by any other class or method.
+	In Swift, the `final` keyword indicates that a class, property, or method cannot be subclassed, overridden, or modified by other classes or methods through inheritance.
 
-	When we declare a class as `final`, it means that we are not going to subclass it in the future. When we declare a method or property as `final`, it means that we are not going to override it in any subclass.
-
-	Here are some examples:
+	Here is an example:
 
 	```swift
 	final class MyClass {
@@ -2957,27 +2970,26 @@
 	<details>
 		<summary>Answer</summary>
 
-	The nil coalescing operator (`??`) is a shorthand way of unwrapping an optional value in Swift. Its purpose is to provide a default value for an optional if it is `nil`, so that we can avoid unexpected crashes or errors when working with optionals.
+	The nil coalescing operator (`??`) in Swift provides a default value when an optional is nil. It's a concise way to safely unwrap an optional with a fallback.
 
 	Here's the syntax for the nil coalescing operator:
 
 	```swift
-	a ?? b
+	let result = optionalValue ?? defaultValue
 	```
 	
-	In this expression, `a` is an optional value, and `b` is a default value that will be used if `a` is `nil`. If `a` is not `nil`, its value will be unwrapped and returned. If `a` is `nil`, then the value of `b` will be returned instead.
+	- If `optionalValue` is non-nil, it's unwrapped and returned.
+	- If `optionalValue` is nil, `defaultValue` is returned instead.
 
 	Here's an example:
 
 	```swift
-	let optionalName: String? = "John"
-	let greeting = "Hello, \(optionalName ?? "Anonymous")!"
-	print(greeting) // prints "Hello, John!"
+	let username: String? = nil
+	let displayName = username ?? "Guest"
+	print(displayName)  // Output: Guest
 	```
 	
-	In this example, we have an optional string `optionalName`, which may or may not have a value. We use the nil coalescing operator to provide a default value of "Anonymous" if `optionalName` is `nil`. The resulting string is then used to construct a greeting.
-
-	The nil coalescing operator can be very useful in situations where we need to provide a default value for an optional, or when we need to combine multiple optional values into a single expression. It can help us write more concise and readable code, while also improving the safety and reliability of our code by handling nil values gracefully.
+	If `username` had a value, like `"Alice"`, `displayName` would be `"Alice"` instead.
 	</details>
 
 - 🟩 [What is the difference between `if let` and `guard let`?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-if-let-and-guard-let)
@@ -2991,8 +3003,6 @@
 	Here's an example using `if let`:
 
 	```swift
-	let optionalName: String? = "John"
-
 	if let name = optionalName {
 		print("Hello, \(name)!")
 	} else {
@@ -3000,7 +3010,10 @@
 	}
 	```
 	
-	In this example, we use `if let` to conditionally bind the optional `optionalName` to a new non-optional constant `name`. If `optionalName` has a value, the constant `name` is set to that value, and the code inside the `if` statement is executed. If `optionalName` is `nil`, the code inside the `else` statement is executed.
+	- If `optionalName` has a value, it's unwrapped into `name`.
+	- If it's `nil`, the `else` block runs.
+	- The unwrapped value (`name`) is only available inside the `if` block.
+	<br>
 
 	`guard let`, on the other hand, is used to ensure that an optional has a value. If the optional has a value, the unwrapped value is assigned to a new non-optional variable, and the execution continues after the `guard` statement. If the optional is `nil`, the `guard` statement fails, and the execution branches to the `else` statement, which typically contains a `return`, `break`, or `throw` statement.
 
@@ -3015,11 +3028,13 @@
 		print("Hello, \(name)!")
 	}
 	
-	greet(nil) // prints "Please provide a name."
-	greet("John") // prints "Hello, John!"
+	greet(nil)  // prints "Please provide a name."
+	greet("John")  // prints "Hello, John!"
 	```
 
-	In this example, we use `guard let` to ensure that the optional `optionalName` has a value. If it is `nil`, the `guard` statement fails, and the code inside the `else` statement is executed, which prints an error message and returns from the function. If `optionalName` has a value, the constant `name` is set to that value, and the code inside the function continues executing.
+	- If `name` is `nil`, the `else` block must exit (using `return`, `break`, `continue`, or `fatalError`).
+	- If it's non-nil, execution continues and `name` is available after the `guard` block.  
+	<br>
 
 	In summary, `if let` is used to conditionally execute code based on the presence of an optional value, while `guard let` is used to ensure that an optional has a value and to exit early from a scope if it doesn't.
 	</details>
@@ -3030,9 +3045,25 @@
 
 	In Swift, `try`, `try?`, and `try!` are used to handle errors that can be thrown by a function or method call that is marked as throws. Here are the differences between them:
 
-	1. `try`: This is used when we want to execute a throwing function or method and handle the errors that can be thrown using a `do-catch` block. The `try` keyword is placed before the function or method call that can throw an error.
+	1. `try`: This is used when we want to execute a throwing function or method and handle the errors that can be thrown using a `do-catch` block. The `try` keyword is placed before the function or method call that can throw an error. It's the safest and most flexible option.
+		```swift
+		do {
+			let result = try someThrowingFunction()
+			print(result)
+		} catch {
+			print("Error: \(error)")
+		}
+  		```
+
 	2. `try?`: This is used when we want to call a throwing function or method and convert any error that is thrown into an optional value. If the function or method call returns a value, it will be wrapped in an optional. If an error is thrown, the result will be `nil`.
+		```swift
+		let result = try? someThrowingFunction()
+  		```
+
 	3. `try!`: This is used when we are absolutely certain that the function or method call will not throw an error, and we want to force the result to be unwrapped. If an error is thrown, our program will crash with a runtime error.
+		```swift
+		let result = try! someThrowingFunction()
+  		```
 	<br />
 
 	In general, it is recommended to use `try` and handle errors using a `do-catch` block whenever possible, as this provides better error handling and makes our code more robust. `try?` and `try!` should be used sparingly, and only when we are sure that the function or method call will never fail.
@@ -3042,45 +3073,40 @@
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, optional chaining is used to solve the problem of accessing properties or methods of an optional value, without having to manually unwrap the optional. Optional chaining provides a way to check if an optional value contains a non-nil value before accessing its properties or methods.
+	Optional chaining in Swift solves the problem of safely accessing properties, methods, or subscripts on optional values without unwrapping them manually. It helps us avoid deeply nested `if let` or `guard let` statements and makes code cleaner, safer, and more concise.
 
-	Consider the following example:
+	Let’s say you have a chain of objects, and one or more links might be `nil`:
 
-	```swift 
-	class Person {
-		var name: String
-		var address: Address?
-	
-		init(name: String) {
-			self.name = name
+  	```swift
+	person.address?.city?.name
+   	```
+
+	Without optional chaining, you'd need to unwrap each step:
+
+   	```swift
+	if let address = person.address {
+		if let city = address.city {
+			print(city.name)
 		}
 	}
-
-	class Address {
-		var street: String
-		var city: String
-		var state: String
-	
-		init(street: String, city: String, state: String) {
-			self.street = street
-			self.city = city
-			self.state = state
-		}
-	}
-
-	let person = Person(name: "John")
-	let state = person.address?.state
 	```
-	
-	In the above example, `person.address` is an optional value of type `Address?`. If we want to access the `state` property of the `Address` instance, we need to manually unwrap the optional by using an `if let` or `guard let` statement. However, this can be cumbersome and repetitive, especially if we need to access nested properties or methods.
- 
-	With optional chaining, we can use the `?.` operator to access the state property of `person.address`, like this:
-	
+
+	This gets tedious and cluttered, especially as the chain gets longer. However, optional chaining lets us attempt the entire chain in one expression:
+
 	```swift
-	let state = person.address?.state
-	```
-	
-	If `person.address` is `nil`, the entire expression will evaluate to `nil`, and the `state` constant will be set to `nil`. Optional chaining allows us to safely access the properties and methods of an optional value, without having to worry about unwrapping it manually or causing a runtime error if the value is `nil`.
+	if let cityName = person.address?.city?.name {
+		print(cityName)
+	}
+ 	```
+
+ 	If any link in the chain is `nil`, the whole expression becomes `nil`—without crashing.
+
+  	Optional chaining can also be used with method calls and subscripts:
+
+	```swift
+	person.address?.printLabel()
+ 	let street = person.address?.streets?[0]
+ 	```
 	</details>
 
 - 🟩 [What's the difference between `String?` and `String!` in Swift?](https://www.hackingwithswift.com/interview-questions/whats-the-difference-between-string-and-string-in-swift)
@@ -3089,43 +3115,65 @@
 	
 	In Swift, `String?` and `String!` are both optional types, but they differ in how they are unwrapped.
 	
-	- `String?` is an optional that may contain a `String` value or `nil`. To access the value, we need to use optional binding (e.g. `if let str = optionalString { ... }`) or force unwrap the optional (e.g. `let str = optionalString!`). Using `!` to force unwrap an optional that is `nil` will result in a runtime error.
-	- `String!` is an implicitly unwrapped optional. It is an optional that is automatically unwrapped when it is accessed. This means we can use it like a non-optional value (e.g. `let strLength = optionalString.count`), but if the optional is `nil` and we try to access it, a runtime error will occur.
-	<br />
-	
-	Implicitly unwrapped optionals are useful when we have a value that is guaranteed to be set before it is accessed, but still need to be represented as an optional due to the initialization process. They are commonly used in situations where a value is set up in `init`, but is not available during the initialization phase. However, they should be used with caution as they can lead to runtime errors if the optional is unexpectedly `nil`. In general, it is safer to use regular optionals and unwrap them explicitly.
+	- `String?`
+ 		```swift
+		 var name: String? = "Alice"
+		 print(name)  // Prints: Optional("Alice")
+		
+		 var name2: String? = nil
+		 print(name2)  // Prints: nil
+		```
+
+		- Can be either a `String` or `nil`.
+		- Must be safely unwrapped using optional binding (`if let`, `guard let`), optional chaining, or the `??` operator.
+		- Preferred for safe, defensive programming.
+
+	- `String!`
+		```swift
+		var name: String! = "Alice"
+		print(name!)  // ✅ Prints: "Alice"
+  
+		var name2: String! = nil
+		print(name2!)  // ❌ Runtime crash: unexpectedly found nil while unwrapping
+		```
+
+		- Also can be a `String` or `nil`.
+		- Assumed to always have a value, so we can use it without unwrapping.
+		- Crashes at runtime if it's `nil` and accessed.
 	</details>
 
 - 🟩 [When would you use the `guard` keyword in Swift?](https://www.hackingwithswift.com/interview-questions/when-would-you-use-the-guard-keyword-in-swift)
 	<details>
 		<summary>Answer</summary>
 
-	We would use the `guard` keyword in Swift to improve the readability and clarity of our code, especially when dealing with error conditions, optionals, or validation of certain conditions.
+	We would use the `guard` keyword in Swift to to check a condition early in a function or block and exit immediately if it fails. It's ideal for early exits, also known as the "early return" pattern, which helps keep your code clean, readable, and flat (avoiding nested ifs).
 
-	The `guard` statement is similar to the `if` statement, but it is used to check if a condition is `false` or if a value is `nil`. The key difference is that when the condition fails, the `guard` statement requires us to exit the current scope, either by returning, throwing an error, or using `continue`, `break`, or `fallthrough`. This ensures that we handle the error condition as early as possible and avoid nested conditional statements.
+	The `guard` statement is similar to the `if` statement, but it is used to check if a condition is `false` or if a value is `nil`. The key difference is that when the condition fails, the `guard` statement requires us to exit the current scope, either by throwing an error, or using `return`, `continue`, `break`, or `fatalError()`. This ensures that we handle the error condition as early as possible and avoid nested conditional statements.
 
 	Here's an example of using `guard` to check if a string is not `nil` and not empty, and then perform some operation on it:
 
 	```swift
-	func processString(str: String?) {
-		guard let string = str, !string.isEmpty else {
-			print("Error: String is empty or nil.")
+	func greet(_ name: String?) {
+		guard let name = name else {
+			print("No name provided")
 			return
 		}
-	
-		// Perform some operation on the non-empty string
-		print("Processing string: \(string)")
+		print("Hello, \(name)")
 	}
 	```
 	
-	In this example, if the `str` parameter is `nil` or empty, the `guard` statement will print an error message and return from the function. Otherwise, it will unwrap the optional string and bind it to a `constant` string, which can then be used safely in the subsequent code block.
+	If `name` is `nil`, it prints a message and returns early. If not, it safely unwraps `name` for use afterward—no need for nesting.
+
+	Overall, `guard` improves clarity by focusing on what must be `true`, not how to handle `false`.
 	</details>
 
 - 🟧 [Apart from the built-in ones, can you give an example of property wrappers?](https://www.hackingwithswift.com/interview-questions/apart-from-the-built-in-ones-can-you-give-an-example-of-property-wrappers)
 	<details>
 		<summary>Answer</summary>
 
-	There are many third-party property wrappers available in the Swift ecosystem. Here is an example of a custom property wrapper:
+	In Swift, we can create custom property wrappers to encapsulate common behaviors—such as validation, formatting, or storage—and apply them to properties in a reusable way.
+
+	Here's a simple, custom property wrapper example: a wrapper that caps a value to a maximum limit.
 
 	```swift
 	@propertyWrapper
@@ -3144,104 +3192,180 @@
 		}
 	}
 	```
-	
-	In this example, we have defined a property wrapper called `Clamped` that ensures the value of the property is always within a given range. It takes a generic `Value` parameter that must conform to the `Comparable` protocol. It also has a range property that specifies the allowed range of values.
- 
-	The `Clamped` property wrapper has two methods: `init(wrappedValue:range:)` and `wrappedValue`. The `init` method initializes the value of the property to the wrapped value, clamped to the allowed range. The `wrappedValue` method provides the getter and setter for the property, which ensures that any new value is clamped to the allowed range.
 
 	Here's an example of how to use the `Clamped` property wrapper:
 
 	```swift
-	struct MyStruct {
-		@Clamped(range: 0...10) var value: Int
+	struct Player {
+		@Clamped(0...100) var health: Int = 120
+		@Clamped(0...10) var lives: Int = 3
 	}
-
-	var myStruct = MyStruct()
-	myStruct.value = 15 // value will be clamped to 10
-	print(myStruct.value) // 10
-	myStruct.value = -5 // value will be clamped to 0
-	print(myStruct.value) // 0
-	```
 	
-	In this example, we define a struct `MyStruct` with a property called `value` that is decorated with the `Clamped` property wrapper. We specify the allowed range as `0...10`. When we assign a value to `myStruct.value`, it will automatically be clamped to the allowed range.
+	var player = Player()
+	print(player.health)  // 100 — clamped to max
+	player.health = -50
+	print(player.health)  // 0 — clamped to min
+ 	```
+	
+	When a value using the `@Clamped` property wrapper is set, it's automatically restricted to a range. There's no need to manually enforce the range each time the value changes.
+
+	Custom property wrappers are useful for encapsulating common logic, keeping structs/classes clean, and improve readabililty and intent clarity.
 	</details>
 
 - 🟧 [Can you give useful examples of enum associated values?](https://www.hackingwithswift.com/interview-questions/can-you-give-useful-examples-of-enum-associated-values)
 	<details>
 		<summary>Answer</summary>
 
-	1. **Error handling**: An `enum` with associated values is commonly used in Swift for error handling. For example, the `Result` type in Swift's standard library uses an `enum` with two associated values to represent either a successful value or an error value. 
+	Enums with associated values in Swift let us store extra, type-specific data alongside each case. This makes enums much more powerful than just labels—they can represent rich, structured data in a type-safe way.
+
+	Here are some usage examples:
+
+	1. **Payment methods**: When building a checkout system, users may pay in different ways. With this enum, each payment method can carry the relevant data needed to process that specific method: card details for credit cards, a token for Apple Pay, and no data for cash. This allows your payment processing logic to pattern-match on the payment type and handle each accordingly, without risking mismatched data.
 	
-	Here's an example:
+		```swift
+		enum PaymentMethod {
+			case creditCard(number: String, expiry: String)
+			case applePay(token: String)
+			case cash
+		}
+		```
 
-	```swift
-	enum Result<T, Error> {
-		case success(T)
-		case failure(Error)
-	}
-	```
+	2. **Representing API responses**: This enum models the two possible outcomes of an API call: success or failure. When the call succeeds, you often get a `Data` object back, which can then be decoded into usable models. If the call fails, an `Error` object is typically returned, which you can use for debugging or displaying a user-friendly message.
 
-	This `enum` allows us to represent the result of an operation that can either succeed with a value of type `T`, or fail with an error of type `Error`.
+		This design is powerful because it keeps both outcomes together in a type-safe way and forces you to handle both scenarios explicitly via a `switch`.
 
-	2. **API responses**: `enum`s with associated values can also be used to model API responses in Swift. For example, if we're working with an API that returns different types of responses depending on the endpoint, we could define an `enum` with associated values to represent each possible response. 
+		```swift
+		enum APIResponse {
+			case success(data: Data)
+			case failure(error: Error)
+		}
+		```
+
+	3. **Navigation**: enums with associated values can be used to model navigation in an iOS app. For example, we could define an enum with associated values to represent different screens in our app. Here's an example:
+
+		```swift
+		enum Screen {
+			case home
+			case profile(username: String)
+			case settings(isLoggedIn: Bool)
+		}
+		```
+
+		This `enum` allows us to represent different screens in our app, such as the home screen, the user profile screen (with a `username` associated value), or the settings screen (with an `isLoggedIn` associated value). We can use this `enum` to navigate between screens in our app.
+
+	4. **Coordinates with units**: This is useful when you’re dealing with location data that could be in two formats: actual GPS coordinates or a plain-text address. By using an enum with associated values, you ensure that each value is tied to its case, and you don’t have to track whether a location is coordinate-based or address-based using separate flags or logic.
+
+		It improves code clarity and reduces the chances of misinterpreting the location data.
 	
-	Here's an example:
+		```swift
+		enum Coordinate {
+			case gps(latitude: Double, longitude: Double)
+			case address(String)
+		}
+	 	```
 
-	```swift
-	enum APIResponse {
-		case success(data: Data)
-		case error(code: Int, message: String)
-	}
-	```
+ 	5. **Color model**: Colors can be defined in multiple formats—RGB and HEX being common ones. This enum captures that concept, letting you work with either type while keeping them neatly organized. You might later add `.hsl(hue:saturation:lightness:)` or `.named(String)` for other cases.
 
-	This `enum` allows us to represent the response from an API endpoint that can either return a successful response with some `Data`, or an error response with an error code and an error `message`.
+		Using associated values like this is much cleaner than having a color model that stores all possible formats at once and requires complex logic to determine which one is in use.
 
-	3. **Navigation**: `enum`s with associated values can be used to model navigation in an iOS app. For example, we could define an `enum` with associated values to represent different screens in our app. Here's an example:
-
-	```swift
-	enum Screen {
-		case home
-		case profile(username: String)
-		case settings(isLoggedIn: Bool)
-	}
-	```
-
-	This `enum` allows us to represent different screens in our app, such as the home screen, the user profile screen (with a `username` associated value), or the settings screen (with an `isLoggedIn` associated value). We can use this `enum` to navigate between screens in our app.
+		```swift
+		enum Color {
+			case rgb(red: Int, green: Int, blue: Int)
+			case hex(String)
+		}
+	 	```
 	</details>
 
 - 🟧 [How would you explain closures to a new Swift developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-closures-to-a-new-swift-developer)
 	<details>
 		<summary>Answer</summary>
 
-	Closures in Swift are self-contained blocks of code that can be passed around and used in our code just like any other variable or constant. Think of them like functions that we can define inline and then use them whenever and wherever we need them.
+	Closures in Swift are self-contained blocks of code that can be passed around and used in our code just like any other variable or constant. Think of them like functions that we can define inline and then use them whenever and wherever we need them. They are useful because they can capture and store references to any constants and variables from the surrounding context in which they are defined. This makes them particularly powerful for tasks such as sorting and filtering arrays, as well as handling asynchronous tasks and callbacks.
 
-	Closures are useful because they can capture and store references to any constants and variables from the surrounding context in which they are defined. This makes them particularly powerful for tasks such as sorting and filtering arrays, as well as handling asynchronous tasks and callbacks.
-
-	To define a closure in Swift, we use curly braces "{}" and the "in" keyword to separate the closure's parameters and return type from its body. Here's a simple example:
+	To define a closure in Swift, we use curly braces `{}` and the `in` keyword to separate the closure's parameters and return type from its body. Here's a simple example:
 
 	```swift
-	let closureExample = { (parameter1: Int, parameter2: Int) -> Int in
-		return parameter1 + parameter2
+	let add = { (a: Int, b: Int) -> Int in
+		return a + b
 	}
+	
+	let result = add(3, 5)  // result is 8
 	```
 	
-	In this example, we define a closure that takes two integer parameters and returns their sum. We can then call this closure later in our code like any other function, such as:
+	This is a closure that behaves like a function; it takes two parameters and returns an integer.
+
+	Here is another example with different syntax:
 
 	```swift
-	let result = closureExample(1, 2)
-	print(result) // Output: 3
+	let names = ["Charlie", "Alice", "Bob"]
+	
+	let sorted = names.sorted { $0 < $1 }  // Closure decides how to sort
+	print(sorted)  // ["Alice", "Bob", "Charlie"]
 	```
+ 
+	The `{ $0 < $1 }` part is a closure that tells sorted how to compare two values.
+
+  	A closure has this basic structure:
+
+  	```swift
+	{ (parameters) -> ReturnType in
+		// body
+	}
+	```
+
+	But Swift allows to omit parts when they're obvious:
+	- Omit types (they're inferred).
+	- Omit `return` if it's a single expression.
+	- Use shorthand arguments like `$0`, `$1`, etc.
+
+	We can also pass closures as parameters:
+
+	```swift
+	func doSomething(action: () -> Void) {
+		print("Before action")
+		action()
+		print("After action")
+	}
+	
+	doSomething {
+		print("Doing the action")
+	}
+	```
+
+	Output:
+
+	```
+	Before action
+	Doing the action
+	After action
+	```
+
+	This is the foundation for things like completion handlers, animations, and event callbacks.
 	</details>
 
 - 🟧 [What are generics and why are they useful?](https://www.hackingwithswift.com/interview-questions/what-are-generics-and-why-are-they-useful)
 	<details>
 		<summary>Answer</summary>
 	
-	Generics are a way of making a data type act in a variety of ways depending on how it is created. They allow us to write flexible, reusable functions and types that can work with different types of data without having to rewrite the code for each type. This helps us to reduce code duplication and improve readability.
+	Generics allow us to write code like functions, structs, classes, or enums that work with placeholder types, which are specified when the code is used. They let us write reusable code that can work with any type, rather than being limited to a specific one. They're a fundamental feature for building type-safe abstractions.
 
-	To use them in Swift, you need to enclose the name of a generic placeholder in angle brackets, like this: `struct Queue<T> {`. The `T` doesn't mean anything special—it could be `R` or `Element`—but `T` is commonly used.
+	To use them in Swift, we need to enclose the name of a generic placeholder in angle brackets, like this: `struct Queue<T> {`. The `T` doesn't mean anything special—it could be `R` or `Element`—but `T` is commonly used.
 
-	Here's a simple example of a generic function that takes an array of any type and returns the largest element:
+	Here's a simple example of a generic function, where the `T` is a placeholder type:
+
+	```swift
+	func swapValues<T>(_ a: inout T, _ b: inout T) {
+		let temp = a
+		a = b
+		b = temp
+	}
+
+	var a = 10
+	var b = 20
+	swapValues(&a, &b)  // a = 20, b = 10
+	```
+
+	We can also add constraints so generics only accept certain types. In the following example, `findLargestElement` only works with types that conform to `Comparable`.
 
 	```swift
 	func findLargestElement<T: Comparable>(in array: [T]) -> T? {
@@ -3252,8 +3376,6 @@
 	}
 	```
 	
-	In this example, the generic type parameter `T` is constrained to be `Comparable`, which means that we can use the `>` and `<` operator to compare elements of the array. The function takes an array of type `[T]` and returns the largest element of type `T`, or `nil` if the array is empty.
-
 	To use the function, we can pass in an array of any type that conforms to the `Comparable` protocol, such as integers, doubles, or strings:
 
 	```swift
@@ -3267,26 +3389,50 @@
 	```
 	</details>
 
-- 🟧 [What are multi-pattern catch clauses?](https://www.hackingwithswift.com/interview-questions/what-are-multi-pattern-catch-clauses)
+- 🟧 [What are multi-pattern `catch` clauses?](https://www.hackingwithswift.com/interview-questions/what-are-multi-pattern-catch-clauses)
 	<details>
 		<summary>Answer</summary>
 
-	Multi-pattern catch clauses are a feature in Swift that allows us to catch and handle different types of errors with a single catch block. In previous versions of Swift, we would need to write multiple catch blocks to handle different types of errors, which could result in redundant code.
+	Multi-pattern `catch` clauses are a feature in Swift that allows us to catch and handle different types of errors with a single catch block using by using a comma-separated list of patterns. In previous versions of Swift, we would need to write multiple catch blocks to handle different types of errors, which could result in redundant code.
 
-	With multi-pattern catch clauses, we can catch and handle multiple types of errors in a single catch block by using a comma-separated list of patterns. Here's an example:
+	Here's an example:
 
 	```swift
+	enum NetworkError: Error {
+		case notConnected
+		case timeout
+	}
+ 
 	do {
 		// some code that can throw different types of errors
-	} catch is NetworkError, is DatabaseError {
+	} catch is NetworkError.notConnected, NetworkError.timeout {
 		// handle network and database errors
 	} catch {
 		// handle other types of errors
 	}
 	```
 
-	In this example, we use the `is` operator to specify two different types of errors that can be thrown: `NetworkError` and `DatabaseError`. If either of these errors are thrown, the first catch block will be executed to handle the error. If another type of error is thrown, the second catch block will be executed to handle the error.
+	In this example, we use a multi-pattern `catch` clause to handle both `.notFound` and `.unreadable` errors in a single block.
 
+	The `catch` statement can match error types, not just specific error values. This lets you catch broad categories of errors like decoding or networking errors, rather than only exact enum cases.
+
+	The example below shows how you can use multiple type matches in a single `catch` clause using the `|` (pipe) operator.
+
+	```swift
+	do {
+		throw URLError(.timedOut)
+	} catch is DecodingError | URLError {
+		print("Either a decoding issue or a network timeout")
+	}
+	```
+
+  	Explanation:
+	- `throw URLError(.timedOut)` simulates a function throwing a specific error—in this case, a `URLError`, which represents a network error.
+	- The `catch is DecodingError | URLError` line is a multi-pattern catch clause using the `|` operator. It means: "If the error is either a `DecodingError` or a `URLError`, run this block."
+	- The `is` keyword is used to match the type of the error.
+	- If the error thrown matches any one of the types listed (in this case, `URLError`), the `print` statement runs.
+	<br>
+	
 	Multi-pattern catch clauses can help reduce code duplication and make error handling more concise and readable. However, it's important to use them judiciously, as too many patterns in a single catch block can make it harder to understand and maintain our code.
 	</details>
 
@@ -3320,9 +3466,9 @@
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, the `#available` syntax is used to conditionally check whether a certain API or feature is available on the current platform or version of iOS, macOS, or other platforms supported by Swift.
+	The `#available` syntax in Swift is used to safely check the OS or platform version at runtime before running code that may only be supported in newer system versions. It helps us prevent crashes from calling APIs that aren't available on older versions of iOS, macOS, or other platforms.
 
-	The `#available` syntax allows us to write code that can handle different versions of the operating system or platform, while still taking advantage of new features or APIs when they are available. Here's an example:
+	Here's an example:
 
 	```swift
 	if #available(iOS 14, macOS 11, *) {
@@ -3335,35 +3481,36 @@
 	In this example, we use the `#available` syntax to check whether the new API or feature is available on the current platform. If it is available (i.e., the current platform is iOS 14 or macOS 11), we can use it. If it is not available, we can fall back to an older API or feature that is still supported on the current platform.
 
 	The `#available` syntax takes a comma-separated list of operating system or platform names and version numbers, followed by an asterisk (`*`) that represents any other platforms that are not explicitly listed. We can also use the `@available` attribute to mark a function or variable as being available on certain platforms.
-
-	Using the `#available` syntax is important for writing code that can be run on different platforms and versions of the operating system. By using this syntax, we can ensure that our code works correctly and takes advantage of new features when they are available, while still providing backward compatibility for older versions of the platform.
 	</details>
 
 - 🟧 [What is a variadic function?](https://www.hackingwithswift.com/interview-questions/what-is-a-variadic-function)
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, a variadic function is a function that can accept any number of arguments of the same type. The number of arguments passed to the function can vary at runtime, and the function can process them as a single collection of values.
+	A variadic function in Swift is a function that can accept zero or more values of a specific type as a single parameter. This is useful when you want to allow callers to pass in a flexible number of arguments, rather than a fixed count. The number of arguments passed to the function can vary at runtime, and the function can process them as a single collection of values.
  
 	To define a variadic function in Swift, we need to use the ellipsis (`...`) after the argument's type. Here's an example:
 
 	```swift
-	func printNumbers(_ numbers: Int...) {
+	func sum(numbers: Int...) -> Int {
+		var total = 0
 		for number in numbers {
-			print(number)
+			total += number
 		}
+		return total
 	}
 	```
 	
-	In this example, the `printNumbers` function takes an arbitrary number of integer arguments using the `Int...` syntax. The function can then iterate over the collection of values passed in and print them to the console.
+	In this example, the `sum` function takes an arbitrary number of integer arguments using the `Int...` syntax. The function can then iterate over the collection of values passed in and sum them.
 
 	To call a variadic function, we can pass any number of values of the specified type, separated by commas. For example:
 
 	```swift
-	printNumbers(1, 2, 3, 4, 5)
+	let result = sum(numbers: 1, 2, 3, 4)
+	print(result)  // Output: 10
 	```
 
-	This call to the `printNumbers` function passes five integer values as arguments, and the function prints them to the console.
+	It's important to note that we can only have **one variadic parameter per function**, and it must be the **last** in the parameter list.
 
 	Variadic functions can be useful for working with collections of values, such as arrays or lists, or for providing flexible interfaces that can accept a variable number of arguments. They are commonly used in Swift standard library functions, such as `print` and `min`, and can be a powerful tool for simplifying our code and making it more flexible.
 	</details>
@@ -3372,51 +3519,132 @@
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, both `weak` and `unowned` are used to declare a weak reference to an object, which allows the object to be deallocated if there are no other strong references to it. However, there are some differences between `weak` and `unowned`:
+	The difference between `weak` and `unowned` in Swift comes down to how they handle memory ownership and optional vs. non-optional references. Both are used to avoid retain cycles in closures or between objects, but they behave differently when the referenced object is deallocated.
 
-	- `weak` creates an **optional** reference, while `unowned` creates a **non-optional** reference. This means that a `weak` reference can be `nil`, while an `unowned` reference can **never** be `nil`.
-	- `weak` references must be declared as optional types using the question mark (`?`), while `unowned` references are declared as non-optional types using the exclamation mark (`!`).
-	- `weak` references are automatically set to `nil` when the referenced object is deallocated, while `unowned` references can cause a runtime error if they are accessed after the referenced object has been deallocated.
-	<br />
+	Here is a table representing the core differences:
+
+	<table>
+		<tr>
+			<th>FEATURE</th>
+			<th><code>weak</code></th>
+			<th><code>unowned</code></th>
+		</tr>
+		<tr>
+			<td><strong>Optional</strong></td>
+			<td>Yes (<code>var x: Type?</code>)</td>
+			<td>No (<code>var x: Type</code>)</td>
+		</tr>
+		<tr>
+			<td><strong>Becomes nil</strong></td>
+			<td>Yes</td>
+			<td>No</td>
+		</tr>
+		<tr>
+			<td><strong>Safe access</strong></td>
+			<td>Safe (optional binding)</td>
+			<td>Crashes if accessed after dealloc</td>
+		</tr>
+		<tr>
+			<td><strong>Use when</strong></td>
+			<td>Referenced object may become <code>nil</code></td>
+			<td>Object must outlive the reference</td>
+		</tr>
+	</table>
 	
-	Here is an example of how to use `weak` and `unowned` references:
+	`weak` is used when one object refers to another, but shouldn't keep it alive. For example, in a delegate pattern, a child object might have a reference to its parent. Making this reference `weak` ensures the child doesn't keep the parent alive indefinitely. `weak` references must always be declared as optional, since the object they point to can be deallocated at any time—and when that happens, the reference is automatically set to `nil`. This prevents dangling pointers and makes the code safe.
 
 	```swift
-	class Person {
-		var name: String
-		weak var spouse: Person?
-		unowned let mother: Person
-	
-		init(name: String, mother: Person) {
-			self.name = name
-			self.mother = mother
-		}
-	
+	class Owner {
+		var pet: Pet?
+
 		deinit {
-			print("\(name) is being deallocated")
+			print("Owner deinitialized")
 		}
 	}
-	
-	var alice: Person? = Person(name: "Alice", mother: Person(name: "Eve", mother: nil))
-	var bob: Person? = Person(name: "Bob", mother: alice!)
-	
-	alice?.spouse = bob
-	bob?.spouse = alice
-	
-	alice = nil
-	bob = nil
-	```
-	
-	In this example, we have two instances of the `Person` class, `alice` and `bob`. `alice` has a `weak` reference to `bob` via the `spouse` property, while `bob` has a `weak` reference to `alice` via the same property. `alice` also has an `unowned` reference to her `mother` instance, which is a required parameter of the `Person` initializer.
 
-	When we set `alice` and `bob` to `nil`, both instances of the `Person` class are deallocated. Since `alice` and `bob` have `weak` references to each other, they are both able to be deallocated. If `alice` had an `unowned` reference to `bob` instead of a `weak` reference, we would get a runtime error when trying to access the `spouse` property after `bob` has been deallocated.
+	class Pet {
+		weak var owner: Owner?  // weak reference
+
+		deinit {
+			print("Pet deinitialized")
+		}
+	}
+
+	var john: Owner? = Owner()
+	var fluffy: Pet? = Pet()
+
+	john?.pet = fluffy
+	fluffy?.owner = john  // no strong reference cycle
+
+	john = nil
+	fluffy = nil
+
+	// Output:
+	// "Owner deinitialized"
+	// "Pet deinitialized"
+	```
+
+	On the other hand, `unowned` is similar to `weak`, but it's used when the referring object is guaranteed to outlive the object it references. Unlike `weak`, an `unowned` reference is non-optional. This is a performance optimization, but it comes with a trade-off: if the referenced object is deallocated and the `unowned` reference is accessed, the app will crash. Therefore, you should only use unowned when you're certain of the ownership relationship—for instance, in closures where the lifecycle is tightly controlled. It's safer to just use `weak`, as `unowned` is rarely used because of making the app potentially crash.
+
+	```swift
+	class Customer {
+		var creditCard: CreditCard?
+
+		deinit {
+			print("Customer deinitialized")
+		}
+	}
+
+	class CreditCard {
+		unowned var owner: Customer  // unowned reference
+
+		init(owner: Customer) {
+			self.owner = owner
+		}
+
+		deinit {
+			print("CreditCard deinitialized")
+		}
+	}
+
+	var john: Customer? = Customer()
+	john?.creditCard = CreditCard(owner: john!)  // No cycle
+
+	john = nil
+
+	// ✅ Output:
+	// "Customer deinitialized"
+	// "CreditCard deinitialized"
+	```
+
+	When in doubt, it's better to use `weak` to avoid any crashes.
 	</details>
 
 - 🟧 [What is the difference between an escaping closure and a non-escaping closure?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-an-escaping-closure-and-a-non-escaping-closure)
 	<details>
 		<summary>Answer</summary>
 
-	The main difference between an escaping closure and a non-escaping closure in Swift is related to their lifetime and how they are used within a function.
+	The difference between an escaping and non-escaping closure in Swift comes down to when and where the closure is executed in relation to the function it's passed into.
+
+	Here is a table that breaks down the core differences:
+
+	<table>
+		<tr>
+			<th>CLOSURE TYPE</th>
+			<th>EXECUTES...</th>
+			<th>BEHAVIOR</th>
+		</tr>
+  		<tr>
+			<td><strong>Non-escaping</strong></td>
+			<td>During the function call</td>
+			<td>Executed immediately and finishes before the function ends</td>
+		</tr>
+  		<tr>
+			<td><strong>Escaping</strong></td>
+			<td>After the function call completes</td>
+			<td>Stored and called later (e.g., in async code, completion handlers)</td>
+		</tr>
+	</table>
 
 	A non-escaping closure is a closure that is guaranteed to be executed synchronously within the same function scope in which it is passed. This means that the closure is executed while the function is still running, and it is not stored or used outside the function. Non-escaping closures are the default in Swift, which means that we don't need to use any special annotations to mark them.
 
@@ -3449,9 +3677,11 @@
 	performOperationEscaping(withNumber: 5) { (num) -> Int in
 		return num * num
 	}
+	// Prints `25`, but asynchronously, so it may appear after other print statements depending
+	// on timing.
 	```
 
-	In this example, `performOperationNonEscaping` takes a non-escaping closure that squares a number synchronously within the same function. On the other hand, `performOperationEscaping` takes an escaping closure that squares a number asynchronously on a different thread, after the function has returned. The `DispatchQueue.main.async` call ensures that the closure is executed on the main thread, which is required for UI updates.
+	In this example, `performOperationNonEscaping` takes a non-escaping closure that squares a number synchronously within the same function. On the other hand, `performOperationEscaping` takes an escaping closure that squares a number asynchronously on a different thread, after the function has returned. The `DispatchQueue.main.async` call ensures that the closure is executed on the main thread, which is required for UI updates. Note that `performOperationNonEscaping` doesn't result anything, so we can't assign it to a variable like did with `performOperationNonEscaping`.
 
 	In general, non-escaping closures are simpler and safer to use than escaping closures because they don't require extra memory management considerations. However, escaping closures are necessary when we need to perform asynchronous operations, such as networking or animation, and we need to handle the results of those operations at a later time.
 	</details>
@@ -3460,108 +3690,128 @@
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, an extension is a mechanism for adding functionality to an existing class, structure, enumeration, or protocol. An extension can add new computed properties, methods, initializers, subscripts, and nested types to the extended type. An extension can also conform a type to a protocol or add conformance to an existing protocol.
+	A regular extension adds new functionality—like methods, computed properties, initializers, or nested types—to an existing type, such as a class, struct, enum, or even another protocol.
+
+	Here's an example:
+
+	```swift
+	extension String {
+		func reversedWords() -> String {
+			return self.split(separator: " ").reversed().joined(separator: " ")
+		}
+	}
+	
+	let text = "Hello world"
+	print(text.reversedWords())  // Output: "world Hello"
+	```
+
+	We added a method to the `String` class that only works for `String` and doesn't affect other types.
 
 	A protocol extension, on the other hand, is a way to provide default implementations for a protocol's requirements. Protocol extensions can add new methods, properties, subscripts, and associated types to a protocol, and provide default implementations for them. Protocol extensions can also provide default implementations for protocol methods and properties, which can be overridden by the adopting types if needed.
 
-	The main difference between an extension and a protocol extension is their purpose and scope. An extension is used to add functionality to a specific type, while a protocol extension is used to provide default implementations for a protocol's requirements that can be used by multiple types that conform to the protocol.
+	The main difference between an extension and a protocol extension is their purpose and scope. It's like saying, "All types that conform to this protocol will automatically get this behavior unless they override it."
 
-	Here's an example to illustrate the difference:
+	Here's an example:
 
 	```swift
-	protocol Printable {
-		var description: String { get }
+	protocol Greetable {
+		func greet()
 	}
-
-	struct Person {
-		let name: String
-	}
-
-	extension Person: Printable {
-		var description: String {
-			return "Person - Name: \(name)"
+	
+	extension Greetable {
+		func greet() {
+			print("Hello from Greetable!")
 		}
 	}
-
-	extension Printable {
-		func printDescription() {
-			print(description)
-		}
-	}
-
-	let person = Person(name: "John")
-	person.printDescription() // Output: Person - Name: John
+	
+	struct Person: Greetable {}
+	Person().greet()  // Output: Hello from Greetable!
 	```
 
-	In this example, we have a `Printable` protocol that defines a `description` property. We then extend the `Person` struct to conform to the `Printable` protocol, and provide a custom implementation of the `description` property.
+	In this example, we added a default `greet()` method to any type that conforms to `Greetable`. However, we can still override the default implementation in a specific type.
 
-	Next, we define a protocol extension for `Printable` that adds a `printDescription()` method with a default implementation that prints the `description` property. Finally, we create an instance of `Person` and call the `printDescription()` method on it, which is provided by the protocol extension.
-
-	As we can see, the extension on `Person` is used to add functionality to a specific type, while the protocol extension on `Printable` provides default implementation that can be used by multiple types that conform to the `Printable` protocol.
+	In summary, use regular extensions to add specific functionality to a concrete type. Conversely, use protocol extensions to define shared default behavior for multiple types that conform to a protocol.
 	</details>
 	
 - 🟧 [When would you use the `defer` keyword in Swift?](https://www.hackingwithswift.com/interview-questions/when-would-you-use-the-defer-keyword-in-swift)
 	<details>
 		<summary>Answer</summary>
 
-	In Swift, the `defer` keyword is used to execute a set of statements when the current scope is exited. The `defer` statement is executed regardless of whether the scope is exited normally or due to an error.
+	In Swift, the `defer` keyword is used to guarantee that certain code is executed at the very end of the current scope, regardless of how that scope exits—whether normally or due to an error, `return`, or early exit.
+
+	In other words, `defer` is perfect for cleanup tasks, such as closing files, releasing resources, stopping animations, or resetting state.
 
 	Here are some common scenarios where we might use `defer`:
 
-	1. **Resource Cleanup**: We can use `defer` to ensure that resources such as files, network connections, and database connections are properly closed or released, regardless of how a function or method exits. For example:
+	1. **Resource cleanup**: We can use `defer` to ensure that resources such as files, network connections, and database connections are properly closed or released, regardless of how a function or method exits. For example:
+
+		```swift
+		func readFile(atPath path: String) throws -> String {
+			let file = try FileHandle(forReadingFrom: URL(fileURLWithPath: path))
+			defer {
+				file.closeFile()
+			}
+			let data = file.readDataToEndOfFile()
+			return String(data: data, encoding: .utf8)!
+		}
+		```
+	
+		In this example, we use the `defer` statement to ensure that the file handle is closed, regardless of whether the function throws an error or not.
+
+	2. **Releasing locks**: When working with concurrent or multithreaded code, it's common to use locks (like `NSLock`, `DispatchSemaphore`, or `pthread_mutex`) to protect shared resources. If we acquire a lock but forget to release it—due to an early return, an error, or a complex control flow—we can easily introduce deadlocks, which are notoriously hard to debug.
+	
+		```swift
+		func doSomething() throws {
+			let lock = NSLock()
+			lock.lock()
+			defer {
+				lock.unlock()
+			}
+			// Do something that requires the lock
+		}
+		```
+		
+		This pattern ensures that the lock is always released, no matter how the function exits. Without `defer`, we'd need to manually release the lock in multiple places, which is error-prone.
+	
+	3. **Resetting temporary state**: Sometimes we need to temporarily change global or shared state—like modifying a flag, changing logging behavior, or toggling a UI element. It's easy to forget to reset the state if the code path has multiple exits (e.g., error handling or early returns).
+
+		```swift
+		func animateView() {
+			startLoadingAnimation()
+			defer {
+				stopLoadingAnimation()
+			}
+		
+			// Perform some work
+		}
+		```
+
+		With `defer`, we make the cleanup predictable and robust, even when the logic gets complicated.
+
+	We can use multiple `defer` blocks within the same scope (typically inside a function or method). Each `defer` block is executed when the scope exits, but there's one key rule: Multiple `defer` blocks execute in reverse order—last-in, first-out (LIFO).
+
+	This behavior mirrors how a stack works: the last `defer` we add is the first one that runs. This gives us predictable and orderly cleanup when multiple resources or operations need to be reversed or undone in a specific order.
 
 	```swift
-	func readFile(atPath path: String) throws -> String {
-		let file = try FileHandle(forReadingFrom: URL(fileURLWithPath: path))
-		defer {
-			file.closeFile()
-		}
-		let data = file.readDataToEndOfFile()
-		return String(data: data, encoding: .utf8)!
+	func multipleDefers() {
+		defer { print("First") }
+		defer { print("Second") }
+		defer { print("Third") }
 	}
+	multipleDefers()
+	// Output: Third, Second, First
 	```
 
-	In this example, we use the `defer` statement to ensure that the file handle is closed, regardless of whether the function throws an error or not.
-
-	2. **Resource Acquisition**: We can use `defer` to acquire a resource at the beginning of a function or method and release it at the end. This can be useful to ensure that resources are properly acquired and released in a function or method. For example:
-	
-	```swift
-	func doSomething() throws {
-		let lock = NSLock()
-		lock.lock()
-		defer {
-			lock.unlock()
-		}
-		// Do something that requires the lock
-	}
-	```
-	
-	In this example, we use the `defer` statement to release the lock at the end of the function.
-	
-	3. **Clean-Up**: We can use `defer` to perform clean-up tasks such as resetting state or logging. For example:
-
-	```swift
-	func process(request: URLRequest) -> Data? {
-		// Set up some state
-		defer {
-			// Clean up state
-		}
-		// Do some processing
-	}
-	```
-
-	In this example, we use `defer` to ensure that the state is cleaned up at the end of the function, regardless of whether the processing succeeds or not.
-
-	In summary, we can use `defer` to ensure that certain actions are performed at the end of a scope, regardless of how the scope is exited. This can be useful for resource cleanup, resource acquisition, and clean-up tasks.
+	In summary, we can use `defer` to ensure that certain actions are performed at the end of a scope, regardless of how the scope is exited. It is useful for resource cleanup, resource acquisition, and clean-up tasks.
 	</details>
 	
 - 🟥 [How would you explain key paths to a new Swift developer?](https://www.hackingwithswift.com/interview-questions/how-would-you-explain-key-paths-to-a-new-swift-developer)
 	<details>
 		<summary>Answer</summary>
 
-	Key paths in Swift are a way to reference and manipulate properties of an object in a type-safe manner. They provide a concise way to get and set properties without having to write boilerplate code.
+	In Swift, key paths are a way to refer to a property of a type—like a pointer to that property—, not the value itself. They provide a type-safe way to do this, eliminating the need for boilerplate code.
 
-	A key path is essentially a reference to a property of a type, represented as a path of property names separated by dots, e.g. `\Person.name`. Key paths are strongly typed, meaning that the type of the key path is determined by the type of the property it refers to.
+	A key path is represented as a path of property names separated by dots, e.g. `\Person.name`. Key paths are strongly typed, meaning that the type of the key path is determined by the type of the property it refers to.
 
 	One way to use key paths is to access or modify properties of an object. For example:
 
@@ -3570,99 +3820,77 @@
 		var name: String
 		var age: Int
 	}
-
-	var person = Person(name: "John", age: 30)
-
+	
 	let nameKeyPath = \Person.name
-	let ageKeyPath = \Person.age
-
-	print(person[keyPath: nameKeyPath]) // Output: John
-
-	person[keyPath: nameKeyPath] = "Jane"
-	person[keyPath: ageKeyPath] = 35
-
-	print(person) // Output: Person(name: "Jane", age: 35)
+	print(nameKeyPath)  // Swift.KeyPath<Person, String>
 	```
 
-	In this example, we define a `Person` struct with `name` and `age` properties. We then create an instance of `Person` and store it in the `person` variable.
+	`\Person.name` is a key path to the name property on `Person`. It doesn't access the value yet, it just describes where to find it.
 
-	Next, we define two key paths: `nameKeyPath` and `ageKeyPath`, which reference the `name` and `age` properties of `Person`, respectively.
-
-	We then use the key paths to access and modify the corresponding properties of the `person` object. We use the subscript syntax with the `keyPath` parameter to access or modify the property.
-
-	Another way to use key paths is with higher-order functions, such as `map`, `filter`, and `reduce`. For example:
+	Another way to use key paths is with higher-order functions, such as `map`, `filter`, `sorted`, and `reduce`. For example:
 	
 	```swift
-	let people = [
-		Person(name: "John", age: 30),
-		Person(name: "Jane", age: 35),
-		Person(name: "Mike", age: 25)
-	]
+	let people = [Person(name: "Bob", age: 40), Person(name: "Alice", age: 30)]
 
-	let names = people.map(\.name)
-
-	print(names) // Output: ["John", "Jane", "Mike"]
+	let sorted = people.sorted { $0[keyPath: \Person.age] < $1[keyPath: \Person.age] }
 	```
 	
-	In this example, we have an array of `Person` objects. We use the `map` function with the `\Person.name` key path to create a new array that contains only the names of the people in the original array.
+	In this example, we sort using the `age` key path; no need to access the property directly.
 
-	In short, key paths are a powerful tool in Swift programming, allowing for more concise and type-safe code.
+	Key paths are useful when:
+	- We want to write generic or reusable code that works with different properties.
+	- We're using APIs like `sort`, `map`, or `filter` and want to reference a property concisely.
+	- We're working with bindings or data-driven UI (like SwiftUI).
 	</details>
 
 - 🟥 [What are conditional conformances?](https://www.hackingwithswift.com/interview-questions/what-are-conditional-conformances)
 	<details>
 		<summary>Answer</summary>
 	
-	In Swift, a protocol can have a set of requirements that a conforming type must implement. However, sometimes we want to specify additional requirements that only apply to certain types that conform to the protocol. This is where conditional conformances come in.
+	Conditional conformances in Swift let a generic type conform to a protocol only when certain conditions are met—typically when its generic parameters themselves conform to a required protocol.
 
-	Conditional conformances allow us to add additional constraints to a protocol conformance that apply only in certain contexts. In other words, a type will only conform to the protocol under certain conditions.
+ 	In natural language, instead of saying: "This type always conforms to protocol X," we would say, "This type only conforms to protocol X if its generic type meets condition Y."
 
-	For example, suppose we have a protocol called `EquatableToSelf` that requires a type to be `Equatable` with itself. We can define this protocol as follows:
-
-	```swift
-	protocol EquatableToSelf {
-		static func == (lhs: Self, rhs: Self) -> Bool
-	}
-	```
-	
-	Now, suppose we have a struct called `Box` that wraps a value of any type:
+	Here's an example:
 
 	```swift
 	struct Box<T> {
-		var value: T
+		let value: T
 	}
-	```
-	
-	We want to make `Box` conform to `EquatableToSelf` only if the wrapped value is equatable with itself. We can achieve this using a conditional conformance, like this:
-
-	```swift
-	extension Box: EquatableToSelf where T: Equatable {
+		
+	// Make Box conform to Equatable only if T does
+	extension Box: Equatable where T: Equatable {
 		static func == (lhs: Box<T>, rhs: Box<T>) -> Bool {
 			return lhs.value == rhs.value
 		}
 	}
-	```
 	
-	Here, we use the `where` clause to specify that the conformance only applies if `T` is `Equatable`. We can then define the `==` operator for `Box<T>` by comparing the wrapped values.
+	let a = Box(value: 5)
+	let b = Box(value: 5)
+	print(a == b)  // ✅ Works because Int is Equatable
+	
+	let x = Box(value: NSObject())
+	// print(x == x) ❌ Error: NSObject isn't Equatable, so Box<NSObject> isn't either
+	```
 
-	Conditional conformances can be a powerful tool for designing generic code that works with a variety of types while still maintaining type safety. They allow us to add additional requirements to protocol conformances in a flexible and expressive way.
+	Conditional conformances avoid forcing all generic types to implement behaviors they may not support. They are essential when working with collections, wrappers, or containers that only make sense under certain type constraints.
 	</details>
 
 - 🟥 [What are opaque return types?](https://www.hackingwithswift.com/interview-questions/what-are-opaque-return-types)
 	<details>
 		<summary>Answer</summary>
 	
-	Opaque return types, introduced in Swift 5.1, allow us to declare a function's return type as a placeholder rather than a concrete type. The placeholder is an "opaque" type that hides the underlying implementation details of the return type, making the interface simpler and more flexible.
+	Opaque return types, introduced in Swift 5.1, allow us to declare a function's return type as a placeholder rather than a concrete type. The placeholder is an "opaque" type that hides the underlying implementation details of the return type while preserving type safety.
 
-	An opaque return type is defined using the `some` keyword followed by a protocol or a class, like this:
+	An opaque return type is defined using the `some` keyword followed by a type, like this:
 
 	```swift
 	func makeShape() -> some Shape {
-			return Circle(radius: 10)
+		return Circle(radius: 10)
 	}
 	```
 
-	Here, the `makeShape` function returns a value that conforms to the `Shape` protocol, but the concrete type is not revealed to the caller. This means that the implementation of `makeShape` can be changed in the future without affecting the caller's code, as long as the new implementation still returns a value that conforms to the `Shape` protocol.
+	Here, the `makeShape` function returns a type that conforms to `Shape`, but the concrete type is not revealed to the caller. This means that the implementation of `makeShape` can be changed in the future without affecting the caller's code, as long as the new implementation still returns a value that conforms to the `Shape` protocol.
 
 	Opaque return types are particularly useful when we want to return a type that is only known to the implementation of the function, but not to the caller. For example, we might have a function that creates and returns a view, but the type of the view depends on the implementation details of the function:
 
@@ -3677,13 +3905,81 @@
 	```
 	
 	Here, the concrete type of the view returned by `makeView` depends on the value of `someCondition`, which is not known to the caller. By using an opaque return type, we can hide this implementation detail and present a simpler and more flexible interface to the caller.
+
+	Now that we know what opaque return types are, we need to undestand between them and protocol return types. Let's break down teh difference between `-> Animal` and `-> some Animal`.
+
+	```swift
+	func makeAnimal() -> Animal {
+		return Dog()  // could also return Cat(), Bird(), etc.
+	}
+ 	```
+
+	This says: "I'll return any kind of `Animal`, and I don't care which". Internally, Swift boxes the value and treats it dynamically, like an abstract interface.
+
+	In fact, we can also do this:
+
+	```swift
+	func makeAnimal(random: Bool) -> Animal {
+		return random ? Dog() : Cat()  // ✅ OK
+	}
+	```
+
+	However, there are downsides to this approach. We lose static type information, as the compiler no longer knows what concrete type we're working with. Also, the method dispatch is slower because it's dynamic.
+
+	On the other hand, here's what we'd do for `-> some Animal`:
+
+  	```swift
+	func makeAnimal() -> some Animal {
+		return Dog()
+	}
+	```
+
+	This says: "I'm returning a specific type that conforms to `Animal`, but I'm hiding the exact type." The caller doesn't know it's a `Dog`, but the compiler does and treats it statically. We must return the same concrete type every time—we can’t switch:
+
+	```swift
+	func makeAnimal(random: Bool) -> some Animal {
+		return random ? Dog() : Cat()  // ❌ Error — must return one consistent type
+	}
+	```
+
+	One advantage of this approach is that it retains static type safety and performance (there is no boxing or dynamic dispatching). This approach also works very well with SwiftUI views, generics, and library design.
+
+	This summary table indicates when to use each:
+
+	<table>
+		<tr>
+			<th>USE CASE</th>
+			<th>USE <code>-> Animal</code></th>
+			<th>USE <code>-> some Animal</code></th>
+		</tr>
+		<tr>
+			<td><strong>Return different types</strong></td>
+			<td>✅</td>
+			<td>❌ Must be one type</td>
+		</tr>
+		<tr>
+			<td><strong>Want maximum abstraction</strong></td>
+			<td>✅</td>
+			<td>✅</td>
+		</tr>
+		<tr>
+			<td><strong>Want performance/type safety</strong></td>
+			<td>❌ Slower dispatch</td>
+			<td>✅ Static, faster</td>
+		</tr>
+		<tr>
+			<td><strong>Building SwiftUI views</strong></td>
+			<td>❌ Not allowed</td>
+			<td>✅ Required</td>
+		</tr>
+	</table>
 	</details>
 
 - 🟥 [What are result builders and when are they used in Swift?](https://www.hackingwithswift.com/interview-questions/what-are-result-builders-and-when-are-they-used-in-swift)
 	<details>
 		<summary>Answer</summary>
 
-	Result builders, introduced in Swift 5.4, are a feature that allows us to declaratively build a complex data structure, such as a view hierarchy, using a concise syntax that looks like a combination of code and markup.
+	A result builder, introduced in Swift 5.4, is a custom attribute (marked with @resultBuilder) that transforms a series of statements (like function calls or conditionals) into a single return value, by combining or composing them. They're most famously used in SwiftUI.
 
 	Result builders are essentially a way to transform a series of expressions and statements into a single value of a specific type. They are implemented using a combination of function builders and property wrappers, which provide a way to collect and transform a sequence of values into a final result.
 	
@@ -3692,21 +3988,52 @@
 	```swift
 	struct ContentView: View {
 		var body: some View {
-			VStack {
-				Text("Hello, World!")
-				Button("Press me") {
-					print("Button pressed")
-				}
+		VStack {
+			Text("Hello")
+			if Bool.random() {
+				Text("Random message")
+			}
+				Text("World")
 			}
 		}
 	}
 	```
 	
-	In this example, the `VStack` and `Button` views are created using a declarative syntax that resembles HTML. The `body` property of the `ContentView` struct returns a `some View`, which is a type-erased view that can represent any view hierarchy.
+	`VStack { ... }` uses a result builder. It combines multiple `Text` views (and even an `if`) into one composite view. This works because `VStack` initializer is annotated with a result builder (`@resultBuilder`).
 
-	Under the hood, the `VStack` and `Button` views are created using result builders, which transform the declarative syntax into a series of function calls and property assignments. The result builders also allow for conditional and iterative logic, as well as other advanced features.
+	Here's an example of what a result builder does under the hood:
 
-	In addition to SwiftUI, result builders can be used in any context where we want to declaratively build a complex data structure using a concise and readable syntax.
+	```swift
+	Text("Hello")
+	Text("World")
+
+	// Transformed into
+	TupleView<(Text, Text)>
+	```
+
+	Here's a custom result builder example:
+
+	```swift
+ 	// Step 1: Define the builder
+	@resultBuilder
+	struct StringListBuilder {
+		static func buildBlock(_ components: String...) -> [String] {
+			return components
+		}
+	}
+
+	// Step 2: Use it
+	func makeList(@StringListBuilder content: () -> [String]) -> [String] {
+		content()
+	}
+	
+	let items = makeList {
+		"Apple"
+		"Banana"
+		"Cherry"
+	}
+	print(items)  // ["Apple", "Banana", "Cherry"]
+	```
 	</details>
 
 - 🟥 [What does the `targetEnvironment()` compiler condition do?](https://www.hackingwithswift.com/interview-questions/what-does-the-targetenvironment-compiler-condition-do)
@@ -3727,23 +4054,36 @@
 
 	```swift
 	#if targetEnvironment(macCatalyst)
-		// Code to run when compiling for Mac Catalyst
+	// Code to run when compiling for Mac Catalyst
 	#elseif os(iOS)
-		// Code to run when compiling for iOS
+	// Code to run when compiling for iOS
 	#elseif os(macOS)
-		// Code to run when compiling for macOS
+	// Code to run when compiling for macOS
 	#else
-		// Code to run for other platforms
+	// Code to run for other platforms
 	#endif
 	```
-	
-	By using the `targetEnvironment()` condition, developers can write code that adapts to the specific target environment at compile-time, which can help ensure that the code runs correctly and efficiently on each platform.
+
+	A common use case is to distinguish between running on a real iOS device or a simulator:
+
+  	```swift
+	#if targetEnvironment(simulator)
+	print("Running in the Simulator")
+	#else
+	print("Running on a real device")
+	#endif
+	```
+
+	This is often used to mock hardware, skip certain features (like Face ID), or avoid crashing when trying to access unsupported device APIs.
 	</details>
 
 - 🟥 [What is the difference between `self` and `Self`?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-self-and-self)
 	<details>
 		<summary>Answer</summary>
-	
+
+	>- `self` → instance
+	>- `Self` → type
+
 	In Swift, `self` (with a lowercase "s") refers to the current instance of a class, struct, or enum, while `Self` (with an uppercase "S") refers to the type of the current instance.
 
 	The `self` keyword is commonly used within an instance method or initializer to refer to the instance itself, for example:
@@ -3758,7 +4098,9 @@
 	}
 	```
 	
-	On the other hand, `Self` is typically used when defining a method or property that returns an instance of the current type. This is known as a "static dispatch" or "static return type" because the type is determined at compile-time rather than run-time. Here's an example:
+	On the other hand, `Self` is typically used when defining a method or property that returns an instance of the current type. This is known as a "static dispatch" or "static return type" because the type is determined at compile time rather than runtime.
+
+	Here's an example:
 
 	```swift
 	class Animal {
@@ -3779,36 +4121,63 @@
 	```
 	
 	In this example, the `create` method on the `Animal` class returns an instance of the current type (`Self`) using the `init` method. When the `create` method is called on the `Dog` class, it returns an instance of `Dog`.
-
-	So, in summary, `self` refers to the current instance of a class, struct, or enum, while `Self` refers to the type of the current instance.
 	</details>
 
 - 🟥 [When would you use `@autoclosure`?](https://www.hackingwithswift.com/interview-questions/when-would-you-use-atautoclosure)
 	<details>
 		<summary>Answer</summary>
 	
-	In Swift, the `@autoclosure` attribute is used to automatically wrap an expression in a closure. This means that the expression is not evaluated until it is called, allowing for deferred execution and lazy evaluation.
+	In Swift, the `@autoclosure` attribute is used to automatically wrap an expression in a closure. This means that the expression is not evaluated until it is called, allowing for deferred execution and lazy evaluation. This can be useful in certain situations where the expression is expensive to evaluate, or when we want to avoid evaluating the expression unless it is necessary.
 
-	We would use `@autoclosure` when we want to defer the evaluation of an expression until it is actually needed. This can be useful in certain situations where the expression is expensive to evaluate, or when we want to avoid evaluating the expression unless it is necessary.
-
-	For example, let's say we have a function that takes a closure as a parameter. If the closure takes a long time to execute, we can use `@autoclosure` to defer the execution of the closure until it is actually needed. Here's an example:
+	`@autoclosure` automatically wraps an expression in a closure—so instead of writing:
 
 	```swift
-	func performOperation(_ operation: @autoclosure () -> Void) {
-		// Do some work here
-	
-		// Call the closure
-		operation()
-	
-		// Do some more work here
-	}
-
-	performOperation(print("Hello, world!"))
+	someFunction({ expensiveComputation() })
 	```
-	
-	In this example, the `print("Hello, world!")` expression is automatically wrapped in a closure using `@autoclosure`, so it is not evaluated until it is called inside the `performOperation` function. This allows us to defer the execution of the `print` statement until it is actually needed, which can be useful in certain situations.
 
-	Note that `@autoclosure` should be used with care, as it can lead to unexpected behavior if used incorrectly. It is generally best to use it only for expressions that are cheap to evaluate and have no side effects.
+	You can write:
+ 
+	```swift
+	someFunction(expensiveComputation())
+	```
+
+	And Swift will automatically wrap it as `() -> ResultType`.
+
+  	As an example of use, Swift's `assert()` function uses `@autoclosure`:
+
+  	```swift
+	assert(2 + 2 == 4, "Math broke")
+	```
+
+	Under the hood, the condition is an `@autoclosure`:
+
+  	```swift
+	func assert(_ condition: @autoclosure () -> Bool, _ message: @autoclosure () -> String)
+	```
+
+	The condition and message are not evaluated unless necessary (e.g., in debug builds). Also, we don't have to wrap them in `{ }` closures.
+
+	Here's a custom example:
+
+	```swift
+	func logIfNeeded(_ message: @autoclosure () -> String) {
+		#if DEBUG
+		print(message())
+		#endif
+	}
+	
+	logIfNeeded("Something went wrong")  // You pass a string, not a closure
+	```
+
+	The string won’t be built unless `DEBUG` is true.
+
+	Overall, `@autoclosure` is useful when:
+	- The argument is expensive to compute.
+ 	- You want to delay or run it conditionally.
+  	- You want to improve API ergonomics (no `{ }` needed from the caller).
+  	<br>
+
+	Note that, since `@autoclosure` delays evaluation, anything with side effects (e.g., modifying a variable, logging, incrementing) might not run at all or run later than expected.
 	</details>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
