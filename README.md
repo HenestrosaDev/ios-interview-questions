@@ -62,7 +62,7 @@
 	<details>
 		<summary>Answer</summary>
 	
-	The answer depends on your experience with VoiceOver. Here is how I would approach it:
+	The answer depends on your experience with VoiceOver. Here's how I would approach it:
  
 	>I would say that I have a fair amount of experience testing with VoiceOver. It is an essential part of making sure that an iOS app is accessible to all users, including those who are visually impaired. To test with VoiceOver, the developer can enable VoiceOver on their test device and navigate through the app using only VoiceOver. This involves listening to the VoiceOver descriptions of each element on the screen and verifying that they are accurate and meaningful.
 	>
@@ -98,7 +98,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your experience with adding accommodations to make apps more accessible. Here is how I would approach it:
+	The answer depends on your experience with adding accommodations to make apps more accessible. Here's how I would approach it:
 	
 	>- **Implementing Dynamic Type**: This allows users to adjust the font size in the app to better suit their needs.
 	>- **Providing alternative text for images**: This allows users with visual impairments to understand the content of the app.
@@ -321,7 +321,9 @@
 
 	A **value type** creates a new copy of its data when it is assigned to a variable, or passed to a function. Changes to one instance of a value type do not affect other instances.
 
-	Value types in Swift include basic data types like `Int`, `Double`, `Bool`, and `String`, as well as more complex types such as structs and enums. Here is an example:
+	Value types in Swift include basic data types like `Int`, `Double`, `Bool`, and `String`, as well as more complex types such as structs and enums.
+
+	Here's an example:
 
 	```swift
 	struct Point {
@@ -380,7 +382,9 @@
 
 	Swift's `Result` type is a generic enumeration that represents the success or failure of an operation. It is commonly used for handling asynchronous tasks or error-prone operations in a concise, expressive, and type-safe way.
 
-	For example, we might use `Result` when making a network request. The successful result would be the data received from the network request, while the failure result would be an error that occurred during the request (e.g. a timeout, network error, or invalid response). Here is an example:
+	For example, we might use `Result` when making a network request. The successful result would be the data received from the network request, while the failure result would be an error that occurred during the request (e.g. a timeout, network error, or invalid response).
+
+	Here's an example:
 
 	```swift
 	enum NetworkError: Error {
@@ -842,7 +846,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your experience with functional programming. Here is how I would approach it:
+	The answer depends on your experience with functional programming. Here's how I would approach it:
 	
 	>I would say that I have a fair amount of experience with functional programming, as I have used languages that support functional programming, such as Scala, Swift and Kotlin. It is a programming paradigm that treats computation as the evaluation of mathematical functions and avoids changing state or mutable data. It focuses on using pure functions, immutable data, and function composition.
 	>
@@ -1040,7 +1044,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your experience with Core Data. Here is how I would approach it:
+	The answer depends on your experience with Core Data. Here's how I would approach it:
 	
 	>I would say that I have a fair amount of experience using Core Data. I have used it in the following projects:
 	>
@@ -1053,7 +1057,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your experience with Core Graphics. Here is how I would approach it:
+	The answer depends on your experience with Core Graphics. Here's how I would approach it:
 	
 	>I would say that I have a fair amount of experience using Core Data. I have used it for the following purposes:
 	>
@@ -1127,7 +1131,7 @@
 
 	Observers can register with the `NotificationCenter` to receive notifications about specific events. When a notification is posted, the notification center sends the notification to all registered observers. The observers can then take appropriate action based on the content of the notification.
 
-	Here is an example:
+	Here's an example:
 
   	```swift
 	// Payload (optional)
@@ -1249,7 +1253,7 @@
 
 	>An **affine transformation** preserves lines and parallelism. For example, a square might turn into a rectangle or parallelogram, but lines within the shape will remain straight, and parallel lines will stay parallel.
 
-	Here is an example in UIKit that uses all of the above transformations:
+	Here's an example in UIKit that uses all of the above transformations:
 
 	```swift
 	let sqView = UIView(frame: CGRect(x: 100, y: 200, width: 100, height: 100))
@@ -1282,7 +1286,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your experience with Core Image. Here is how I would approach it:
+	The answer depends on your experience with Core Image. Here's how I would approach it:
 
 	>I would say that I have a fair amount of experience using Core Image. I have used it for the following purposes: 
 	>
@@ -1317,7 +1321,7 @@
 
 	iBeacons are now deprecated, so I wouldn't bother preparing this question. However, I will provide its answer for the sake of completeness.
 
-	The answer depends on your experience with iBeacons. Here is how I would approach it:
+	The answer depends on your experience with iBeacons. Here's how I would approach it:
 	
 	>I haven't had much experience with it due to its low popularity. However, I once made a project to send notifications or special offers to customers who were browsing nearby products in a store.
 	</details>
@@ -1326,7 +1330,7 @@
 	<details>
 		<summary>Answer</summary>
 	
-	The answer depends on your experience with StoreKit. Here is how I would approach it:
+	The answer depends on your experience with StoreKit. Here's how I would approach it:
 	
 	>I integrated StoreKit into two applications. One was a game that used StoreKit to allow players to purchase new levels and characters, and the other was an English learning app that allowed users to subscribe to a monthly plan that gave them access to unlimited content within the app.
  	
@@ -1403,7 +1407,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your experience with GCD. Here is how I would approach it:
+	The answer depends on your experience with GCD. Here's how I would approach it:
 
 	>Grand Central Dispatch (GCD) is Apple's low-level concurrency and threading API used in Swift to that abstracts thread management, making concurrency easier and safer. I have used it in multiple projects to perform time-consuming tasks in the background, such as network requests or file operations, without blocking the main thread and freezing the UI. I have used the main queue to handle UI-related tasks and global queues for general-purpose tasks.
 
@@ -1467,7 +1471,7 @@
 
 	I would use the `AVAudioPlayer` class in Swift. It's designed for playing audio files from your app bundle or file system. It supports formats like `.mp3`, `.wav`, `.m4a`, etc. and allows control over playback (play, pause, stop)
 
-	Here is an example code snippet that shows how to play a sound file named `mySoundFile.mp3` from the app's main bundle:
+	Here's an example code snippet that shows how to play a sound file named `mySoundFile.mp3` from the app's main bundle:
 
 	```swift
 	import AVFoundation
@@ -1491,11 +1495,11 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your experience with `NSAttributedString`. Here is how I would approach it:
+	The answer depends on your experience with `NSAttributedString`. Here's how I would approach it:
 
 	>`NSAttributedString` is a class used to create immutable (read-only) strings with rich text attributes (like fonts, colors, styles, etc.) attached to ranges of characters. I have used it to display stylized text in views, such as `UILabel`, `UIButton` and `UITextView`. It is useful for creating headings, bullet points or highlighted text.
 
-	Here is a code example for creating a `NSAttributedString`:
+	Here's a code example for creating a `NSAttributedString`:
 
 	```swift
 	let attributedString = NSMutableAttributedString(string: "Hello, World!")
@@ -1534,7 +1538,7 @@
 	- Built-in support for sharing recorded videos via social media, messaging apps, and more
 	<br />
 
-	Here is a basic example for starting a recording:
+	Here's a basic example for starting a recording:
 
 	```swift
 	import ReplayKit
@@ -1612,7 +1616,7 @@
 
 	`CADisplayLink` is a class in UIKit that creates a timer that synchronizes your app's rendering with the display's refresh rate (usually 60 or 120 Hz on modern iOS devices). When a `CADisplayLink` object is added to the app's run loop, the system notifies the app each time the display is about to refresh. This allows the app to update its content before the screen is redrawn, ensuring smooth and fluid animations.
 
-	Here is an example usage:
+	Here's an example of how it's used:
 
 	```swift
 	var displayLink: CADisplayLink?
@@ -1638,7 +1642,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your preference for creating UI layouts. Here is how I would approach it:
+	The answer depends on your preference for creating UI layouts. Here's how I would approach it:
 
 	>I prefer creating them in code because it gives me more flexibility and control over the layout, which is useful for more complex and dynamic UIs. It's also easier to manage with version control and refactoring, especially with the introduction of SwiftUI and its declarative approach, which makes building layouts easier and more intuitive than with UIKit. Storyboards, on the other hand, are faster to prototype and easily support segues and Auto Layout constraints. However, they are prone to merge conflicts, and it's difficult to reuse views or create complex, dynamic UIs.
 	</details>
@@ -1647,7 +1651,9 @@
 	<details>
 		<summary>Answer</summary>
 	
-	To add a shadow to a view in iOS, we can use the `layer` property of the view's `CALayer` object. Here is an example of how to add a shadow to a view:
+	To add a shadow to a view in iOS, we can use the `layer` property of the view's `CALayer` object.
+
+	Here's an example of how to add a shadow to a view:
 
 	```swift 
 	// Create the view
@@ -1812,7 +1818,7 @@
 	
 	>I'm very familiar with XCTest as it's a testing framework built into Xcode for unit testing. I have created UI tests by using the `XCUIApplication` API to launch the app and, then, using `XCUIElement` API to simulate user interactions with the UI, such as tapping buttons. Once this is settled, I use assertions to verify the expected behavior of the UI elements, such as checking if a label displays the correct text or if a button is enabled or disabled.
 	>
-	>Here is the code that reflects the process:
+	>Here's the code that reflects the process:
 	>
 	>```swift
 	>import XCTest
@@ -2047,7 +2053,7 @@
 
 	To use `NSCache`, we can create an instance of the class and set the maximum number of objects and the total cost limit of the cache. We can then add and retrieve objects from the cache using keys.
 
-	Here is an example of using `NSCache` to cache image data:
+	Here's an example of using `NSCache` to cache image data:
 
 	```swift
 	class ImageCache {
@@ -2261,7 +2267,7 @@
 		// "CreditCard deinitialized"
 		```
 
-		Here is a table summing up the key differences between `weak` and `unowned`:
+		Here's a table summing up the key differences between `weak` and `unowned`:
 	
 		<table>
 			<tr>
@@ -2304,7 +2310,7 @@
 	
 	ARC makes memory management easier and less error-prone for developers because we don't have to manually keep track of how many references there are to an object and when to deallocate it.
 
-	Here is an example:
+	Here's an example:
 
 	```swift
 	class Person {
@@ -2328,7 +2334,7 @@
 
 	Although ARC handles most memory management, it can't detect retain cycles, where two objects hold strong references to each other. This prevents ARC from deallocating them.
 
-	Here is an example of a retain cycle:
+	Here's an example of a retain cycle:
 
 	```swift
 	class Owner {
@@ -2462,7 +2468,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your experience with Face ID or Touch ID. Here is how I would approach it:
+	The answer depends on your experience with Face ID or Touch ID. Here's how I would approach it:
 
 	>I have used them as an alternative login method for applications that stored sensitive information, such as bank transactions and stock positions. I have also used them in an application that stored sensitive information in the keychain, which users could access by logging in with Face ID or Touch ID.
 	</details>
@@ -2501,7 +2507,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The answer depends on your experience with the keychain. Here is how I would approach it:
+	The answer depends on your experience with the keychain. Here's how I would approach it:
 	
 	>I have used the iOS Keychain to securely store an retrieve sensitive data, such as authentication tokens or user credentials. I ensure that the keychain items use appropriate accessibility levels depending on the use case—for example, `.whenUnlocked` for tokens that should only be available when the device is unlocked, or `.whenPasscodeSetThisDeviceOnly` with `.userPresence` to add biometric protection via Face ID or Touch ID. It's very convenient to use an access control mechanism along with the keychain, such as requiring a passcode or biometric authentication, to ensure that only authorized users can access the data.
 	</details>
@@ -2711,7 +2717,7 @@
 	- `didSet`: Called **immediately after** the new value is set. It receives the old value as a parameter, which we can use to perform some action after the value has been set.
 	<br />
 
-	Here is an example:
+	Here's an example:
 
 	```swift
 	class Temperature {
@@ -2941,7 +2947,7 @@
 
 	In Swift, the `final` keyword indicates that a class, property, or method cannot be subclassed, overridden, or modified by other classes or methods through inheritance.
 
-	Here is an example:
+	Here's an example:
 
 	```swift
 	final class MyClass {
@@ -3294,7 +3300,7 @@
 	
 	This is a closure that behaves like a function; it takes two parameters and returns an integer.
 
-	Here is another example with different syntax:
+	Here's another example with different syntax:
 
 	```swift
 	let names = ["Charlie", "Alice", "Bob"]
@@ -3521,7 +3527,7 @@
 
 	The difference between `weak` and `unowned` in Swift comes down to how they handle memory ownership and optional vs. non-optional references. Both are used to avoid retain cycles in closures or between objects, but they behave differently when the referenced object is deallocated.
 
-	Here is a table representing the core differences:
+	Here's a table representing the core differences:
 
 	<table>
 		<tr>
@@ -3626,7 +3632,7 @@
 
 	The difference between an escaping and non-escaping closure in Swift comes down to when and where the closure is executed in relation to the function it's passed into.
 
-	Here is a table that breaks down the core differences:
+	Here's a table that breaks down the core differences:
 
 	<table>
 		<tr>
@@ -4050,7 +4056,7 @@
 	- `arch`: Evaluates to true when the code is being compiled for a specific processor architecture, such as `arch(x86_64)` or `arch(arm64)`.
 	<br />
 	
-	Here is an example of how to use the `targetEnvironment()` condition in Swift:
+	Here's an example of how to use the `targetEnvironment()` condition in Swift:
 
 	```swift
 	#if targetEnvironment(macCatalyst)
@@ -4205,7 +4211,7 @@
 
 	Marking a property with `@Published` automatically creates a publisher for that property. This publisher will emit a new value whenever the value of the property changes, which will also trigger the `objectWillChange` publisher of the `ObservableObject` that SwiftUI observes to ensure the UI updates seamlessly. This eliminates the need to manually send updates or notifications when the value of the property changes, as Combine handles it automatically.
 
-	Here is an example:
+	Here's an example:
 
 	```swift
 	import SwiftUI
@@ -4382,7 +4388,7 @@
 	
 	Programmatic navigation in SwiftUI can be achieved using the `NavigationLink` view and the `@State` property wrapper.
 
-	Here is an example of how to create programmatic navigation:
+	Here's an example of how to create programmatic navigation:
 
 	1. First, create a view that will be the destination of the navigation:
 		```swift
