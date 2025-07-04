@@ -4194,22 +4194,69 @@
 	<details>
 		<summary>Answer</summary>
 	
-	In SwiftUI, the `Environment` is a powerful feature that allows us to share data and configuration settings across our app. Think of it as a way to pass down a set of values or objects to all the views in our app without having to pass them down explicitly.
+	In SwiftUI, the environment is a way to pass shared data or settings automatically through the view hierarchy—from parent to child—without explicitly injecting it into every view.
 
-	The `Environment` is a key-value store that can hold any type of data. SwiftUI provides some built-in keys, such as `.colorScheme` or `.locale`, that can be used to access system-level settings like the user's preferred color scheme or language. However, we can also define our own keys to store and retrieve custom data or objects.
+	Think of it as a set of global values that any SwiftUI view can read or respond to, like:
+	- System settings (e.g., dark mode, locale, accessibility).
+	- App-wide values (e.g., user preferences, layout direction).
+	- Custom values you inject yourself (e.g., theme color, auth state).
+	<br>
 
-	One of the main benefits of using the `Environment` is that it allows we to create a consistent user interface throughout our app. For example, we might use the `.font` environment key to set a default font for all our app's text views. If the user changes the font size in the system settings, all the text in our app will automatically update to reflect the new font size.
-	
-	We can also use the `Environment` to create theming systems, where we define a set of colors or styles that can be applied to all the views in our app. By changing the values in the `Environment`, we can switch between different themes and instantly update the appearance of our app.
+ 	To establish a simple analogy, imagine you're building a house (your app) and that the environment is the air—all rooms (views) can breathe it. You don't have to run wires (pass data manually) to every single room.
+
+	One of the main benefits of using the environment is that it allows us to create a consistent user interface throughout our app. For example, we might use the `.font` environment key to set a default font for all our app's text views. If the user changes the font size in the system settings, all the text in our app will automatically update to reflect the new font size.
+
+	SwiftUI includes many useful system-provided environment values:
+
+	```swift
+	@Environment(\.colorScheme) var colorScheme
+	@Environment(\.locale) var locale
+	@Environment(\.horizontalSizeClass) var sizeClass
+	```
+
+	We can also define custom environment values to share app-level state or configuration:
+
+	```swift
+	// Step 1: Define a shared model
+	struct UserSettings: ObservableObject {
+		@Published var isLoggedIn: Bool = false
+	}
+
+	// Step 2: Inject it into the app's view hierarchy
+	@main
+	struct MyApp: App {
+		@StateObject var settings = UserSettings()
+		
+		var body: some Scene {
+			WindowGroup {
+				ContentView()
+					.environmentObject(settings)  // This injects the model into the environment
+			}
+		}
+	}
+
+	// Step 3: Access it in any child view
+	struct ContentView: View {
+		@EnvironmentObject var settings: UserSettings
+		
+		var body: some View {
+			Text(settings.isLoggedIn ? "Welcome back!" : "Please log in.")
+		}
+	}
+ 	```
+
+	`.environmentObject(settings)` adds the `UserSettings` object to the environment, allowing any subsequent view to access it. Additionally, we don't need to manually pass `settings` as a parameter in the `ContentView`, as SwiftUI automatically looks up the environment to find `UserSettings`.
+
+	The `@Environment` property wrapper is used to access system-provided settings, such as dark mode, locale, and font. `@EnvironmentObject`, on the other hand, is used to access custom environment values, such as the user's session or settings.
 	</details>
 
 - 🟩 [What does the `@Published` property wrapper do?](https://www.hackingwithswift.com/interview-questions/what-does-the-atpublished-property-wrapper-do)
 	<details>
 		<summary>Answer</summary>
 	
-	The `@Published` property wrapper in Swift is used in conjunction with the Combine framework to enable automatic publishing of changes to a property. It is most commonly used in `ObservableObject` classes to notify SwiftUI views or other subscribers about changes in the property value.
+	The `@Published` property wrapper in Swift is used inside an `ObservableObject` to automatically announce changes to a property so that SwiftUI views (or other observers) can react and update when the value changes.
 
-	Marking a property with `@Published` automatically creates a publisher for that property. This publisher will emit a new value whenever the value of the property changes, which will also trigger the `objectWillChange` publisher of the `ObservableObject` that SwiftUI observes to ensure the UI updates seamlessly. This eliminates the need to manually send updates or notifications when the value of the property changes, as Combine handles it automatically.
+	Marking a property with `@Published` automatically creates a publisher for that property. This publisher will emit a new value whenever the value of the property changes, which will also trigger the `objectWillChange` publisher of the `ObservableObject` that SwiftUI observes to trigger UI updates. This eliminates the need to manually send updates or notifications when the value of the property changes, as Combine handles it automatically.
 
 	Here's an example:
 
@@ -4237,6 +4284,7 @@
 	
 	- `@Published var count: Int`: Marks the `count` property as a publisher. Any changes to `count` will notify subscribers.
  	- `@StateObject`: Used in SwiftUI to create and observe the `Counter` instance. SwiftUI listens to changes in the `objectWillChange` publisher and updates the UI automatically.
+	<br>
 	
 	Common pitfalls:
 	- **Not for structs or enums**: `@Published` works only in classes because it relies on reference semantics and the `ObservableObject` protocol.
@@ -4248,32 +4296,41 @@
 	<details>
 		<summary>Answer</summary>
 
-	The `@State` property wrapper is a feature in SwiftUI that allows us to declare a property in a `View` struct as a state variable. When the value of the state variable changes, SwiftUI automatically updates the `View` to reflect the new state.
+	The `@State` property wrapper in SwiftUI is used to declare a piece of state that is local to a view. It allows the view to own and manage its own mutable data—and automatically triggers a UI update whenever that data changes.
+
+	In simple terms, `@State` is for temporary view-specific data—things like:
+	- Whether a toggle is on or off.
+	- A text field's input.
+	- A counter's value.
+	<br>
+
+	SwiftUI watches that state, and when it changes, it re-renders the body of the view.
 
 	Here's an example of how to use `@State` in a simple SwiftUI `View`:
 	
 	```swift
 	import SwiftUI
 
-	struct MyView: View {
-		@State private var count = 0
+	struct CounterView: View {
+		@State private var count = 0  // @State makes `count` mutable inside the view
 
 		var body: some View {
 			VStack {
-				Text("Count: \(count)")
+				Text("Count: \(count)")  // This view updates automatically
 				Button("Increment") {
-					count += 1
+					count += 1  // Triggers view update
 				}
 			}
 		}
 	}
 	```
-	
-	In this example, we declare a state variable `count` using the `@State` property wrapper. We can then use this variable inside the `body` property of the `View` to create a label that displays the current value of `count` and a button that increments the count when tapped.
 
-	The key benefit of using `@State` is that it allows SwiftUI to manage the lifecycle of the state variable for us. Whenever the value of the state variable changes, SwiftUI automatically updates the `View` to reflect the new value. Additionally, `@State` ensures that the state variable is only accessed from the main thread, which helps avoid race conditions and other concurrency issues.
-
-	It's worth noting that `@State` is designed for simple, local state variables that are tightly coupled to the `View`. If we need to share state between multiple views or across our app, we should consider using `@ObservedObject` or `@EnvironmentObject` instead.
+	Here are some important rules to consider about `@State`:
+	- `@State` variables are usually private because they are internal to the view and they shouldn't be read or written from outside.
+	- It ensures that the state variable is only accessed from the main thread, which helps avoid race conditions and other concurrency issues.
+	- `@State` can only be used in structs that conform to `View`.
+	- We should not pass it directly to other views—instead, pass a binding via `$value`.
+	- If we need to share state between multiple views or across our app, we should consider using `@ObservedObject` or `@EnvironmentObject` instead.
 	</details>
 
 - 🟩 [What's the difference between a view's initializer and `onAppear()`?](https://www.hackingwithswift.com/interview-questions/whats-the-difference-between-a-views-initializer-and-onappear)
@@ -4299,6 +4356,7 @@
 			}
 			.onAppear {
 				print("View appeared")
+				fetchUserData()
 			}
 		}
 	}
@@ -4306,51 +4364,58 @@
 	
 	In this example, the `init()` method is called once to initialize the `message` property to "Hello, world!", and the `onAppear()` modifier is called each time the view appears on the screen to print "View appeared" to the console.
 
-	It's important to note that the `init()` method is called before the view is fully configured and may not have access to certain environment values or view modifiers. In contrast, `onAppear()` is called after the view has been configured and is visible on the screen, so it's a good place to perform tasks that require access to the view hierarchy or environment.
-
-	In summary, the initializer of a SwiftUI `View` is used to set up the initial state of the view, while `onAppear()` is used to perform tasks when the view appears on the screen.
+	**IMPORTANT**: Don't rely on the initializer for things like API calls or one-time logic, because SwiftUI may recreate the view multiple times. Use `onAppear` or `@State` to manage that instead.
 	</details>
 
 - 🟩 [When would you use `@StateObject` versus `@ObservedObject`?](https://www.hackingwithswift.com/interview-questions/when-would-you-use-atstateobject-versus-atobservedobject)
 	<details>
 		<summary>Answer</summary>
 	
-	In SwiftUI, both `@StateObject` and `@ObservedObject` are used to manage external state in a view, but they have slightly different use cases.
+	In SwiftUI, both `@StateObject` and `@ObservedObject` are used to manage external state in a view, but the key distinction lies in who own and created the object.
 
-	`@ObservedObject` is used to reference an object that is created outside the current view and is used by the view to render its content. The object is passed into the view's initializer and is marked with `@ObservedObject`. Whenever the object's state changes, the view is updated to reflect the new state.
+	Here's a table pinpointing the core difference:
 
-	On the other hand, `@StateObject` is used to create and own an object within the view. The object is created and managed entirely by the view, and is not passed in from the outside. The @StateObject property wrapper is used to indicate that the view owns the object, and the object's state can be mutated within the view.
-
-	In general, we would use `@ObservedObject` when we need to reference an object that is created outside the view, and `@StateObject` when we need to create and manage an object within the view.
+	<table>
+		<tr>
+			<th>PROPERTY WRAPPER</th>
+			<th>OWNERSHIP</th>
+			<th>RESPONSABILITY</th>
+		</tr>
+		<tr>
+			<td><code>@StateObject</code></td>
+			<td>Creates and owns the model</td>
+			<td>Use when the view creates the object</td>
+		</tr>
+		<tr>
+			<td><code>@ObservedObject</code></td>
+			<td>References an external model</td>
+			<td>Use when the object is created elsewhere</td>
+		</tr>
+	</table>
 	
 	Here's a simple example to illustrate the difference:
 
 	```swift
-	class MyData: ObservableObject {
-		@Published var message = "Hello, world!"
-	}
-
-	struct ContentView: View {
-		@ObservedObject var data = MyData()
-		@StateObject var newData = MyData()
-	
+	struct ParentView: View {
+		@StateObject var viewModel = ProfileViewModel()
+		
 		var body: some View {
-			VStack {
-				Text(data.message)
-				Text(newData.message)
-			
-				Button("Change Message") {
-					data.message = "Goodbye, world!"
-					newData.message = "New message"
-				}
-			}
+			ProfileView(viewModel: viewModel)  // Pass down as @ObservedObject
+		}
+	}
+	
+	struct ProfileView: View {
+		@ObservedObject var viewModel: ProfileViewModel
+		
+		var body: some View {
+			Text(viewModel.username)
 		}
 	}
 	```
 	
-	In this example, `data` is an object created outside the view and passed in using `@ObservedObject`, while `newData` is created and owned by the view using `@StateObject`. When the button is tapped, both objects are mutated, but only the change to `data` is observed by the view, because `newData` is not passed in from the outside and is not observed by any other view.
+	In this example, the `ParentView` creates and owns the object (`@StateObject`). The `ProfileView` uses it (`@ObservedObject`), but doesn't own it.
 
-	In summary, we would use `@ObservedObject` when we need to reference an object created outside the view, and `@StateObject` when we need to create and manage an object within the view.
+	Beware that, if we use `@ObservedObject` to create a new object in a view, SwiftUI may recreate it every time the view reloads, causing bugs like loss of state, repeated API calls, and unwanted side effects. That's why `@StateObject` was introduced in Swift 5.3.
 	</details>
 
 - 🟧 [How can an observable object announce changes to SwiftUI?](https://www.hackingwithswift.com/interview-questions/how-can-an-observable-object-announce-changes-to-swiftui)
@@ -4362,6 +4427,8 @@
 	For example, let's say we have an observable object `UserData`:
 
 	```swift
+	import Combine
+
 	class UserData: ObservableObject {
 		@Published var name: String = ""
 	}
@@ -4380,84 +4447,104 @@
 	``` 
 	
 	When the `name` property of `UserData` changes, the `@Published` property wrapper will notify SwiftUI that the object has changed, and the `UserView` will be updated with the new value of `name`.
+
+	Instead of `@Published`, we can use `objectWillChange.send()` for custom or manual update control. In fact, `@Published` uses this method under the hood.
+
+	Here's the `UserData` class rewritten using `objectWillChange.send()` manually, instead of relying on `@Published`:
+
+	```swift
+	import Combine
+
+	class UserData: ObservableObject {
+		// The publisher used to notify SwiftUI of upcoming changes
+		let objectWillChange = ObservableObjectPublisher()
+		
+		var name: String = "" {
+			willSet {
+				objectWillChange.send() // Notify SwiftUI before value changes
+			}
+		}
+	}
+	```
 	</details>
 
 - 🟧 [How would you create programmatic navigation in SwiftUI?](https://www.hackingwithswift.com/interview-questions/how-would-you-create-programmatic-navigation-in-swiftui)
 	<details>
 		<summary>Answer</summary>
 	
-	Programmatic navigation in SwiftUI can be achieved using the `NavigationLink` view and the `@State` property wrapper.
+	To create programmatic navigation in SwiftUI, where navigation is triggered by state changes and not just by tapping on links, we typically use one of these two approaches.
 
-	Here's an example of how to create programmatic navigation:
+	1. **`NavigationLink` with a `Binding<Bool>` or `Binding<Optional>` destination**
 
-	1. First, create a view that will be the destination of the navigation:
-		```swift
-		struct DetailView: View {
-			var text: String
+		This is the most common method for simple programmatic navigation.
 
-			var body: some View {
-				Text(text)
-			}
-		}
-		```
-		 
-	2. Next, create the view that will initiate the navigation. Inside this view, define a `@State` variable that will keep track of whether the navigation should be active or not.
+		Here's an example:
+
 		```swift
 		struct ContentView: View {
-			@State private var isDetailViewActive = false
-
-			var body: some View {
-				VStack {
-					Button("Go to detail view") {
-						self.isDetailViewActive = true
-					}
-			
-					NavigationLink(
-						destination: DetailView(text: "Hello from DetailView"),
-						isActive: $isDetailViewActive,
-						label: { EmptyView() }
-					)
-				}
-			}
-		}
-		```
-		 
-		In this example, we have a `Button` that sets the `isDetailViewActive` state variable to true when it is tapped. We also have a `NavigationLink` that defines the destination view (`DetailView`) and whether it should be active or not (`isActive`).
-
-	3. Finally, embed the view inside a `NavigationView`:
-		```swift
-		struct ContentView: View {
-			@State private var isDetailViewActive = false
-
+			@State private var isShowingDetail = false
+		
 			var body: some View {
 				NavigationView {
 					VStack {
-						Button("Go to detail view") {
-							self.isDetailViewActive = true
+						Button("Go to Detail") {
+							isShowingDetail = true  // Trigger navigation
 						}
-							
+			
 						NavigationLink(
-							destination: DetailView(text: "Hello from DetailView"),
-							isActive: $isDetailViewActive,
-							label: { EmptyView() }
+							destination: DetailView(),
+							isActive: $isShowingDetail,
+							label: { EmptyView() }  // Hidden link
 						)
 					}
 				}
 			}
 		}
+		
+		struct DetailView: View {
+			var body: some View {
+				Text("Detail View")
+			}
+		}
 		```
 
-	With this setup, when the button is tapped, the `isDetailViewActive` state variable is set to true, which activates the `NavigationLink` and navigates to the `DetailView`.
+	2. **`NavigationStack` and `NavigationPath` APIs (iOS 16+)**
 
+		For more complex flows or dynamic stacks, use `NavigationStack` and `NavigationPath`.
+
+		Here's an example with push logic:
+
+		```swift
+		struct ContentView: View {
+			@State private var path = NavigationPath()
+			
+			var body: some View {
+				NavigationStack(path: $path) {
+					VStack {
+						Button("Go to Detail") {
+							path.append("Detail")  // Push a new view
+						}
+					}
+					.navigationDestination(for: String.self) { value in
+						if value == "Detail" {
+							DetailView()
+						}
+					}
+				}
+			}
+		}
+		```
+
+		In this example, the entire stack is controlled via the path. In addition to pushing, we can also pop or clear views.
 	</details>
 
 - 🟧 [What is the purpose of the `ButtonStyle` protocol?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-the-buttonstyle-protocol)
 	<details>
 		<summary>Answer</summary>
 	
-	The `ButtonStyle` protocol in SwiftUI defines the appearance and behavior of a button. It specifies a set of methods and properties that a custom button style should implement, such as configuring the appearance of the button's label and handling user interactions.
+	The `ButtonStyle` protocol in SwiftUI defines how a button looks and reacts visually, allowing developers to customize its appearance and pressed-state behavior. It requires implementing a single method, `makeBody(configuration:)`, which returns a view describing the button's look.
 
-	By conforming to the `ButtonStyle` protocol, we can create custom button styles that can be applied to any `Button` instance in our SwiftUI views. This can be useful for creating consistent branding or visual design across our app, as well as for creating specialized button behaviors that are not available with the default button styles.
+	By conforming to `ButtonStyle`, you can create reusable, branded, or specialized styles and apply them to any `Button` instance. This is useful for maintaining consistent visual design and adding effects (like color changes or scaling) when the button is pressed.
 	</details>
 
 - 🟧 [When would you use `GeometryReader`?](https://www.hackingwithswift.com/interview-questions/when-would-you-use-geometryreader)
@@ -4466,28 +4553,57 @@
 	
 	`GeometryReader` is a view in SwiftUI that provides information about the size and position of its parent view, as well as its own size and position within its parent. It's useful in a variety of situations, such as:
 
-	1. Positioning child views relative to the parent view: By using the `GeometryReader` to get the size and position of the parent view, we can position child views within it using relative coordinates.
-	2. Creating responsive layouts: By using the `GeometryReader` to get the size of the parent view, we can adjust the layout of child views to fit different screen sizes and orientations.
-	3. Creating custom drawing: By using the `GeometryReader` to get the size of the parent view, we can create custom drawings that adapt to the size and position of the view.
-	<br />
+	1. **Responsive layouts**:
+		Get the size of the parent view to adjust the layout of child views to fit different screen sizes and orientations based on available space:
 
-	Some specific examples of when to use `GeometryReader` include:
+		```swift
+		GeometryReader { geometry in
+			Text("Hello")
+				.frame(width: geometry.size.width * 0.8)
+		}
+		```
 
-	- Creating a custom navigation bar with a background image that spans the entire width of the screen, including the safe area insets.
-	- Creating a circular progress bar that fills up as the user completes a task, with the radius of the circle adapting to the available space.
-	- Creating a responsive grid layout that adjusts the number of columns based on the screen size and orientation.
+		This makes the text fill 80% of the parent's width.
+
+	2. **Dynamic positioning**
+		Get the size and position of the parent view to position child views within it using relative coordinates:
+
+		```swift
+		GeometryReader { geometry in
+			Circle()
+				.position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+		}
+		```
+
+		This centers the circle in its parent.
+
+	3. **Parallax or scroll effects**: Get the position of a view on screen and react to it (e.g., scroll offset animations).
+
+	4. **Debugging layouts**
+		Print or inspect frame data during layout:
+
+		```swift
+		GeometryReader { geometry in
+			Text("Width: \(geometry.size.width)")
+		}
+		```
+
+ 	Things to watch out for:
+	- `GeometryReader` expands to fill all available space, so we should wrap it in a `ZStack` or `VStack`. Alternatively, we can use the `.frame()` method to constrain it.
+	- It can be expensive if used excessively, so only use it when necessary.
+	- Avoid nesting too many GeometryReaders, as this can make the layout more difficult to understand.
 	</details>
 
 - 🟥 [Why does SwiftUI use structs for views?](https://www.hackingwithswift.com/interview-questions/why-does-swiftui-use-structs-for-views)
 	<details>
 		<summary>Answer</summary>
 
-	SwiftUI uses structs for views for several reasons:
+	SwiftUI uses structs for views because they provide predictability, optimal performance, and simplicity, which aligns with the platform's declarative UI design philosophy.
 
-	1. **Efficiency**: Structs are lightweight and efficient to create and copy, which makes them well-suited for UI components that are frequently created and destroyed, such as views in a user interface.
-	2. **Predictable behavior**: Structs are immutable by default, which means that their properties cannot be changed after they are created. This makes it easier to reason about the behavior of a view, since its properties will not change unexpectedly.
-	3. **Composition**: SwiftUI views can be composed of other views, and structs are well-suited for composition. When we compose views, the resulting view hierarchy is a tree of structs, which can be efficiently created and updated by SwiftUI.
-	4. **Declarative syntax**: Structs lend themselves well to a declarative syntax, where we define the desired outcome of a view hierarchy, rather than specifying the imperative steps required to achieve that outcome. SwiftUI leverages this declarative syntax to simplify UI development and reduce code complexity.
+	1. **Value semantics = Predictable behavior**: Structs are value types, which means that when a view is updated, a new copy is made. SwiftUI can then compare the old and new versions to determine what actually changed, which makes the rendering system more predictable and less error-prone than using reference type like classes.
+	2. **Lightweight and fast**: Since structs don't require heap allocation or reference counting, they can be copied and discarded cheaply. This allows SwiftUI to optimize view diffing and updates.
+	3. **Declarative = Immutable UI snapshots**: SwiftUI is declarative, meaning you describe what the UI should look like at any given time. Structs are perfect for this, as each view is a static snapshot of the UI state. If state changes, SwiftUI simply recomputes the view body from scratch using new structs.
+	4. **Simple and clean code**: Structs make view code easier to read, safer to reason about and more aligned with Swift's focus on clarity and safety.
 	</details>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
