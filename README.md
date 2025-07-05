@@ -4616,9 +4616,9 @@
 	
 	XIBs and storyboards are both ways of creating graphical user interfaces (GUIs) in iOS and macOS development, but they differ in some key ways.
 
-	XIB files, also known as .nib files, are individual interface files that contain a single view or scene. They are used to build specific user interface elements that can be reused in different parts of an application. XIB files are typically used in conjunction with programmatic view controller code, allowing developers to create a custom UI without having to build all the UI elements in code.
+	XIB files, also known as `.nib` files, are individual interface files that contain a single view or scene. They are used to build specific user interface elements that can be reused in different parts of an application. XIB files are typically used in conjunction with programmatic view controller code, which makes creating a custom UI possible without building all the UI elements in code.
 
-	Storyboards, on the other hand, are files that contain multiple scenes or views in a single file. Storyboards allow us to design and connect multiple screens of an app in a single file, and they make it easy to create and manage segues between screens. This makes it possible to design the entire flow of an application's user interface in a single place, making it easier to visualize and manage.
+	Storyboards, on the other hand, contain multiple scenes or views within a single file. They allow us to design and connect multiple screens of an app and make it easy to create and manage segues between screens. This makes designing the entire flow of an application's user interface possible in a single place, which makes visualization and management easier.
 
 	Here are some key differences between XIBs and storyboards:
 
@@ -4626,7 +4626,7 @@
 	2. **Navigation**: Storyboards can be used to create the entire flow of an application's user interface, including navigation between different views, while XIBs are typically used to build specific views that are reused in multiple parts of an app.
 	3. **Collaboration**: Since XIBs contain individual views, they can be more easily shared between developers, while storyboards are more complex and can be harder to manage in a team environment.
 	4. **Flexibility**: XIBs provide more flexibility in terms of customizing individual views, while storyboards make it easier to manage the overall flow of an application's user interface.
-	<br />
+	<br>
 
 	In summary, XIBs are used to build individual views or UI elements that can be reused in different parts of an app, while storyboards are used to design the overall flow of an app's user interface.
 	</details>
@@ -4635,23 +4635,45 @@
 	<details>
 		<summary>Answer</summary>
 	
-	A segue is a way to transition from one view controller to another in a storyboard-based iOS app. It provides a visual transition effect that creates a sense of continuity between the two screens.
+	A segue is a visual and declarative way to transition from one view controller to another in a storyboard-based iOS app.
 
-	There are three types of segues in UIKit:
+	There are four types of segues in UIKit:
 
-	1. **Show Segue**: This type of segue is used to push a new view controller onto the navigation stack. The new view controller slides in from the right, and the current view controller slides out to the left.
-	2. **Modally Present Segue**: This type of segue is used to present a view controller modally. The new view controller slides up from the bottom of the screen, covering the current view controller.
-	3. **Custom Segue**: This type of segue is used to create a custom transition between view controllers. It allows the developer to define a custom animation or transition effect.
-	<br />
+	1. **Show (push)**: Pushes a new view controller onto the navigation stack. The new view controller slides in from the right, and the current view controller slides out to the left.
+	2. **Modal (present)**: Presents a new view controller modally (fullscreen or sheet). The new view controller slides up from the bottom of the screen, covering the current view controller.
+	3. **Popover**: Displays content in a popover (iPad-focused).
+	4. **Custom**: Creates a custom transition between view controllers. It allows the developer to define a custom animation or transition effect.
+	<br>
 
 	Each segue has an identifier that is used to identify it in code. When a segue is triggered, the `prepare(for:sender:)` method is called on the current view controller, which allows the developer to pass data to the destination view controller before it is presented.
+
+	Here's an example:
+
+	```swift
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "showDetail" {
+			let destinationVC = segue.destination as! DetailViewController
+			destinationVC.userName = "Alice"
+		}
+	}
+	```
 	</details>
 
 - 🟩 [What are storyboard identifiers for?](https://www.hackingwithswift.com/interview-questions/what-are-storyboard-identifiers-for)
 	<details>
 		<summary>Answer</summary>
 	
-	Storyboard identifiers are used to identify a specific view controller within a storyboard. They are commonly used when navigating between view controllers programmatically, as they allow the developer to specify which view controller they want to present or push onto the navigation stack. When assigning a storyboard identifier to a view controller, the developer gives it a unique string identifier, which can then be used in code to instantiate the view controller or perform a segue to it. The use of storyboard identifiers can help make view controller navigation more efficient and organized in iOS app development.
+	Storyboard identifiers are used to identify a specific view controller within a storyboard. They are commonly used when navigating between view controllers programmatically, as they specify which view controller to present or push onto the navigation stack. When assigning a storyboard identifier to a view controller, we need to give it a unique string identifier, which can then be used in code to instantiate the view controller or perform a segue to it.
+
+	Here's an example:
+
+	```swift
+	let storyboard = UIStoryboard(name: "Main", bundle: nil)
+	let detailVC = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+	navigationController?.pushViewController(detailVC, animated: true)
+	```
+
+	Without setting a Storyboard ID in Interface Builder, this code will crash.
 	</details>
 
 - 🟩 [What are the benefits of using child view controllers?](https://www.hackingwithswift.com/interview-questions/what-are-the-benefits-of-using-child-view-controllers)
@@ -4660,57 +4682,96 @@
 	
 	Using child view controllers can have several benefits, including:
 
-	1. **Modularization**: Child view controllers allow developers to modularize their code by breaking down complex view controller hierarchies into smaller, more manageable pieces. This can make the code easier to read, understand, and maintain over time.
-	2. **Reusability**: Once a child view controller has been created, it can be easily reused in different parts of the app, reducing the amount of duplicate code needed.
-	3. **Flexibility**: Child view controllers allow for more flexibility in the presentation and layout of views, as they can be added and removed dynamically as needed.
-	4. **Separation of concerns**: Child view controllers allow developers to separate the concerns of different parts of the UI. For example, one child view controller might be responsible for displaying a list of items, while another might handle the details view for each item.
-	5. **Improved performance**: Child view controllers can help improve the performance of an app by allowing it to load only the views it needs at a given time, rather than loading all views at once. This can be particularly useful for apps with complex UIs that require a lot of resources to render.
+	1. **Reusability**: After creating a child view controller, it can easily be reused in different parts of the app, thereby reducing the need for duplicate code.
+	2. **Flexibility**: They offer greater flexibility in presentation and layout because views can be added or removed as needed. We can also animate transitions between them and repond to screen size or orientation changes with layout logic specific to each child.
+	3. **Separation of concerns**: The parent manages layout and coordination, while children manage their own content and behavior.
+	4. **Improved performance**: They improve app performance by enabling apps to load only the necessary views at a given time rather than loading all views simultaneously. This is particularly useful for apps with complex UIs that require a lot of resources to render.
+	5. **Testing**: Each child can handle its own view model and interactions, so they can be unit tested or UI tested in isolation. This reduces dependencies between unrelated parts of the screen.
+	6. **Lifecycle management**: They participate in the full `UIViewController` lifecycle. The events propagate from parent to child.
+	<br>
+
+	Here's an example:
+
+	```swift
+	let childVC = DetailViewController()
+	addChild(childVC)
+	view.addSubview(childVC.view)
+	childVC.view.frame = container.bounds
+	childVC.didMove(toParent: self)
+	```
+
 	</details>
 
 - 🟩 [What are the pros and cons of using `viewWithTag()`?](https://www.hackingwithswift.com/interview-questions/what-are-the-pros-and-cons-of-using-viewwithtag)
 	<details>
 		<summary>Answer</summary>
 	
-	The `viewWithTag()` method is a way to retrieve a view from its superview by using a unique tag assigned to it. Here are some pros and cons of using this method:
+	The `viewWithTag()` method is a way to retrieve a view from its superview by using a unique tag assigned to it. Here are some pros and cons of using it:
 
-	Pros: 
+	✅ Pros: 
 	- It is a quick and easy way to access a view from its superview without having to store a reference to it in a property.
 	- It can be useful when dealing with dynamically generated views or when working with views that are not directly accessible in code (e.g. in a table view cell or collection view cell).
-	<br />  
+	<br>
 
-	Cons:
+	❌ Cons:
 	- It can lead to code that is hard to read and maintain because the tag value is not easily discoverable in code.
 	- It can be error-prone if multiple views have the same tag value or if the tag value is not unique.
 	- It is less performant than directly accessing a view through a property because it requires the superview to search through its subviews to find the one with the specified tag.
-	<br />
+	- It is not type-safe, as tags are just `Int`. There's no compile-time safety or autcomplete.
+	<br>
 
-	In short, it is generally recommended to avoid using `viewWithTag()` when possible and instead use properties to store references to views that need to be accessed multiple times. However, in some cases where quick access to a view is needed and the tag value is guaranteed to be unique, using `viewWithTag()` can be a convenient solution.
+	In short, it is generally recommended to avoid using `viewWithTag()` when possible and instead use `@IBOutlet` properties to store references to views that need to be accessed multiple times. However, in some cases where quick access to a view is needed and the tag value is guaranteed to be unique, using `viewWithTag()` can be a convenient solution.
 	</details>
 
 - 🟩 [What is the difference between `@IBOutlet` and `@IBAction`?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-atiboutlet-and-atibaction)
 	<details>
 		<summary>Answer</summary>
 	
-	In iOS development, `@IBOutlet` and `@IBAction` are annotations used with Interface Builder to connect user interface elements with code in Swift.
+	`@IBOutlet` and `@IBAction` are annotations used with Interface Builder to connect user interface elements with code in Swift.
 
-	`@IBOutlet` is used to create a reference from the Interface Builder component to the Swift code, allowing the code to interact with the component, such as changing its properties, like its text or color, or responding to user actions.
+	`@IBOutlet` creates a reference to a UI element, such as a label, button, or text field. This allows the code to interact with the component by changing its properties, like text or color. It is always used with a `var` because UIKit needs to assign a value at runtime.
 
-	`@IBAction`, on the other hand, is used to define an action to be performed when the connected user interface element, such as a button or slider, is triggered by a user interaction.
+  	```swift
+	@IBOutlet weak var nameLabel: UILabel!
+	nameLabel.text = "Welcome!"
+	```
 
-	In summary, `@IBOutlet` is used to establish a connection between a user interface element and the code, while `@IBAction` is used to define a method that will be called when a user interacts with the connected element.
+	`@IBAction`, on the other hand, connects UI events (like button taps) to a method in the code. It must have a specific method signature the Interface Builder recognizes (usually returns `Void` and takes one parameter for the sender).
+
+  	```swift
+	@IBAction func submitButtonTapped(_ sender: UIButton) {
+		print("Button was tapped!")
+	}
+	```
+
+	This function gets called when the connected button is tapped.
+
+	As a quick analogy, think of `@IBOutlet` as "reaching into the UI" to change it, and `@IBAction` as "responding to the UI" when something happens.
 	</details>
 
 - 🟩 [What is the difference between a `UIImage` and a `UIImageView`?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-a-uiimage-and-a-uiimageview)
 	<details>
 		<summary>Answer</summary>
 	
-	In iOS development with UIKit, `UIImage` and `UIImageView` are two related but distinct concepts:
+	`UIImage` is the image itself and `UIImageView` other is a visual container that displays the image on the screen.
 
-	- `UIImage` is a class that represents an image in memory. It is often used as a source of data for a view that displays images, such as a `UIImageView`.
-	- `UIImageView` is a subclass of `UIView` that is designed to display a `UIImage` on screen. It provides additional functionality for scaling, animating, and manipulating images, and is often used in conjunction with other view classes to build a user interface.
-	<br />
-			
-	In summary, `UIImage` represents the image data, while `UIImageView` is a view that displays the image data.
+	A `UIImage` is a class that represents an image in memory. It does not display images itself, but rather, it is used as a data source for views that display images, such as a `UIImageView`.
+
+	```swift
+	let image = UIImage(named: "logo")
+	```
+
+	A `UIImageView`, on the other hand, is a subclass of `UIView` that displays a `UIImage` on screen. It is used in the view hierarchy to render images to users. We can apply layout, animations, tinting, and content modes to it.
+
+	```swift
+	let imageView = UIImageView(image: UIImage(named: "logo"))
+	imageView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+	view.addSubview(imageView)
+	```
+
+	Now the image is visible inside the view.
+
+	To understand the difference, consider the analogy of a photo and a photo frame. The photo is the `UIImage` and the frame is the `UIImageView`. You can't see the photo until it's placed in the frame and hung on the wall.
 	</details>
 
 - 🟩 [What is the difference between aspect fill and aspect fit when displaying an image?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-aspect-fill-and-aspect-fit-when-displaying-an-image)
@@ -4719,79 +4780,132 @@
 	
 	When displaying an image, aspect fill and aspect fit refer to two different ways of scaling the image to fit into the available space while maintaining its aspect ratio.
 
-	Aspect fill means that the image will be scaled up or down so that it completely fills the available space, with any excess parts of the image being cropped off. This can result in the image being enlarged beyond its original dimensions or parts of the image being cut off, but it ensures that the entire available space is filled with the image.
+	Aspect fit (`.scaleAspectFit`) means that the image will be scaled so that it fits entirely within the available space, **without cropping**. This may leave empty space (padding) around the image, but ensures the whole image is visible.
 
-	Aspect fit means that the image will be scaled up or down so that it fits entirely within the available space, without any parts of the image being cropped off. This can result in empty space around the edges of the image, but it ensures that the entire image is visible within the available space.
+	Aspect fill (`.scaleAspectFill`) means that the image will be scaled so that it completely fills the available space, even if that means cropping parts of the image to maintain its aspect ratio.
 
-	In other words, aspect fill prioritizes filling the space, while aspect fit prioritizes displaying the entire image.
+	In other words, aspect fit prioritizes displaying the entire image, while aspect fill prioritizes filling the entire space.
+
+	Here's a table that sums up the differences:
+
+	<table>
+		<tr>
+			<th>MODE</th>
+			<th>BEHAVIOR</th>
+			<th>PRESERVES ASPECT RATIO?</th>
+			<th>MIGHT CROP?</th>
+			<th>MIGHT ADD PADDING?</th>
+		</tr>
+		<tr>
+			<td><code>.scaleAspectFit</code></td>
+			<td>Fits image inside view</td>
+			<td>✅ Yes</td>
+			<td>❌ No</td>
+			<td>✅ Yes</td>
+		</tr>
+		<tr>
+			<td><code>.scaleAspectFill</code></td>
+			<td>Fills view with image</td>
+			<td>✅ Yes</td>
+			<td>✅ Yes</td>
+			<td>❌ No</td>
+		</tr>
+	</table>
+
+	Here's an example of usage:
+
+	```swift
+	let imageView = UIImageView(image: UIImage(named: "photo"))
+	imageView.contentMode = .scaleAspectFit  // or .scaleAspectFill
+	```
 	</details>
 
 - 🟩 [What is the purpose of `UIActivityViewController`?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-uiactivityviewcontroller)
 	<details>
 		<summary>Answer</summary>
 
-	`UIActivityViewController` is a class in UIKit framework of iOS that provides a pre-built user interface to share content such as text, images, and URLs with other applications or services. It allows the user to select from a list of services they have configured on their device, such as messaging, email, social media, or cloud storage, to share the content. The content can be shared through built-in services or third-party apps that have registered to appear in the activity view. The purpose of `UIActivityViewController` is to make it easier for developers to implement sharing functionality in their apps and provide a consistent user experience across different services.
+	The purpose of the `UIActivityViewController` class is to provide a standard interface for sharing content or performing actions, such as sending text, images, URLs, or files via Messages, Mail, AirDrop, or social media, or saving them to the Files app.
+
+	It's commonly referred to as the share sheet.
+
+	Here's an example of usage:
+
+	```swift
+	let items = ["Check this out!", URL(string: "https://apple.com")!]
+	let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+	present(activityVC, animated: true)
+	```
+
+	We can share texts, URLs, images, files, and custom data via `UIActivityItemSource`.
+
+	We can even fine-tune what's shown to hide actions that don't make sense for the shared content:
+
+	```swift
+	activityVC.excludedActivityTypes = [.postToFacebook, .assignToContact]
+	```
 	</details>
 
 - 🟩 [What is the purpose of `UIVisualEffectView`?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-uivisualeffectview)
 	<details>
 		<summary>Answer</summary>
-	
+		
 	The purpose of `UIVisualEffectView` in iOS is to apply visual effects to the views behind it. It provides a simple way to add blur and vibrancy effects to our app's user interface, which can help improve the overall visual appeal and user experience of our app.
 
-	The `UIVisualEffectView` class is part of the UIKit framework and was introduced in iOS 8. It works by applying a blur effect to the views behind it, and also provides a vibrancy effect that can be used to make text and other user interface elements more visible and prominent.
-
-	Using a `UIVisualEffectView` is fairly straightforward: we simply create an instance of the class, set its `effect` property to an instance of the desired effect, and then add the view to our app's view hierarchy. The visual effect is automatically applied to the views behind the `UIVisualEffectView`, creating a visually appealing blur effect with subtle highlights and shadows. Here's an example:
+	Using a `UIVisualEffectView` is fairly straightforward: we simply create an instance of the class, set its `effect` property to an instance of the desired effect, and then add the view to our app's view hierarchy. The visual effect is automatically applied to the views behind the `UIVisualEffectView`, creating a blur effect with subtle highlights and shadows. Here's an example:
 
 	```swift
-	import UIKit
-
-	 class MyViewController: UIViewController {
-
-		override func viewDidLoad() {
-			super.viewDidLoad()
-
-			// Create a view to add the blur effect to
-			let myView = UIView(frame: CGRect(x: 50, y: 100, width: 200, height: 200))
-			myView.backgroundColor = .white
-
-			// Create a visual effect view with a blur effect
-			let blurEffect = UIBlurEffect(style: .light)
-			let visualEffectView = UIVisualEffectView(effect: blurEffect)
-
-			// Add the visual effect view as a subview to the view to blur
-			visualEffectView.frame = myView.bounds
-			myView.addSubview(visualEffectView)
-
-			// Add the blurred view to the main view
-			view.addSubview(myView)
-		}
-	}
+	let blurEffect = UIBlurEffect(style: .light)
+	let blurView = UIVisualEffectView(effect: blurEffect)
+	blurView.frame = view.bounds
+	view.addSubview(blurView)
 	```
+
+	This adds a light blur over the entire screen.
 	</details>
 
 - 🟩 [What is the purpose of reuse identifiers for table view cells?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-reuse-identifiers-for-table-view-cells)
 	<details>
 		<summary>Answer</summary>
 	
-	In iOS development, table views are commonly used to display a list of items. To optimize the performance of the table view, cells that are scrolled off-screen are re-used for new cells that need to be displayed on-screen. This means that a single cell instance can be re-used multiple times, rather than creating a new instance for each cell.
+	A reuse identifier is a string that uniquely identifies a type of cell in a table view. Its purpose in table view cells (`UITableViewCell`) is to improve performance and memory efficiency by allowing cells to be reused instead of recreated every time they appear on screen. They are also used to distinguish between different types of cells in the same table view (e.g., `PhotoCell` vs. `TextCell`). 
 
-	To facilitate the re-use of cells, developers use reuse identifiers. A reuse identifier is a string that uniquely identifies a type of cell in a table view. When a cell scrolls off-screen and is no longer visible, the table view stores the cell in a reuse queue, indexed by its reuse identifier. When a new cell needs to be displayed on-screen, the table view first checks if there is a reusable cell with the appropriate reuse identifier in the reuse queue. If so, it dequeues the cell from the queue and reconfigures it with new data. If not, it creates a new cell instance.
+	Although table views can contain thousands of rows, but only a small number are rendered at any given time. Creating a new cell for each row would be memory-intensive, wasteful, and slow. Therefore, each cell is assigned a reuse identifier so that the table view can maintain a reusable pool of cells that can be recycled when they scroll off-screen. When a cell scrolls off-screen and is no longer visible, the table view stores the cell in a reuse queue, indexed by its reuse identifier. When a new cell needs to be displayed on-screen, the table view first checks if there is a reusable cell with the appropriate reuse identifier in the reuse queue. If so, it dequeues the cell from the queue and reconfigures it with new data. If not, it creates a new cell instance.
 
-	By using reuse identifiers, developers can optimize the performance of their table views by reducing the number of cell instances that need to be created and configured. This can improve the overall performance of the app, particularly when displaying large lists of data.
+	Here's an example:
+
+	```swift
+	class MyViewController: UIViewController, UITableViewDataSource {
+
+		let tableView = UITableView()
+
+		init() {
+			tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MyCell")
+		}
+ 
+		func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+			return 1000
+		}
+	
+		func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
+			cell.textLabel?.text = "Row \(indexPath.row)"
+			return cell
+		}
+	}
+	```
 	</details>
 
 - 🟩 [When would you choose to use a collection view rather than a table view?](https://www.hackingwithswift.com/interview-questions/when-would-you-choose-to-use-a-collection-view-rather-than-a-table-view)
 	<details>
 		<summary>Answer</summary>
 	
-	A collection view and a table view are both used to display a collection of data in a scrollable view, but there are some differences between them that might make one more suitable than the other depending on the specific requirements of the app.
+	We would choose a collection view (`UICollectionView`) over a table view (`UITableView`) when more layout flexibility or multidimensional item arrangements are needed, such as grids, custom layouts, or horizontal scrolling.
 
 	Here are some scenarios where a collection view might be preferred over a table view:
 
 	- **Non-linear or custom layouts**: Collection views provide more flexibility in terms of how items are laid out on the screen. They can be arranged in a grid, a carousel, or any other custom layout.
-	- **Heterogeneous data types**: Collection views are better suited for displaying different types of content, such as images, videos, and text, in the same view. Each cell in a collection view can be customized to display a different type of content, whereas in a table view, each row typically displays the same type of content.
-	- **Interactivity**: Collection views provide more options for interactivity than table views. For example, we can implement drag-and-drop functionality, or add animations and gestures to individual cells.
+	- **Heterogeneous data types**: While both table and collection views support multiple cell types, collection views are more commonly used for visually rich or diverse layouts (e.g., mixed media like images and text side-by-side).
+	- **Interactivity**: Collection views offer greater flexibility for custom interactive elements (like drag-and-drop or complex animations), though both table and collection views support interaction via gestures and delegates.
 	- **Horizontal scrolling**: Collection views are designed to handle both vertical and horizontal scrolling, whereas table views are typically used for vertical scrolling only.
 	<br />
 	
@@ -4813,31 +4927,72 @@
 	<details>
 		<summary>Answer</summary>
 	
-	A view's intrinsic content size is an important concept in Auto Layout that enables the system to determine the size of a view based on its content. When a view has an intrinsic content size, it means that the size of the view is determined by its content, and the view can communicate its preferred size to the layout system. For example, a label has an intrinsic content size that is based on the size of the text it contains, while a button has an intrinsic content size that is based on the size of its title and image.
+	A view's intrinsic content size is its natural size based on its content. It plays a crucial role in Auto Layout. For example, a `UILabel` has an intrinsic content size that matches the dimensions required to display its text, and a `UIButton` uses the size of its title and image.
 
-	By providing an intrinsic content size, a view can participate in Auto Layout and help the system determine the appropriate size and position for the view within its superview. This can be especially useful when building user interfaces that need to adapt to different screen sizes and orientations, as it allows views to maintain their intrinsic proportions while still fitting within the available space.
+	When a view provides an intrinsic content size, Auto Layout can often position and size the view **without requiring explicit width or height constraints**. This is especially useful in adaptive layouts, where views need to adjust naturally across different screen sizes and content configurations.
 
-	In summary, a view's intrinsic content size is a key part of Auto Layout that enables views to communicate their preferred size to the system, making it easier to build adaptive user interfaces that work well across a variety of screen sizes and orientations.
+	Here's an example:
+
+	```swift
+	let label = UILabel()
+	label.text = "Hello, world!"
+	stackView.addArrangedSubview(label)
+	```
+
+	In this example, we don't need to constraint the label's width or height, as it uses its intrinsic content size, and the stack view arranges it accordingly. Therefore, we don't need to set manual constraints, which is another useful feature.
+
+	Intrinsic content size works together with content hugging and compression resistance priorities to resolve layout conflicts.
 	</details>
 
 - 🟧 [What is the function of anchors in Auto Layout?](https://www.hackingwithswift.com/interview-questions/what-is-the-function-of-anchors-in-auto-layout)
 	<details>
 		<summary>Answer</summary>
 	
-	In Auto Layout, anchors are used to create constraints that define the position and size of a view relative to other views or the superview. Anchors provide a way to programmatically specify constraints using the layout anchors provided by the `NSLayoutAnchor` class in UIKit. By using anchors, developers can create constraints that are flexible and adaptable to different device sizes and orientations. For example, we can use anchors to align two views horizontally or vertically, set their width or height, or create constraints between different edges of a view. Anchors simplify the process of creating constraints and make it easier to create layouts that are both visually appealing and functional across different devices.
+	In Auto Layout, anchors create constraints that define the position and size of a view relative to other views or the superview. They provide a way to programmatically specify constraints using the layout anchors provided by the `NSLayoutAnchor` class in UIKit in a concise, readable, and type-safe way.
+
+	Each view in UIKit has layout anchors like:
+	- `topAnchor`
+	- `bottomAnchor`
+	- `leadingAnchor`
+	- `trailingAnchor`
+	- `widthAnchor`
+	- `heightAnchor`
+	- `centerXAnchor`
+	- `centerYAnchor`
+	<br>
+
+	These anchors represent specific points or dimensions of the view and can be used to create constraints relative to other views or constant values.
+
+	Here's an example of pinning a view to the edges of its superview:
+
+	```swift
+	let box = UIView()
+	box.translatesAutoresizingMaskIntoConstraints = false
+	view.addSubview(box)
+	
+	NSLayoutConstraint.activate([
+		box.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+		box.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+		box.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+		box.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
+	])
+	```
+
+	This example uses anchors to pin `box` inside its superview with padding.
 	</details>
 
-- 🟧 [What is the purpose of `IBDesignable`?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-ibdesignable)
+- 🟧 [What is the purpose of `@IBDesignable`?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-ibdesignable)
 	<details>
 		<summary>Answer</summary>
 
-	`IBDesignable` is an attribute in Xcode that allows developers to see their custom views rendered directly in Interface Builder. When a custom view is marked as IBDesignable, Interface Builder compiles the view and renders it directly in the canvas, so developers can see how the view looks without having to run the app. This can be particularly helpful in tweaking the layout and appearance of a view before running the app, saving time and effort. To use IBDesignable, a custom view must also be marked with the IBInspectable attribute on any properties that should be exposed in Interface Builder.
+	`@IBDesignable` is an attribute in Xcode that enables live rendering of custom views directly in Interface Builder without running the app. To use `@IBDesignable`, a custom view can optionally use the `@IBInspectable` attribute to expose specific properties in Interface Builder's Attributes Inspector.
 
 	Here's an example:
 	
 	```swift
 	@IBDesignable
 	class MyCustomView: UIView {
+
 		@IBInspectable var cornerRadius: CGFloat = 0 {
 			didSet {
 				layer.cornerRadius = cornerRadius
@@ -4845,24 +5000,52 @@
 			}
 		}
 
-		...
+		override func prepareForInterfaceBuilder() {
+			super.prepareForInterfaceBuilder()
+			// Setup code that should run in Interface Builder
+		}
 	}
 	```
 	
-	In this example, we have a custom view called `MyCustomView` that has a `cornerRadius` property that we want to be able to set in Interface Builder. We've marked the class with `@IBDesignable` so that it can be rendered directly in Interface Builder, and we've also marked the `cornerRadius` property with `@IBInspectable` so that it can be edited in Interface Builder's attributes inspector.
-
-	When we set the `cornerRadius` property, we update the view's `layer` to have a corner radius equal to the new value. We also set the `masksToBounds` property to `true` if the corner radius is greater than 0, which ensures that the corners are clipped to the bounds of the view.
-
-	With these changes, we can now use `MyCustomView` directly in Interface Builder and see how it looks with the specified corner radius.
+	In this example:
+	- `@IBDesignable` makes the custom view previewable in Interface Builder.
+	- `@IBInspectable` makes `cornerRadius` show up in the Attributes Inspector.
+	<br>
 	</details>
 
 - 🟧 [What is the purpose of `UIMenuController`?](https://www.hackingwithswift.com/interview-questions/what-is-the-purpose-of-uimenucontroller)
 	<details>
 		<summary>Answer</summary>
 	
-	`UIMenuController` is a class in UIKit that allows us to display custom menus in our iOS app. It is used to create and manage menus, which can include actions that are specific to our app. The purpose of `UIMenuController` is to provide a flexible and customizable way to present menus to users, which can help improve the user experience of our app.
+	`UIMenuController` is a class in UIKit that allows us to display contextual pop-up menu with actions like **Cut**, **Copy**, **Paste**, etc. when a user long-presses or selects editable or selectable content, such as text fields, custom views, or table cells.
 
-	`UIMenuController` provides a set of APIs that enable us to create and display menus in response to user interactions. We can add menu items to the menu, and specify which actions should be taken when a user selects a particular menu item. `UIMenuController` can be used in a variety of contexts, such as when the user performs a long-press gesture on a view or when we want to provide contextual options in response to a specific user action.
+	We can add the following actions:
+	- Standard system actions (`cut:`, `copy:`, `paste:`).
+	- Custom menu items.
+	- App-specific logic when a menu item is tapped.
+	<br>
+
+	Here's an example of a custom text view with a custom action:
+
+	```swift
+	override var canBecomeFirstResponder: Bool {
+		return true
+	}
+	
+	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+		becomeFirstResponder()
+		
+		let menu = UIMenuController.shared
+		let custom = UIMenuItem(title: "Highlight", action: #selector(highlightText))
+		menu.menuItems = [custom]
+		
+		menu.showMenu(from: self, rect: bounds)
+	}
+	
+	@objc func highlightText() {
+		print("Text highlighted")
+	}
+	```
 	</details>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
