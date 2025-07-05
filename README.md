@@ -427,18 +427,20 @@
 	<details>
 		<summary>Answer</summary>
 
-	Type erasure is a technique in Swift that allows you to work with values of generic or protocol-constrained types in a way that hides their specific underlying type, making it possible to use a uniform interface while still maintaining type safety. 
+	Type erasure is a technique in Swift that allows us to work with values of generic or protocol-constrained types in a way that hides their specific underlying type, making it possible to use a uniform interface while still maintaining type safety. 
 
 	It is often used to:
 
 	- Work with heterogeneous collections or APIs that require a single type.
 	- Pass around protocol-constrained types without exposing the concrete type.
 	- Abstract over generic or protocol requirements, especially with protocols that include associated types or self-requirements.
+	<br>
 
 	Type erasure is necessary because some protocols in Swift cannot be used directly as a concrete type because they either have:
 
 	- **Associated types**, such as `Collection` or `Equatable`, which depend on generic parameters, making them inherently incomplete without a specific type.
  	- References to `Self`, which cannot be used as a type for variables or collections.
+	<br>
 
  	The following example reflects the previous explanation:
   
@@ -567,7 +569,7 @@
  		- Contains the data and the logic for manipulating that data, including notifying the controller when data changes.
  		- In an iOS app, the model might represent the data that is stored in a database or fetched from a web service.
  	- **View**:
- 		- Represents the UI of your app, displaying data to the user.
+ 		- Represents the UI of an app, displaying data to the user.
  		- Views might include things like buttons, labels, text fields, and images.
 		- Binds to the **ViewModel** to automatically reflect changed in the data.
 		- In an iOS app, they can be created using UIKIt (programatically or with the Interface Builder) or SwiftUI.
@@ -609,15 +611,15 @@
 	A dependency is just something that a class relies on to do its work. For example:
 
 	- A restaurant (class) needs ingredients (dependencies) to cook food.
-	- Without DI: The restaurant has its own farm, fishing boat, and supply chain to get ingredients (tightly coupled).
-	- With DI: The ingredients are delivered by a supplier (loose coupling). If the supplier changes, the restaurant can still function without altering how it cooks.
-   	<br />
+	- **Without DI**: The restaurant has its own farm, fishing boat, and supply chain to get ingredients (tightly coupled).
+	- **With DI**: The ingredients are delivered by a supplier (loose coupling). If the supplier changes, the restaurant can still function without altering how it cooks.
+   	<br>
 
 	If a class creates its own dependencies, it becomes tightly coupled to them, meaning:
 
-	- You can't easily replace the dependency (e.g., for testing or updates).
+	- We can't easily replace the dependency (e.g., for testing or updates).
 	- The class becomes harder to understand and maintain.
- 	<br />
+ 	<br>
 
 	For example:
 
@@ -635,8 +637,8 @@
 	Here:
 
 	- The `Restaurant` is tightly coupled to the `IngredientSupplier` class.
-	- If the restaurant stops to supply the ingredients you'd have to rewrite the restaurant's operations.
- 	<br />
+	- We'd have to rewrite the restaurant's operations if the restaurant stopped supplying the ingredients.
+ 	<br>
 
   	To solve these issues, we can use dependency injection to pass the dependency (an ingredient supplier) into the class, so the class doesn't create it itself. In the context of the example, imagine that the restaurant now relies on an external ingredient supplier:
 
@@ -658,14 +660,13 @@
    	Now:
 
   	- The restaurant does't care how the ingredients are sourced.
-  	- You can easily swap suppliers without changing the code of the `Restaurant` class.
-	<br />
-
-	---
+  	- We can easily swap suppliers without changing the code of the `Restaurant` class.
+	<br>
 
  	On a separate note, there are three types of dependency injection:
 
   	- **Constructor injection**: Dependencies are passed into the class when it's created.
+
  		```swift
 		class Restaurant {
 			let supplier: IngredientSupplier
@@ -675,7 +676,9 @@
 			}
 		}
   		```
+
   	- **Property injection**: Dependencies are assigned to properties after the object is created.
+
 		```swift
 		class Restaurant {
 			var supplier: IngredientSupplier?
@@ -686,7 +689,9 @@
 			}
 		}
   		```
+
   	- **Method injection**:
+
 		```swift
 		class Restaurant {
 			func prepareMeal() {
@@ -718,7 +723,7 @@
 
 	Here, the `Drivable` protocol defines the "contract" that anything that is `Drivable` must have `start()` and `drive()` methods.
 
-	In object-oriented programming, you often use inheritance to share behavior:
+	In object-oriented programming, we often use inheritance to share behavior:
 
 	```swift
 	class Vehicle {
@@ -736,13 +741,13 @@
 
 	This works, but:
 
-	- You can only inherit from one class (single inheritance).
-	- If unrelated types need similar behavior, you either:
+	- We can only inherit from one class (single inheritance).
+	- If unrelated types need similar behavior, we either:
 		- Create artificial parent-child relationships, which may not make sense.
 		- Duplicate code across multiple classes.
 	<br />
  
-	Instead of relying on inheritance, POP allows you to use protocols to share behavior across any type (class, struct, or enum). This avoids the limitations of single inheritance and makes code more modular and reusable.
+	Instead of relying on inheritance, POP allows us to use protocols to share behavior across any type (class, struct, or enum). This avoids the limitations of single inheritance and makes code more modular and reusable.
 
 	```swift
 	protocol Drivable {
@@ -779,8 +784,8 @@
 	
 	Key benefits of Protocol-Oriented Programming:
 
-	- **Flexibility**: Any type (class, struct, or enum) can conform to a protocol, so you're not tied to a single class hierarchy.
- 	- **Composition over inheritance**: You can "compose" multiple behaviors by conforming to multiple protocols, rather than relying on deep inheritance trees.
+	- **Flexibility**: Any type (class, struct, or enum) can conform to a protocol, so we're not tied to a single class hierarchy.
+ 	- **Composition over inheritance**: We can "compose" multiple behaviors by conforming to multiple protocols, rather than relying on deep inheritance trees.
 		```swift
 		protocol Drivable {
 			func drive()
@@ -853,7 +858,7 @@
  	>Here are the key concepts of this paradigm:
 	>
  	>- **Pure deterministic functions**: Functions that have no side effects and return the same output for the same input.
-	>- **First-class functions**: Functions are treated as values, which means that you can assign a function to a variable, pass it around as an argument, or return it from other functions.
+	>- **First-class functions**: Functions are treated as values, which means that we can assign a function to a variable, pass it around as an argument, or return it from other functions.
 	>- **Higher-order functions**: Functions that take one or more functions as arguments and can also return a function.
 	>- **Immutability**: Once data is created, it cannot be changed.
  	><br />
@@ -871,7 +876,7 @@
 
 	For example, let's say we have a `User` model that has a `name` property. We want to be notified whenever the name property changes so that we can update the user interface. To do this, we would follow these steps:
 
-	1. Define the model (`User`) with a property that you want to observe (`name`).
+	1. Define the model (`User`) with a property that we want to observe (`name`).
  
 		```swift
 		import Foundation
@@ -934,10 +939,10 @@
 
 		- `addObserver(_:forKeyPath:options:context:)`: This method registers the observer (`self`) to watch the `name` property on the `user` object. We specify the `keyPath` (which is the property name `name`), and we also specify that we want to receive both the new and old values when the property changes.
 		- `observeValue(forKeyPath:of:change:context:)`: This is the method that gets called whenever the observed property changes. Here, we can check which key path was changed (`keyPath`), and take action based on the new value.
-		- `removeObserver(_:forKeyPath:)`: This is very important. You must always remove observers when they are no longer needed to avoid memory leaks or unexpected behavior. In this case, we remove the observer in the `deinit` method to make sure it's cleaned up when the view controller is deallocated.
+		- `removeObserver(_:forKeyPath:)`: This is very important. We must always remove observers when they are no longer needed to avoid memory leaks or unexpected behavior. In this case, we remove the observer in the `deinit` method to make sure it's cleaned up when the view controller is deallocated.
 		<br />
 
-	Overall, KVO can be useful in many situations, such as updating a UI when the value of a model object changes, or observing changes to a property of a third-party library. However, it's important to use KVO with care, as KVO notifications are usually delivered on the same thread that changes the observed property. If you're observing from a background thread, make sure you properly handle UI updates on the main thread. In addition, it can be resource-intensive, especially when observing many properties. For large applications using UIKit, consider alternative patterns like `NSNotificationCenter` or **reactive programming**.
+	Overall, KVO can be useful in many situations, such as updating a UI when the value of a model object changes, or observing changes to a property of a third-party library. However, it's important to use KVO with care, as KVO notifications are usually delivered on the same thread that changes the observed property. When observing from a background thread, be sure to properly handle UI updates on the main thread. In addition, this process can be resource-intensive, especially when observing many properties. For large applications using UIKit, consider alternative patterns like `NSNotificationCenter` or **reactive programming**.
 	</details>
 
 - 🟥 [Can you give some examples of where singletons might be a good idea?](https://www.hackingwithswift.com/interview-questions/can-you-give-some-examples-of-where-singletons-might-be-a-good-idea)
@@ -1125,7 +1130,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The `NotificationCenter` class in Swift is a messaging system used to broadcast information within an app. It allows different parts of your app to communicate without tightly coupling them. When an event happens, one or more objects can post a notification to the notification center, which then broadcasts the notification to any interested observers.
+	The `NotificationCenter` class in Swift is a messaging system used to broadcast information within an app. It allows different parts of an app to communicate without tightly coupling them. When an event happens, one or more objects can post a notification to the notification center, which then broadcasts the notification to any interested observers.
 
 	It is a powerful tool for decoupling different parts of an app. It is commonly used to handle situations such as updating the UI when a data model changes, responding to system events such as keyboard or screen orientation changes, and notifying other parts of the app when a user completes a task—like logging in or switching themes. However, it's not suitable for communication between unrelated apps, or for sharing large amounts of data between different parts of an app. In those cases, other mechanisms such as URL schemes or app extensions may be more appropriate.
 
@@ -1165,7 +1170,7 @@
 
 	2. **Create a `URLRequest`** (optional)
 
-		If you need to customize the request (e.g., set HTTP method, headers):
+		If we need to customize the request (e.g., set HTTP method, headers):
 
 		```swift
 		var request = URLRequest(url: url)
@@ -1174,6 +1179,7 @@
 		```
 
 	3. **Create a `URLSession`**
+
 		This creates a data task to perform the request:
 
 		```swift
@@ -1182,7 +1188,8 @@
 		}
 		```
 		
-	4. **Handle the response**
+	5. **Handle the response**
+
 		```swift
 		// Check for errors.
 		if let error = error {
@@ -1213,12 +1220,14 @@
 		}
 		```
 
-	5. **Start the task**
+	7. **Start the task**
+
 		```swift
 		task.resume()
 		```
 
-	6. **Bonus: Using `async/await`** (iOS 15+)
+	9. **Bonus: Using `async/await`** (iOS 15+)
+
 		```swift
 		func fetchData() async {
 			guard let url = URL(string: "https://api.example.com/data") else { return }
@@ -1240,7 +1249,7 @@
 		}
 		```
 
-	<br />
+	<br>
 
 	These are the basic steps to make a network request in an iOS app, but the specifics may vary depending on our app's requirements and the API we're interacting with.
 	</details>
@@ -1469,7 +1478,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	I would use the `AVAudioPlayer` class in Swift. It's designed for playing audio files from your app bundle or file system. It supports formats like `.mp3`, `.wav`, `.m4a`, etc. and allows control over playback (play, pause, stop)
+	I would use the `AVAudioPlayer` class in Swift. It's designed for playing audio files from an app bundle or the file system. It supports formats such as `.mp3`, `.wav`, `.m4a`, etc. and allows control over playback (play, pause, and stop).
 
 	Here's an example code snippet that shows how to play a sound file named `mySoundFile.mp3` from the app's main bundle:
 
@@ -1731,7 +1740,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	The `Info.plist` (Information Property List) file in an iOS app contains metadata used by the system to configure and manage your app. You store app settings and configuration keys that the OS or certain APIs need at runtime. The `Info.plist` file contains key-value pairs that describe various aspects of our app, such as its name, version number, icon files, supported devices, required capabilities, and much more.
+	The `Info.plist` (Information Property List) file in an iOS app contains metadata that the system uses to configure and manage the app. It stores app settings and configuration keys that the OS or certain APIs need at runtime. The `Info.plist` file contains key-value pairs describing various aspects of the app, including as its name, version number, icon files, supported devices, required capabilities, and much more.
 		
 	Some examples of settings that can be stored in the `Info.plist` file include:
 
@@ -1757,7 +1766,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	Size classes in Swift are used to provide a way to design responsive interfaces that can adapt to different device sizes and orientations. With size classes, developers can define layout constraints and rules that adjust automatically based on the device's screen size, allowing for the creation of adaptive layouts that work across a wide range of devices.
+	In Swift, size classes provide a way to design responsive interfaces that can adapt to different device sizes and orientations. Using size classes, developers can define layout constraints and rules that automatically adjust based on the screen size of the device, enabling the creation of adaptive layouts that work across a wide range of devices.
 
 	Size classes are defined by two dimensions: horizontal size class and vertical size class. The horizontal size class describes the width of the device's screen, and the vertical size class describes the height. Each size class can be set to one of several possible values, such as compact or regular, depending on the screen size.
 
@@ -1783,7 +1792,7 @@
 
 	>Recently, I worked on an iOS app that required a custom view that would animate the transition between two child views. This view needed to perform a series of animations in a specific order, with some animations happening simultaneously and others happening sequentially. To accomplish this, I created a custom animation manager class that used Core Animation to perform the animations.
 	>
-	>The animation manager class had a public function that could be called to start the animation. This function took two views as parameters - the view that was currently being displayed and the view that was going to be displayed after the animation was complete.
+	>The animation manager class had a public function that could be called to start the animation. This function took two views as parameters: the current view and the view that was going to be displayed after the animation was complete.
 	>
 	>Inside the animation manager class, I used a combination of `CABasicAnimation` and `CAAnimationGroup` to perform the animations. I also used a completion block to make sure that the new view was added to the screen hierarchy at the correct time.
 	>
@@ -1956,7 +1965,7 @@
 	Swift and Objective-C are both programming languages used for developing applications for Apple's ecosystem, with Objective-C being the older language and Swift being the newer one. Here are a few key differences:
 
 	- **Syntax**: One of the most noticeable differences between Swift and Objective-C is their syntax. Swift uses a more modern, concise, and readable syntax than Objective-C, which can be more verbose and difficult to read.
-	- **Performance**: Objective-C is less performant than Swift because it has a dynamic message resolution mechanism. That is, for every function call you do, Objective-C will look into a resolution table an it will decide on runtime where to send the message. Both Swift and Objective-C use ARC, so memory management is basically equivalent for both, except that Objective-C passes everything by reference, which may be slightly faster but very error prone. In contrast, Swift passes everything that is not a class by copy, except for data containers that uses the COW strategy. That is, Copy On Write, where instances are only copied when they are locally modified. That makes Swift safer and more performant than Objective-C.
+	- **Performance**: Objective-C is less performant than Swift because it has a dynamic message resolution mechanism. That is, for every function call we do, Objective-C will look into a resolution table an it will decide on runtime where to send the message. Both Swift and Objective-C use ARC, so memory management is basically equivalent for both, except that Objective-C passes everything by reference, which may be slightly faster but very error prone. In contrast, Swift passes everything that is not a class by copy, except for data containers that uses the COW strategy. That is, Copy On Write, where instances are only copied when they are locally modified. That makes Swift safer and more performant than Objective-C.
 	- **Safety**: Swift is designed to be a safer language than Objective-C. It has features like optional types and safe memory management that help prevent common programming errors.
 	- **Interoperability**: Objective-C and Swift are interoperable, which means that we can use them together in the same project. This is particularly useful when we're migrating an existing Objective-C codebase to Swift.
 	<br />
@@ -2084,18 +2093,20 @@
 	<details>
 		<summary>Answer</summary>
 
-	Here's how you can do it effectively:
+	Here's how we can do this effectively:
 
 	1. **Identify symptons or user reports**
 		- High battery drain when the app is running or after using specific features.
 		- Device feels hot
 		- Users report performance or battery issues in reviews or feedback.
+
 	2. **Profile with instruments**
 		Xcode tools to use:
 		- **Energy log**: Identifies which parts of the app are using the most energy. We have to identify spikes in energy use from CPU, GPU, networking, location and background activity.
 		- **Time profiler**: Shows CPU usage over time and pinpoints CPU-intensive code paths.
 		- **Network instruments**: Look for excessive or frequent requests.
 		- **Leaks and allocations**: Check for memory leaks that may cause unintended background processing.
+
   	3. **Analyze common causes**
 		- **Excessive background activity**: When the user isn't interacting with the app, it's important to minimize the amount of work that's being done. This includes things like suspending background tasks, stop GPS tracking if not needed, and using `beginBackgroundTask` along with `backgroundTaskIdentifier` for background tasks.
 		- **High CPU/GPU usage**: Drawing can be a major drain on battery life, especially if the app is constantly redrawing the screen. To optimize drawing, consider using techniques such as layer masking, off-screen rendering, and Core Graphics to minimize the amount of drawing that needs to be done. In addition, heavy logic in main/UI thread can be battery-consuming, so it's important to offload work to background threads.
@@ -2103,10 +2114,12 @@
 		- **Location services misuse**: Use significant location change or region monitoring when full GPS accuracy isn't needed. Also avoid using `startUpdatingLocation` when not needed.
 		- **Timers or background tasks**: Uncontrolled `Timer` firing while app is idle or unmanaged `DispatchSource`, `RunLoop`, or `CADisplayLink` are common causes. To fix this, we need to invalidate timers when not in use and use system callbacks/events when possible.
 		- **Push notifications**: Excessive silent push notifications wake up the app in the background, so we need to limit silent push usage; only use them when there's new data or real purpose.
+
 	4. **Implement fixes and re-test**
 		- Use instruments again after applying changes.
 		- Compare battery impact before and after.
 		- Test on real devices, not just the simulator.
+
 	- **Extra tips**
 		- Use `OSLog` for low-overhead logging when profiling energy or background activity.
 		- Respect system throttling—iOS aggressively limits background tasks, timers, and networking in low-power mode.
@@ -2234,7 +2247,7 @@
 		// "Pet deinitialized"
 		```
 
-	- **`unowned` reference**: It's similar to `weak`, but it's used when the referring object is guaranteed to outlive the object it references. Unlike `weak`, an `unowned` reference is non-optional. This is a performance optimization, but it comes with a trade-off: if the referenced object is deallocated and the `unowned` reference is accessed, the app will crash. Therefore, you should only use unowned when you're certain of the ownership relationship—for instance, in closures where the lifecycle is tightly controlled. It's safer to just use `weak`, as `unowned` is rarely used because of making the app potentially crash.
+	- **`unowned` reference**: It's similar to `weak`, but it's used when the referring object is guaranteed to outlive the object it references. Unlike `weak`, an `unowned` reference is non-optional. This is a performance optimization, but it comes with a trade-off: if the referenced object is deallocated and the `unowned` reference is accessed, the app will crash. Therefore, we should only use `unowned` when we're certain of the ownership relationship, such as in closures where the lifecycle is tightly controlled. It's safer to just use `weak` because `unowned` is rarely used and can potentially cause the app to crash.
 
 		```swift
 		class Customer {
@@ -2346,7 +2359,7 @@
 	}
 	```
 
-	If both `owner` and `pet` reference each other strongly, they keep each other alive—even when the rest of your code is done with them. To fix it, we can use `weak` or `unowned` to break the cycle:
+	If the `owner` and `pet` strongly reference each other, they keep each other alive even after the rest of the code has finished using them. To resolve this issue, we can employ the `weak` or `unowned` reference types to break the cycle:
 
 	```swift
 	class Pet {
@@ -2362,13 +2375,18 @@
 	Here are the steps I would take to identify and resolve a memory leak:
 
 	1. **Recognize the symptons**: Look for signs like increasing memory over time, objects not getting deallocated, app slowdown or crashes due to memory pressure and `deinit` methods never being called.
+	<br>
+
 	2. **Use Xcode's memory debugging tools**:
 		- **Memory graph debugger**: Run the app in debug mode and click on the **Memory graph** icon to open the memory graph debugger. There, we need to look for orphaned objects still in memory, reference cycles (shown as lines in the graph), and objects that should be deallocated but persist.
 		- **Allocations & Leaks**: Open **Xcode > Services > Allocations & Leaks**. To start a session, run the app normally and look for retained objects that never go away. Use **Mark generation** to compare before/after memory states.
+	<br>
+
 	3. **Analyze the retention graph**: Use the memory graph to trace what's retaining the leaked object. Most leaks are caused by closures capturing `self` strongly, delegates not marked `weak`, and static singletons holding onto instances.
+	<br>
+
 	4. **Fix common memory leaks patterns**
-		- **Closures**
-			Closures retain captured variables by default. Use capture lists:
+		- **Closures**: They retain captured variables by default. Use capture lists:
 
 			```swift
 			// ⛔ Retain cycle
@@ -2382,22 +2400,24 @@
 			}
 			```
 
-		- **Closures**
-			Always declare delegates as `weak` to avoid strong reference cycles:
+		- **Delegates**: Always declare delegates as `weak` to avoid strong reference cycles:
 
 			```swift
 			weak var delegate: SomeDelegate?
 			```
 
-		- **Parent–child cycles**
-			For objects that reference each other (e.g., `Parent` and `Child`), make one reference `weak`:
+		- **Parent–child cycles**: For objects that reference each other (e.g., `Parent` and `Child`), make one reference `weak`:
 
 			```swift
 			class Child {
 				weak var parent: Parent?
 			}
 			```
+	<br>
+   
 	5. **Test the fix**: Re-run the memory graph and the Allocations & Leaks service to ensure that the objects are properly deallocated (`deinit` prints, gone from graph). Also, monitor the app during normal usage, especially screen transitions, to check that there are no memory leaks.
+	<br>
+
 	6. **Prevent future leaks**: Use `deinit` to track object lifecycles and be mindful of how closures and async code capture `self`. Also use `weak` or `unowned` as needed, as well as avoiding strong references in singletons or static variables unless necessary.
 	</details>
 
@@ -2408,9 +2428,11 @@
 	Identifying and resolving performance issues can be a complex and iterative process. It involves a methodical approach combining profiling tools, code analysis, and targeted optimization. Here are some general steps that can be taken:
 
 	1. **Recognize the symptons**: Look for issues like slow app launch, laggy scrolling ir UI stutters, delayed button taps or animations, and high CPU/GPU usage.
+	<br>
+
 	2. **Profile with Xcode instruments**: Launch Xcode instruments to collect real performance data. The key instruments are the following:
 		- **Time Profiler**
-			- Shows where your app spends time (CPU usage).
+			- Shows where the app spends time (CPU usage).
 			- Identify heavy methods or long-running tasks.
 		- **Core Animation**
 			- Detects dropped frames or rendering bottlenecks.
@@ -2420,7 +2442,11 @@
 			- Prevent memory churn or leaks causing slowdowns.
 		- **Energy Log**
 			- Detect high power usage from CPU, GPU, networking, or background work.
+	<br>
+
 	3. **Isolate the bottleneck**: Look for patterns in long function calls, synchronous work on the main thread (e.g., image decoding, JSON parsing), nested loops or large view hierarchies, and blocking network or file operations. Use Xcode's Debug Navigator (<kbd>⌘7</kbd>) to watch CPU, memory, and FPS live.
+	<br>
+ 
 	4. **Fix common performance issues**
 	   	- **Heavy work on main thread**
 
@@ -2455,8 +2481,11 @@
 			- Avoid redundant requests or polling.
 			- Use background fetch or batching.
 			- Cache responses where appropriate.
+	<br>
 
 	5. **Test and iterate**: Once we have made changes to our code to improve performance, test the app again using profiling tools to see if the changes have had the desired effect. Iterate on the process until we are satisfied with the app's performance.
+	<br>
+
 	6. **Consider hardware limitations**: Remember that different devices have different hardware capabilities, and what works well on one device may not work as well on another. Be sure to test our app on a range of devices to ensure that it performs well on all of them.
 	</details>
 
@@ -2742,7 +2771,7 @@
 	// Temperature was set from 25.0 to 30.0 degrees Celsius
 	```
 
-	Note that property observer **do not trigger** during initialization. Also, you **cannot use observers** on computed properties (those with `get`/`set`).
+	Note that property observer **do not trigger** during initialization. Also, we **cannot use observers** on computed properties (those with `get`/`set`).
 	</details>
 
 - 🟩 [What are raw strings?](https://www.hackingwithswift.com/interview-questions/what-are-raw-strings)
@@ -3081,13 +3110,13 @@
 
 	Optional chaining in Swift solves the problem of safely accessing properties, methods, or subscripts on optional values without unwrapping them manually. It helps us avoid deeply nested `if let` or `guard let` statements and makes code cleaner, safer, and more concise.
 
-	Let’s say you have a chain of objects, and one or more links might be `nil`:
+	Let’s say we have a chain of objects, and one or more links might be `nil`:
 
   	```swift
 	person.address?.city?.name
    	```
 
-	Without optional chaining, you'd need to unwrap each step:
+	Without optional chaining, we'd need to unwrap each step:
 
    	```swift
 	if let address = person.address {
@@ -3105,7 +3134,7 @@
 	}
  	```
 
- 	If any link in the chain is `nil`, the whole expression becomes `nil`—without crashing.
+ 	If any link in the chain is `nil`, the whole expression becomes `nil` without crashing.
 
   	Optional chaining can also be used with method calls and subscripts:
 
@@ -3152,7 +3181,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	We would use the `guard` keyword in Swift to to check a condition early in a function or block and exit immediately if it fails. It's ideal for early exits, also known as the "early return" pattern, which helps keep your code clean, readable, and flat (avoiding nested ifs).
+	We would use the `guard` keyword in Swift to to check a condition early in a function or block and exit immediately if it fails. It's ideal for early exits, also known as the "early return" pattern, which helps keep the code clean, readable, and flat (avoiding nested ifs).
 
 	The `guard` statement is similar to the `if` statement, but it is used to check if a condition is `false` or if a value is `nil`. The key difference is that when the condition fails, the `guard` statement requires us to exit the current scope, either by throwing an error, or using `return`, `continue`, `break`, or `fatalError()`. This ensures that we handle the error condition as early as possible and avoid nested conditional statements.
 
@@ -3226,7 +3255,7 @@
 
 	Here are some usage examples:
 
-	1. **Payment methods**: When building a checkout system, users may pay in different ways. With this enum, each payment method can carry the relevant data needed to process that specific method: card details for credit cards, a token for Apple Pay, and no data for cash. This allows your payment processing logic to pattern-match on the payment type and handle each accordingly, without risking mismatched data.
+	1. **Payment methods**: When building a checkout system, users may pay in different ways. With this enum, each payment method can carry the relevant data needed to process that specific method: card details for credit cards, a token for Apple Pay, and no data for cash. This allows the payment processing logic to pattern-match on the payment type and handle each accordingly, without risking mismatched data.
 	
 		```swift
 		enum PaymentMethod {
@@ -3236,9 +3265,9 @@
 		}
 		```
 
-	2. **Representing API responses**: This enum models the two possible outcomes of an API call: success or failure. When the call succeeds, you often get a `Data` object back, which can then be decoded into usable models. If the call fails, an `Error` object is typically returned, which you can use for debugging or displaying a user-friendly message.
+	2. **Representing API responses**: This enum models the two possible outcomes of an API call: success or failure. When the call succeeds, we often get a `Data` object back, which can then be decoded into usable models. If the call fails, an `Error` object is typically returned, which we can use for debugging or displaying a user-friendly message.
 
-		This design is powerful because it keeps both outcomes together in a type-safe way and forces you to handle both scenarios explicitly via a `switch`.
+		This design is powerful because it keeps both outcomes together in a type-safe way and forces us to handle both scenarios explicitly via a `switch`.
 
 		```swift
 		enum APIResponse {
@@ -3259,7 +3288,7 @@
 
 		This `enum` allows us to represent different screens in our app, such as the home screen, the user profile screen (with a `username` associated value), or the settings screen (with an `isLoggedIn` associated value). We can use this `enum` to navigate between screens in our app.
 
-	4. **Coordinates with units**: This is useful when you’re dealing with location data that could be in two formats: actual GPS coordinates or a plain-text address. By using an enum with associated values, you ensure that each value is tied to its case, and you don’t have to track whether a location is coordinate-based or address-based using separate flags or logic.
+	4. **Coordinates with units**: This is useful when we're dealing with location data that could be in two formats: actual GPS coordinates or a plain-text address. Using an enum with associated values ensures that each value is tied to its respective format, eliminating the need to track whether a location is coordinate- or address-based using separate flags or logic.
 
 		It improves code clarity and reduces the chances of misinterpreting the location data.
 	
@@ -3270,7 +3299,7 @@
 		}
 	 	```
 
- 	5. **Color model**: Colors can be defined in multiple formats—RGB and HEX being common ones. This enum captures that concept, letting you work with either type while keeping them neatly organized. You might later add `.hsl(hue:saturation:lightness:)` or `.named(String)` for other cases.
+ 	5. **Color model**: Colors can be defined in multiple formats, with RGB and HEX being the most common. This enum encapsulates that concept, allowing us to work with either type while keeping them neatly organized. We may add `.hsl(hue:saturation:lightness:)` or `.named(String)` for other cases later on.
 
 		Using associated values like this is much cleaner than having a color model that stores all possible formats at once and requires complex logic to determine which one is in use.
 
@@ -3420,9 +3449,9 @@
 
 	In this example, we use a multi-pattern `catch` clause to handle both `.notFound` and `.unreadable` errors in a single block.
 
-	The `catch` statement can match error types, not just specific error values. This lets you catch broad categories of errors like decoding or networking errors, rather than only exact enum cases.
+	The `catch` statement can match error types, not just specific error values. This lets us to catch broad categories of errors, such as decoding or networking errors, rather than only exact enum cases.
 
-	The example below shows how you can use multiple type matches in a single `catch` clause using the `|` (pipe) operator.
+	The example below illustrates how to use multiple type matches in a single `catch` clause using the `|` (pipe) operator.
 
 	```swift
 	do {
@@ -3493,7 +3522,7 @@
 	<details>
 		<summary>Answer</summary>
 
-	A variadic function in Swift is a function that can accept zero or more values of a specific type as a single parameter. This is useful when you want to allow callers to pass in a flexible number of arguments, rather than a fixed count. The number of arguments passed to the function can vary at runtime, and the function can process them as a single collection of values.
+	A variadic function in Swift is a function that can accept zero or more values of a specific type as a single parameter. This is useful when we want to allow callers to pass in a flexible number of arguments, rather than a fixed count. The number of arguments passed to the function can vary at runtime, and the function can process them as a single collection of values.
  
 	To define a variadic function in Swift, we need to use the ellipsis (`...`) after the argument's type. Here's an example:
 
@@ -3590,7 +3619,7 @@
 	// "Pet deinitialized"
 	```
 
-	On the other hand, `unowned` is similar to `weak`, but it's used when the referring object is guaranteed to outlive the object it references. Unlike `weak`, an `unowned` reference is non-optional. This is a performance optimization, but it comes with a trade-off: if the referenced object is deallocated and the `unowned` reference is accessed, the app will crash. Therefore, you should only use unowned when you're certain of the ownership relationship—for instance, in closures where the lifecycle is tightly controlled. It's safer to just use `weak`, as `unowned` is rarely used because of making the app potentially crash.
+	On the other hand, `unowned` is similar to `weak`, but it's used when the referring object is guaranteed to outlive the object it references. Unlike `weak`, an `unowned` reference is non-optional. This is a performance optimization, but it comes with a trade-off: if the referenced object is deallocated and the `unowned` reference is accessed, the app will crash. Therefore, we should only use `unowned` when we're certain of the ownership relationship, such as in closures where the lifecycle is tightly controlled. It's safer to just use `weak`, as `unowned` is rarely used because it can cause the app to crash.
 
 	```swift
 	class Customer {
@@ -4141,7 +4170,7 @@
 	someFunction({ expensiveComputation() })
 	```
 
-	You can write:
+	We can write:
  
 	```swift
 	someFunction(expensiveComputation())
@@ -4179,8 +4208,8 @@
 
 	Overall, `@autoclosure` is useful when:
 	- The argument is expensive to compute.
- 	- You want to delay or run it conditionally.
-  	- You want to improve API ergonomics (no `{ }` needed from the caller).
+ 	- We want to delay or run it conditionally.
+  	- We want to improve API ergonomics (no `{ }` needed from the caller).
   	<br>
 
 	Note that, since `@autoclosure` delays evaluation, anything with side effects (e.g., modifying a variable, logging, incrementing) might not run at all or run later than expected.
@@ -4199,10 +4228,10 @@
 	Think of it as a set of global values that any SwiftUI view can read or respond to, like:
 	- System settings (e.g., dark mode, locale, accessibility).
 	- App-wide values (e.g., user preferences, layout direction).
-	- Custom values you inject yourself (e.g., theme color, auth state).
+	- Custom values we inject ourselves (e.g., theme color, auth state).
 	<br>
 
- 	To establish a simple analogy, imagine you're building a house (your app) and that the environment is the air—all rooms (views) can breathe it. You don't have to run wires (pass data manually) to every single room.
+ 	To establish a simple analogy, imagine we're building a house (the app) and that the environment is the air—all rooms (views) can breathe it. We don't have to run wires (pass data manually) to every single room.
 
 	One of the main benefits of using the environment is that it allows us to create a consistent user interface throughout our app. For example, we might use the `.font` environment key to set a default font for all our app's text views. If the user changes the font size in the system settings, all the text in our app will automatically update to reflect the new font size.
 
@@ -4288,7 +4317,7 @@
 	
 	Common pitfalls:
 	- **Not for structs or enums**: `@Published` works only in classes because it relies on reference semantics and the `ObservableObject` protocol.
- 	- **Default behavior**: If you don't observe an `ObservableObject` instance properly in SwiftUI (e.g., by using `@StateObject` or `@ObservedObject`), the UI won't react to changes in `@Published` properties.
+ 	- **Default behavior**: If we don't observe an `ObservableObject` instance properly in SwiftUI (e.g., by using `@StateObject` or `@ObservedObject`), the UI won't react to changes in `@Published` properties.
   	- **Non-thread-safe**: Modifying `@Published` properties from non-main threads without ensuring thread safety can lead to unexpected behavior in the UI.
 	</details>
 
@@ -4544,7 +4573,7 @@
 	
 	The `ButtonStyle` protocol in SwiftUI defines how a button looks and reacts visually, allowing developers to customize its appearance and pressed-state behavior. It requires implementing a single method, `makeBody(configuration:)`, which returns a view describing the button's look.
 
-	By conforming to `ButtonStyle`, you can create reusable, branded, or specialized styles and apply them to any `Button` instance. This is useful for maintaining consistent visual design and adding effects (like color changes or scaling) when the button is pressed.
+	By conforming to `ButtonStyle`, we can create reusable, branded, or specialized styles and apply them to any `Button` instance. This is useful for maintaining consistent visual design and adding effects (like color changes or scaling) when the button is pressed.
 	</details>
 
 - 🟧 [When would you use `GeometryReader`?](https://www.hackingwithswift.com/interview-questions/when-would-you-use-geometryreader)
@@ -4602,7 +4631,7 @@
 
 	1. **Value semantics = Predictable behavior**: Structs are value types, which means that when a view is updated, a new copy is made. SwiftUI can then compare the old and new versions to determine what actually changed, which makes the rendering system more predictable and less error-prone than using reference type like classes.
 	2. **Lightweight and fast**: Since structs don't require heap allocation or reference counting, they can be copied and discarded cheaply. This allows SwiftUI to optimize view diffing and updates.
-	3. **Declarative = Immutable UI snapshots**: SwiftUI is declarative, meaning you describe what the UI should look like at any given time. Structs are perfect for this, as each view is a static snapshot of the UI state. If state changes, SwiftUI simply recomputes the view body from scratch using new structs.
+	3. **Declarative = Immutable UI snapshots**: SwiftUI is declarative, meaning we describe what the UI should look like at any given time. Structs are perfect for this, as each view is a static snapshot of the UI state. If state changes, SwiftUI simply recomputes the view body from scratch using new structs.
 	4. **Simple and clean code**: Structs make view code easier to read, safer to reason about and more aligned with Swift's focus on clarity and safety.
 	</details>
 
@@ -4771,7 +4800,7 @@
 
 	Now the image is visible inside the view.
 
-	To understand the difference, consider the analogy of a photo and a photo frame. The photo is the `UIImage` and the frame is the `UIImageView`. You can't see the photo until it's placed in the frame and hung on the wall.
+	To understand the difference, consider the analogy of a photo and a photo frame. The photo is the `UIImage` and the frame is the `UIImageView`. We can't see the photo until it's placed in the frame and hung on the wall.
 	</details>
 
 - 🟩 [What is the difference between aspect fill and aspect fit when displaying an image?](https://www.hackingwithswift.com/interview-questions/what-is-the-difference-between-aspect-fill-and-aspect-fit-when-displaying-an-image)
